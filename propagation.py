@@ -5,11 +5,13 @@ log distance path loss + zero mean Gaussian shadowing
 
 import math
 import numpy as np
+from input_output import Default
+
 
 class Propagation:
     '''Free space pathloss plus shadowing
     '''
-    def __init__(self, alpha: float, std: float):
+    def __init__(self, alpha: float = Default.alpha, std: float = Default.std):
         '''
         Args:
             alpha -- the pathloss exponent
@@ -25,6 +27,18 @@ class Propagation:
         Return:
             pathloss: float
         '''
-        freespace = 10 * math.log10(distance)
-        shadowing = np.random.normal(loc=0, scale=self.std)
-        return freespace + shadowing
+        freespace = 10 * self.alpha * math.log10(distance) if distance > 1 else 0
+        shadowing = np.random.normal(0, self.std)
+        pathloss = freespace + shadowing
+        return pathloss if pathloss > 0 else -pathloss
+
+
+def test():
+    p = Propagation(2, 1)
+    print(p.pathloss(0))
+    print(p.pathloss(3))
+    print(p.pathloss(15))
+
+
+if __name__ == '__main__':
+    test()
