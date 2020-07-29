@@ -31,3 +31,4 @@ class Transmitter(Node):
     def __init__(self, x: int, y: int, indx: int, power: int):
         super().__init__(x, y, indx)
         self.power = power
+

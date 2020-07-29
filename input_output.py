@@ -15,8 +15,9 @@ class Default:
     methods      = ['dl']
     sen_density  = 100
     grid_length  = 100
-    grid_width   = 100
+    cell_length  = 10
     num_intruder = 1
+    random_seed  = 0
 
 
 @dataclass
