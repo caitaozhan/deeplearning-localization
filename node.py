@@ -17,7 +17,7 @@ class Node:
         self.indx = indx
 
 
-class Receiver(Node):
+class Sensor(Node):
     '''encapsualte a receiver
     '''
     def __init__(self, x: int, y: int, indx: int):

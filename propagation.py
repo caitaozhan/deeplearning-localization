@@ -34,18 +34,6 @@ class Propagation:
 
 
 
-class GenerateData:
-    '''Generate synthetic data from the propagation model
-    '''
-    def __init__(self, random_seed, alpha, std, grid_length, cell_length):
-        self.random_seed = random_seed
-        self.alpha = alpha
-        self.std = std
-        self.grid_length = grid_length
-        self.cell_length = cell_length
-
-
-
 def test():
     p = Propagation(2, 1)
     print(p.pathloss(0))
