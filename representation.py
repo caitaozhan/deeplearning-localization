@@ -12,4 +12,4 @@ class InputRepresentation:
     def transform2image(self):
         '''transform the raw sensing data into a image that can be utilized by deep learning frameworks
         '''
-        pass
+        pass 

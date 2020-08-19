@@ -85,14 +85,16 @@ class GenerateData:
         self.sensor_density = sensor_density
         self.propagation = Propagation(self.alpha, self.std)
 
-    def generate(self, power: float, cell_percentage: float, sample_per_cell: int, sensor_file: str, root_dir: str):
+
+    def generate(self, power: float, cell_percentage: float, sample_per_label: int, sensor_file: str, root_dir: str):
         '''
+        The generated input data is not images, but instead matrix. Because saving as images will loss some accuracy
         Args:
-            power           -- the power of the transmitter
-            cell_percentage -- percentage of cells being label (see if all discrete location needs to be labels)
-            sample_per_cell -- samples per cell
-            sensor_file -- sensor location file
-            root_dir    -- the image output directory
+            power            -- the power of the transmitter
+            cell_percentage  -- percentage of cells being label (see if all discrete location needs to be labels)
+            sample_per_label -- samples per cell
+            sensor_file      -- sensor location file
+            root_dir         -- the output directory
         '''
         Utility.remove_make(root_dir)
 
@@ -117,7 +119,7 @@ class GenerateData:
         for label in labels:
             tx = label           # each label create a directory
             os.mkdir(f'{root_dir}/{tx}')
-            for i in range(sample_per_cell):
+            for i in range(sample_per_label):
                 grid = np.zeros((self.grid_length, self.grid_length))
                 grid.fill(Default.noise_floor)
                 for sensor in sensors:
@@ -125,7 +127,9 @@ class GenerateData:
                     pathloss = self.propagation.pathloss(dist)
                     rssi = power - pathloss
                     grid[sensor.x][sensor.y] = rssi if rssi > Default.noise_floor else Default.noise_floor
-                imageio.imwrite(f'{root_dir}/{tx}/{i}.png', grid)
+                np.savetxt(f'{root_dir}/{tx}/{i}.txt', grid, fmt='%1.2f', delimiter=', ')
+                if i == 0:
+                    imageio.imwrite(f'{root_dir}/{tx}/visualize.png', grid)
 
 
 if __name__ == '__main__':
@@ -161,11 +165,12 @@ if __name__ == '__main__':
         cell_length = args.cell_length[0]
         power = args.power[0]
         cell_percentage = args.cell_percentage[0]
+        sample_per_label = args.sample_per_label[0]
+        root_dir = args.root_dir[0]
 
         print('generating data')
         print(random_seed, alpha, std, grid_length, cell_length, sensor_density)
         generatedata = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density)
 
         gd = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density)
-        root_dir = 'data/images-1'
-        gd.generate(power, cell_percentage, 2, f'data/sensors/{grid_length}-{sensor_density}', 'data/images_1')
+        gd.generate(power, cell_percentage, sample_per_label, f'data/sensors/{grid_length}-{sensor_density}', root_dir)
