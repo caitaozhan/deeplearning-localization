@@ -2,6 +2,5 @@
 *.code-workspace
 __pycache__
 visualize
-data/images_1
-data/matrix-1
+data/*
 *.ipynb_checkpoints

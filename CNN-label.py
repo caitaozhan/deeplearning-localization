@@ -78,6 +78,8 @@ class MinMaxNormalize:
         return matrix.astype(np.float32)
 
 
+
+
 def main():
     '''main'''
     root_dir = './data/matrix-1'

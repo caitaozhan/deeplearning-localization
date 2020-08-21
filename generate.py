@@ -85,6 +85,21 @@ class GenerateData:
         self.sensor_density = sensor_density
         self.propagation = Propagation(self.alpha, self.std)
 
+    def log(self, power, cell_percentage, sample_per_label, sensor_file, root_dir):
+        '''the meta data of the data
+        '''
+        with open(root_dir + '.txt', 'w') as f:
+            f.write(f'seed             = {self.seed}\n')
+            f.write(f'alpha            = {self.alpha}\n')
+            f.write(f'std              = {self.std}\n')
+            f.write(f'grid length      = {self.grid_length}\n')
+            f.write(f'cell length      = {self.cell_length}\n')
+            f.write(f'sensor density   = {self.sensor_density}\n')
+            f.write(f'power            = {power}\n')
+            f.write(f'cell percent     = {cell_percentage}\n')
+            f.write(f'sample per label = {sample_per_label}\n')
+            f.write(f'sensor file      = {sensor_file}\n')
+            f.write(f'root file        = {root_dir}\n')
 
     def generate(self, power: float, cell_percentage: float, sample_per_label: int, sensor_file: str, root_dir: str):
         '''
@@ -97,7 +112,7 @@ class GenerateData:
             root_dir         -- the output directory
         '''
         Utility.remove_make(root_dir)
-
+        self.log(power, cell_percentage, sample_per_label, sensor_file, root_dir)
         random.seed(self.seed)
         # 1 read the sensor file, do a checking
         if str(self.grid_length) not in sensor_file[:sensor_file.find('-')]:
@@ -116,14 +131,18 @@ class GenerateData:
         population = [(i, j) for j in range(self.grid_length) for i in range(self.grid_length)]
         labels = random.sample(population, label_count)
 
+        counter = 0
         for label in labels:
             tx = label           # each label create a directory
+            if counter % 100 == 0:
+                print(f'{counter/len(labels)*100}%')
+            counter += 1
             os.mkdir(f'{root_dir}/{tx}')
             for i in range(sample_per_label):
                 grid = np.zeros((self.grid_length, self.grid_length))
                 grid.fill(Default.noise_floor)
                 for sensor in sensors:
-                    dist = Utility.distance(tx, (sensor.x, sensor.y))
+                    dist = Utility.distance(tx, (sensor.x, sensor.y)) * Default.cell_length
                     pathloss = self.propagation.pathloss(dist)
                     rssi = power - pathloss
                     grid[sensor.x][sensor.y] = rssi if rssi > Default.noise_floor else Default.noise_floor
@@ -169,7 +188,6 @@ if __name__ == '__main__':
         root_dir = args.root_dir[0]
 
         print('generating data')
-        print(random_seed, alpha, std, grid_length, cell_length, sensor_density)
         generatedata = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density)
 
         gd = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density)

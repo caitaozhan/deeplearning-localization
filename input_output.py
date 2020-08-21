@@ -9,8 +9,8 @@ from typing import List
 class Default:
     '''some default constants
     '''
-    alpha            = 3     # the slope of wireless signal depreciation
-    std              = 1     # the standard deviation of the zero mean shadowing
+    alpha            = 3.5     # the slope of wireless signal depreciation
+    std              = 1       # the standard deviation of the zero mean shadowing
     data_source      = 'propagation_model'
     methods          = ['dl']
     sen_density      = 500
@@ -18,10 +18,10 @@ class Default:
     cell_length      = 10
     num_intruder     = 1
     random_seed      = 0
-    noise_floor      = -70
+    noise_floor      = -80
     power            = 10
     cell_percentage  = 1
-    sample_per_label = 2
+    sample_per_label = 10
     root_dir         = 'data/images-1'  # the root directory of the data
 
 
