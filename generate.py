@@ -76,13 +76,14 @@ class GenerateSensors:
 class GenerateData:
     '''generate training data using a propagation model
     '''
-    def __init__(self, seed: int, alpha: float, std: float, grid_length: int, cell_length: int, sensor_density: int):
+    def __init__(self, seed: int, alpha: float, std: float, grid_length: int, cell_length: int, sensor_density: int, noise_floor: int):
         self.seed = seed
         self.alpha = alpha
         self.std = std
         self.grid_length = grid_length
         self.cell_length = cell_length
         self.sensor_density = sensor_density
+        self.noise_floor = noise_floor
         self.propagation = Propagation(self.alpha, self.std)
 
     def log(self, power, cell_percentage, sample_per_label, sensor_file, root_dir):
@@ -95,6 +96,7 @@ class GenerateData:
             f.write(f'grid length      = {self.grid_length}\n')
             f.write(f'cell length      = {self.cell_length}\n')
             f.write(f'sensor density   = {self.sensor_density}\n')
+            f.write(f'noise floor      = {self.noise_floor}\n')
             f.write(f'power            = {power}\n')
             f.write(f'cell percent     = {cell_percentage}\n')
             f.write(f'sample per label = {sample_per_label}\n')
@@ -114,6 +116,7 @@ class GenerateData:
         Utility.remove_make(root_dir)
         self.log(power, cell_percentage, sample_per_label, sensor_file, root_dir)
         random.seed(self.seed)
+        np.random.seed(self.seed)
         # 1 read the sensor file, do a checking
         if str(self.grid_length) not in sensor_file[:sensor_file.find('-')]:
             print(f'grid length {self.grid_length} and sensor file {sensor_file} not match')
@@ -146,7 +149,7 @@ class GenerateData:
                     pathloss = self.propagation.pathloss(dist)
                     rssi = power - pathloss
                     grid[sensor.x][sensor.y] = rssi if rssi > Default.noise_floor else Default.noise_floor
-                np.savetxt(f'{root_dir}/{tx}/{i}.txt', grid, fmt='%1.2f', delimiter=', ')
+                np.save(f'{root_dir}/{tx}/{i}.npy', grid.astype(np.float32))
                 if i == 0:
                     imageio.imwrite(f'{root_dir}/{tx}/visualize.png', grid)
 
@@ -167,6 +170,7 @@ if __name__ == '__main__':
     parser.add_argument('-cp', '--cell_percentage', nargs=1, type=int, default=[Default.cell_percentage], help='percentage of cells being labels')
     parser.add_argument('-sl', '--sample_per_label', nargs=1, type=int, default=[Default.sample_per_label], help='# of samples per label')
     parser.add_argument('-rd', '--root_dir', nargs=1, type=str, default=[Default.root_dir], help='the root directory for the images')
+    parser.add_argument('-nl', '--noise_floor', nargs=1, type=str, default=[Default.noise_floor], help='RSSI cannot be lower than noise floor')
 
     args = parser.parse_args()
 
@@ -186,9 +190,9 @@ if __name__ == '__main__':
         cell_percentage = args.cell_percentage[0]
         sample_per_label = args.sample_per_label[0]
         root_dir = args.root_dir[0]
+        noise_floor = args.noise_floor[0]
 
         print('generating data')
-        generatedata = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density)
 
-        gd = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density)
+        gd = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density, noise_floor)
         gd.generate(power, cell_percentage, sample_per_label, f'data/sensors/{grid_length}-{sensor_density}', root_dir)

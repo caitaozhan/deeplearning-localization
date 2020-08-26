@@ -26,14 +26,14 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    if args.generate_data:
-        print('generating data')
-        random_seed = args.random_seed[0]
-        alpha = args.alpha[0]
-        std = args.std[0]
-        grid_length = args.grid_length[0]
-        cell_length = args.cell_length[0]
-        sensor_density = args.sensor_density[0]
+    # if args.generate_data:
+    #     print('generating data')
+    #     random_seed = args.random_seed[0]
+    #     alpha = args.alpha[0]
+    #     std = args.std[0]
+    #     grid_length = args.grid_length[0]
+    #     cell_length = args.cell_length[0]
+    #     sensor_density = args.sensor_density[0]
 
-        print(random_seed, alpha, std, grid_length, cell_length, sensor_density)
-        generatedata = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density)
+    #     print(random_seed, alpha, std, grid_length, cell_length, sensor_density)
+    #     generatedata = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density)
