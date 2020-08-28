@@ -98,7 +98,7 @@ class GenerateData:
             f.write(f'sensor density   = {self.sensor_density}\n')
             f.write(f'noise floor      = {self.noise_floor}\n')
             f.write(f'power            = {power}\n')
-            f.write(f'cell percent     = {cell_percentage}\n')
+            f.write(f'cell percentage  = {cell_percentage}\n')
             f.write(f'sample per label = {sample_per_label}\n')
             f.write(f'sensor file      = {sensor_file}\n')
             f.write(f'root file        = {root_dir}\n')
@@ -135,12 +135,12 @@ class GenerateData:
         labels = random.sample(population, label_count)
 
         counter = 0
-        for label in labels:
+        for label in sorted(labels):
             tx = label           # each label create a directory
             if counter % 100 == 0:
                 print(f'{counter/len(labels)*100}%')
-            counter += 1
-            os.mkdir(f'{root_dir}/{tx}')
+            folder = f'{root_dir}/{counter:06d}'
+            os.mkdir(folder)     # update on Aug. 27, change the name of the folder from label to counter index
             for i in range(sample_per_label):
                 grid = np.zeros((self.grid_length, self.grid_length))
                 grid.fill(Default.noise_floor)
@@ -149,9 +149,10 @@ class GenerateData:
                     pathloss = self.propagation.pathloss(dist)
                     rssi = power - pathloss
                     grid[sensor.x][sensor.y] = rssi if rssi > Default.noise_floor else Default.noise_floor
-                np.save(f'{root_dir}/{tx}/{i}.npy', grid.astype(np.float32))
+                np.save(f'{folder}/{i}.npy', grid.astype(np.float32))
                 if i == 0:
-                    imageio.imwrite(f'{root_dir}/{tx}/visualize.png', grid)
+                    imageio.imwrite(f'{folder}/{tx}.png', grid)
+            counter += 1
 
 
 if __name__ == '__main__':
@@ -167,7 +168,7 @@ if __name__ == '__main__':
     parser.add_argument('-rs', '--random_seed', nargs=1, type=int, default=[Default.random_seed], help='random seed')
     parser.add_argument('-sd', '--sensor_density', nargs=1, type=int, default=[Default.sen_density], help='number of sensors')
     parser.add_argument('-po', '--power', nargs=1, type=int, default=[Default.power], help='the power of the transmitter')
-    parser.add_argument('-cp', '--cell_percentage', nargs=1, type=int, default=[Default.cell_percentage], help='percentage of cells being labels')
+    parser.add_argument('-cp', '--cell_percentage', nargs=1, type=float, default=[Default.cell_percentage], help='percentage of cells being labels')
     parser.add_argument('-sl', '--sample_per_label', nargs=1, type=int, default=[Default.sample_per_label], help='# of samples per label')
     parser.add_argument('-rd', '--root_dir', nargs=1, type=str, default=[Default.root_dir], help='the root directory for the images')
     parser.add_argument('-nl', '--noise_floor', nargs=1, type=str, default=[Default.noise_floor], help='RSSI cannot be lower than noise floor')
