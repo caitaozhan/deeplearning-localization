@@ -166,7 +166,7 @@ class Net3(nn.Module):
         return num_features
 
 
-def train_test(train, test, net):
+def train_test(train, test, num_epoch, net):
     '''
     Args:
         the filenames of training and testing dataset
@@ -189,7 +189,7 @@ def train_test(train, test, net):
     optimizer  = optim.Adam(model.parameters(), lr=0.001)
     criterion  = nn.MSELoss()  # criterion is the loss function
 
-    num_epochs = 6
+    num_epochs = num_epoch
     train_losses_epoch = []
     train_errors_epoch = []
     test_errors_epoch  = []
@@ -252,12 +252,13 @@ def train_test(train, test, net):
 if __name__ == '__main__':
     regression = []
     training_dataset = ['matrix-train10', 'matrix-train11', 'matrix-train12', 'matrix-train13', 'matrix-train14']
-    testing_dataset  = ['matrix-test10',  'matrix-test11',  'matrix-test12',  'matrix-test13',  'matrix-test14']
-    net = Net3()
-    for train, test in zip(training_dataset, testing_dataset):
+    testing_dataset  = ['matrix-test10',  'matrix-test10',  'matrix-test10',  'matrix-test10',  'matrix-test10']
+    epoches = [8, 15, 20, 20, 20]
+    for train, test, epoch in zip(training_dataset, testing_dataset, epoches):
         tmp = []
         for _ in range(2):
-            tmp.append(train_test(train, test, net))
+            net = Net3()
+            tmp.append(train_test(train, test, epoch, net))
         regression.append(np.mean(tmp))
         print(regression)
-    np.savetxt('experimental/regression.txt', np.array(regression), delimiter=',')
+    np.savetxt('experimental/regression2.txt', np.array(regression), delimiter=',')

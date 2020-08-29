@@ -142,7 +142,7 @@ class Net2(nn.Module):
         return x
 
 
-def train_test(train, test, net):
+def train_test(train, test, epoch: int, net):
     '''
     Args:
         the filenames of training and testing dataset
@@ -165,7 +165,7 @@ def train_test(train, test, net):
     optimizer  = optim.Adam(model.parameters(), lr=0.001)
     criterion  = nn.MSELoss()  # criterion is the loss function
 
-    num_epochs = 6
+    num_epochs = epoch
     train_losses_epoch = []
     train_errors_epoch = []
     test_errors_epoch  = []
@@ -227,13 +227,14 @@ if __name__ == '__main__':
     start = time.time()
     segmentation = []
     training_dataset = ['matrix-train10', 'matrix-train11', 'matrix-train12', 'matrix-train13', 'matrix-train14']
-    testing_dataset  = ['matrix-test10',  'matrix-test11',  'matrix-test12',  'matrix-test13',  'matrix-test14']
-    net = Net2()
-    for train, test in zip(training_dataset, testing_dataset):
+    testing_dataset  = ['matrix-test10',  'matrix-test10',  'matrix-test10',  'matrix-test10',  'matrix-test10']
+    epoches = [8, 15, 20, 20, 20]
+    for train, test, epoch in zip(training_dataset, testing_dataset, epoches):
         tmp = []
         for _ in range(2):
-            tmp.append(train_test(train, test, net))
+            net = Net2()
+            tmp.append(train_test(train, test, epoch, net))
         segmentation.append(np.mean(tmp))
         print(segmentation)
-    np.savetxt('experimental/segmentation.txt', np.array(segmentation), delimiter=',')
+    np.savetxt('experimental/segmentation2.txt', np.array(segmentation), delimiter=',')
     print('time = {}'.format(time.time() - start))
