@@ -228,7 +228,7 @@ if __name__ == '__main__':
     segmentation = []
     training_dataset = ['matrix-train10', 'matrix-train11', 'matrix-train12', 'matrix-train13', 'matrix-train14']
     testing_dataset  = ['matrix-test10',  'matrix-test10',  'matrix-test10',  'matrix-test10',  'matrix-test10']
-    epoches = [8, 15, 20, 20, 20]
+    epoches = [10, 20, 30, 30, 30]
     for train, test, epoch in zip(training_dataset, testing_dataset, epoches):
         tmp = []
         for _ in range(2):
@@ -236,5 +236,5 @@ if __name__ == '__main__':
             tmp.append(train_test(train, test, epoch, net))
         segmentation.append(np.mean(tmp))
         print(segmentation)
-    np.savetxt('experimental/segmentation2.txt', np.array(segmentation), delimiter=',')
+    np.savetxt('experimental/segmentation3.txt', np.array(segmentation), delimiter=',')
     print('time = {}'.format(time.time() - start))

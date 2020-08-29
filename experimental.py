@@ -9,6 +9,7 @@ import torchvision.transforms as T
 import torch.optim as optim
 import matplotlib.pyplot as plt
 import numpy as np
+import time
 import os
 import glob
 from skimage import io, transform
@@ -250,15 +251,17 @@ def train_test(train, test, num_epoch, net):
 
 
 if __name__ == '__main__':
+    time.sleep(60*60*2)
     regression = []
     training_dataset = ['matrix-train10', 'matrix-train11', 'matrix-train12', 'matrix-train13', 'matrix-train14']
     testing_dataset  = ['matrix-test10',  'matrix-test10',  'matrix-test10',  'matrix-test10',  'matrix-test10']
-    epoches = [8, 15, 20, 20, 20]
+    epoches = [10, 20, 30, 30, 30]
     for train, test, epoch in zip(training_dataset, testing_dataset, epoches):
         tmp = []
-        for _ in range(2):
+        for i in range(3):
+            print(train, i)
             net = Net3()
             tmp.append(train_test(train, test, epoch, net))
         regression.append(np.mean(tmp))
         print(regression)
-    np.savetxt('experimental/regression2.txt', np.array(regression), delimiter=',')
+    np.savetxt('experimental/regression3.txt', np.array(regression), delimiter=',')
