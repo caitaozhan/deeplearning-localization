@@ -19,6 +19,7 @@ import sys
 sys.path.insert(0, '/home/caitao/Project/dl-localization')
 from input_output import Default
 from utility import Utility
+from deepleaning_models import Net2
 
 
 class MinMaxNormalize:
@@ -87,29 +88,30 @@ class SensorInputDatasetSegmentation(Dataset):
         folder = format(folder, '06d')
         matrix_name = str(idx%self.sample_per_label) + '.npy'
         matrix_path = os.path.join(self.root_dir, folder, matrix_name)
+        target_name = str(idx%self.sample_per_label) + '.target.npy'
+        target = self.get_segmentation_target(folder, target_name)
         matrix = np.load(matrix_path)
         if self.transform:
             matrix = self.transform(matrix)
-        label = self.get_segmentation_output(folder)
-        sample = {'matrix':matrix, 'label':label}
+        sample = {'matrix':matrix, 'target':target}
         return sample
 
     def get_sample_per_label(self):
         folder = glob.glob(os.path.join(self.root_dir, '*'))[0]
         samples = glob.glob(os.path.join(folder, '*.npy'))
-        return len(samples)
+        targets = glob.glob(os.path.join(folder, '*.target.npy'))
+        return len(samples) - len(targets)
 
-    def get_segmentation_output(self, folder: str):
+    def get_segmentation_target(self, folder: str, target_name: str):
         '''
         Args:
-            folder -- example: 000001
+            folder      -- eg. 000001
+            target_name -- eg. 0.target.npy
         Return:
             np.ndarray, n = 2, the pixel with the TX is labeled 1, everywhere else is labeled 0
         '''
-        twoDstr = glob.glob(os.path.join(self.root_dir, folder, '*.png'))[0]
-        twoDstr = twoDstr.split('/')[4]
-        twoDstr = twoDstr[1:-5]
-        x, y = twoDstr.split(',')
+        location = np.load(os.path.join(self.root_dir, folder, target_name))
+        x, y = location[0], location[1]
         x, y = int(x), int(y)
         grid = np.zeros((Default.grid_length, Default.grid_length))
         grid[x][y] = 1
@@ -125,23 +127,6 @@ tf = T.Compose([
 
 # model
 
-class Net2(nn.Module):
-    '''The output dimension of the full connnection layer is 100 x 100 = 10000
-       Assuming the input image is 1 x 100 x 100
-    '''
-    def __init__(self):
-        super(Net2, self).__init__()
-        self.conv1 = nn.Conv2d(1, 8, 5, padding=2)
-        self.conv2 = nn.Conv2d(8, 32, 5, padding=2)
-        self.conv3 = nn.Conv2d(32, 1, 5, padding=2)
-        
-    def forward(self, x):
-        x = F.relu(self.conv1(x))
-        x = F.relu(self.conv2(x))
-        x = self.conv3(x)
-        return x
-
-
 def train_test(train, test, epoch: int, net):
     '''
     Args:
@@ -152,11 +137,11 @@ def train_test(train, test, epoch: int, net):
     # training
     train = os.path.join('.', 'data', train)
     sensor_input_dataset = SensorInputDatasetSegmentation(root_dir = train, transform = tf)
-    sensor_input_dataloader = DataLoader(sensor_input_dataset, batch_size=32, shuffle=True, num_workers=3)
+    sensor_input_dataloader = DataLoader(sensor_input_dataset, batch_size=32, shuffle=True, num_workers=0)
     # testing
     test = os.path.join('.', 'data', test)
     sensor_input_test_dataset = SensorInputDatasetSegmentation(root_dir = test, transform = tf)
-    sensor_input_test_dataloader = DataLoader(sensor_input_test_dataset, batch_size=32, shuffle=True, num_workers=3)
+    sensor_input_test_dataloader = DataLoader(sensor_input_test_dataset, batch_size=32, shuffle=True, num_workers=0)
 
     print(net)
 
@@ -179,7 +164,7 @@ def train_test(train, test, epoch: int, net):
         model.train()
         for t, sample in enumerate(sensor_input_dataloader):
             X = sample['matrix'].to(device)
-            y = sample['label'].to(device)
+            y = sample['target'].to(device)
             pred = model(X)
             loss = criterion(pred, y)
             optimizer.zero_grad()
@@ -195,7 +180,7 @@ def train_test(train, test, epoch: int, net):
         model.eval()
         for t, sample in enumerate(sensor_input_test_dataloader):
             X = sample['matrix'].to(device)
-            y = sample['label'].to(device)
+            y = sample['target'].to(device)
             pred = model(X)
             pred = pred.data.cpu()
             y    = y.data.cpu()
@@ -226,8 +211,8 @@ def train_test(train, test, epoch: int, net):
 if __name__ == '__main__':
     start = time.time()
     segmentation = []
-    training_dataset = ['matrix-train10', 'matrix-train11', 'matrix-train12', 'matrix-train13', 'matrix-train14']
-    testing_dataset  = ['matrix-test10',  'matrix-test10',  'matrix-test10',  'matrix-test10',  'matrix-test10']
+    training_dataset = ['matrix-train20', 'matrix-train21', 'matrix-train22', 'matrix-train23', 'matrix-train24']
+    testing_dataset  = ['matrix-test20',  'matrix-test20',  'matrix-test20',  'matrix-test20',  'matrix-test20']
     epoches = [10, 20, 30, 30, 30]
     for train, test, epoch in zip(training_dataset, testing_dataset, epoches):
         tmp = []

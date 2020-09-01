@@ -137,6 +137,7 @@ class GenerateData:
         counter = 0
         for label in sorted(labels):
             tx = label           # each label create a directory
+            tx = (tx[0] + random.uniform(0, 1), tx[1] + random.uniform(0, 1))
             if counter % 100 == 0:
                 print(f'{counter/len(labels)*100}%')
             folder = f'{root_dir}/{counter:06d}'
@@ -150,6 +151,7 @@ class GenerateData:
                     rssi = power - pathloss
                     grid[sensor.x][sensor.y] = rssi if rssi > Default.noise_floor else Default.noise_floor
                 np.save(f'{folder}/{i}.npy', grid.astype(np.float32))
+                np.save(f'{folder}/{i}.target', np.array(tx).astype(np.float32))
                 if i == 0:
                     imageio.imwrite(f'{folder}/{tx}.png', grid)
             counter += 1
