@@ -9,7 +9,7 @@ import shutil
 class Utility:
     '''some common utilities'''
     @staticmethod
-    def distance(indx2d_1: tuple, indx2d_2: tuple):
+    def distance_propagation(indx2d_1: tuple, indx2d_2: tuple):
         '''euclidean distance for propagation model'''
         if indx2d_1 == indx2d_2:
             return 0.5
@@ -17,7 +17,7 @@ class Utility:
             return math.sqrt((indx2d_1[0] - indx2d_2[0]) ** 2 + (indx2d_1[1] - indx2d_2[1]) ** 2)
 
     @staticmethod
-    def distance_error(indx2d_1: tuple, indx2d_2: tuple):
+    def distance(indx2d_1: tuple, indx2d_2: tuple):
         '''euclidean distance for localization error'''
         return math.sqrt((indx2d_1[0] - indx2d_2[0]) ** 2 + (indx2d_1[1] - indx2d_2[1]) ** 2)
 

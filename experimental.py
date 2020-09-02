@@ -58,7 +58,7 @@ class Metrics:
                 print(pred, truth)
             pred_x, pred_y = pred[0], pred[1]
             true_x, true_y = truth[0], truth[1]
-            error.append(Utility.distance_error((pred_x, pred_y), (true_x, true_y)))
+            error.append(Utility.distance((pred_x, pred_y), (true_x, true_y)))
         return error
 
 # data

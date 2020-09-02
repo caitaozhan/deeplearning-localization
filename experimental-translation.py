@@ -57,14 +57,49 @@ class Metrics:
             indx = np.argmax(truth)
             true_x = indx // grid_len
             true_y = indx %  grid_len
-            err = Utility.distance_error((pred_x, pred_y), (true_x, true_y))
+            err = Utility.distance((pred_x, pred_y), (true_x, true_y))
             if debug:
                 print((pred_x, pred_y), (true_x, true_y), err)
             error.append(err)
         return error
 
+    @staticmethod
+    def localization_error_image_continuous(pred_batch, truth_batch, grid_len, debug=False):
+        '''Continuous
+           euclidian error when modeling the output representation is a matrix (image)
+           both pred and truth are batches, typically a batch of 32
+           now both prediction and truth are continuous numbers
+        Args:
+            pred_batch  -- size=(N, 1, 100, 100)
+            truth_batch -- size=(N, 2)
+        '''
+        error = []
+        for pred, truth in zip(pred_batch, truth_batch):
+            pred = pred[0]  # there is only one channel
+            indx = np.argmax(pred)
+            pred_x = indx // grid_len
+            pred_y = indx %  grid_len
+            neighbor = []
+            sum_weight = 0
+            for d in [(0, 0), (-1, 0), (0, 1), (1, 0), (0, -1)]:
+                nxt = (pred_x + d[0], pred_y + d[1])
+                if 0 <= nxt[0] < Default.grid_length and 0 <= nxt[1] < Default.grid_length:
+                    neighbor.append(((nxt[0] + 0.5, nxt[1] + 0.5), pred[nxt[0]][nxt[1]]))
+                    sum_weight += pred[nxt[0]][nxt[1]]
+            pred_x, pred_y = 0, 0
+            for n in neighbor:
+                loc = n[0]
+                w   = n[1]
+                pred_x += loc[0]/sum_weight*w
+                pred_y += loc[1]/sum_weight*w
+            err = Utility.distance((pred_x, pred_y), truth)
+            if debug:
+                print((pred_x, pred_y), (truth[0], truth[1]), err)
+            error.append(err)
+        return error
 
-class SensorInputDatasetSegmentation(Dataset):
+
+class SensorInputDatasetTranslation(Dataset):
     '''Sensor reading input dataset
        Output is image, model as a image segmentation problem
     '''
@@ -89,11 +124,11 @@ class SensorInputDatasetSegmentation(Dataset):
         matrix_name = str(idx%self.sample_per_label) + '.npy'
         matrix_path = os.path.join(self.root_dir, folder, matrix_name)
         target_name = str(idx%self.sample_per_label) + '.target.npy'
-        target = self.get_segmentation_target(folder, target_name)
+        target_img, target_float = self.get_translation_target(folder, target_name)
         matrix = np.load(matrix_path)
         if self.transform:
             matrix = self.transform(matrix)
-        sample = {'matrix':matrix, 'target':target}
+        sample = {'matrix':matrix, 'target':target_img, 'target_float':target_float}
         return sample
 
     def get_sample_per_label(self):
@@ -102,7 +137,7 @@ class SensorInputDatasetSegmentation(Dataset):
         targets = glob.glob(os.path.join(folder, '*.target.npy'))
         return len(samples) - len(targets)
 
-    def get_segmentation_target(self, folder: str, target_name: str):
+    def get_translation_target(self, folder: str, target_name: str):
         '''
         Args:
             folder      -- eg. 000001
@@ -112,11 +147,22 @@ class SensorInputDatasetSegmentation(Dataset):
         '''
         location = np.load(os.path.join(self.root_dir, folder, target_name))
         x, y = location[0], location[1]
+        target_float = (x, y)
         x, y = int(x), int(y)
         grid = np.zeros((Default.grid_length, Default.grid_length))
-        grid[x][y] = 1
+        neighbor = []
+        sum_weight = 0
+        for i in [-1, 0, 1]:
+            for j in [-1, 0, 1]:
+                nxt = (x + i, y + j)
+                if 0 <= nxt[0] < Default.grid_length and 0 <= nxt[1] < Default.grid_length:
+                    weight = 1./Utility.distance((nxt[0] + 0.5, nxt[1] + 0.5), target_float)
+                    sum_weight += weight
+                    neighbor.append((nxt, weight))
+        for n, w in neighbor:
+            grid[n[0]][n[1]] = w / sum_weight * len(neighbor)
         grid = np.expand_dims(grid, 0)
-        return grid.astype(np.float32)
+        return grid.astype(np.float32), np.array(target_float)
 
 
 tf = T.Compose([
@@ -136,12 +182,12 @@ def train_test(train, test, epoch: int, net):
     '''
     # training
     train = os.path.join('.', 'data', train)
-    sensor_input_dataset = SensorInputDatasetSegmentation(root_dir = train, transform = tf)
-    sensor_input_dataloader = DataLoader(sensor_input_dataset, batch_size=32, shuffle=True, num_workers=0)
+    sensor_input_dataset = SensorInputDatasetTranslation(root_dir = train, transform = tf)
+    sensor_input_dataloader = DataLoader(sensor_input_dataset, batch_size=32, shuffle=True, num_workers=3)
     # testing
     test = os.path.join('.', 'data', test)
-    sensor_input_test_dataset = SensorInputDatasetSegmentation(root_dir = test, transform = tf)
-    sensor_input_test_dataloader = DataLoader(sensor_input_test_dataset, batch_size=32, shuffle=True, num_workers=0)
+    sensor_input_test_dataset = SensorInputDatasetTranslation(root_dir = test, transform = tf)
+    sensor_input_test_dataloader = DataLoader(sensor_input_test_dataset, batch_size=32, shuffle=True, num_workers=3)
 
     print(net)
 
@@ -165,6 +211,7 @@ def train_test(train, test, epoch: int, net):
         for t, sample in enumerate(sensor_input_dataloader):
             X = sample['matrix'].to(device)
             y = sample['target'].to(device)
+            y_float = sample['target_float']
             pred = model(X)
             loss = criterion(pred, y)
             optimizer.zero_grad()
@@ -172,8 +219,7 @@ def train_test(train, test, epoch: int, net):
             optimizer.step()
             train_losses.append(loss.item())
             pred = pred.data.cpu()
-            y = y.data.cpu()
-            train_errors.extend(Metrics.localization_error_image(pred, y, Default.grid_length))
+            train_errors.extend(Metrics.localization_error_image_continuous(pred, y_float, Default.grid_length))
             if t % print_every == 0:
                 print(f't = {t}, loss = {loss.item()}')
 
@@ -181,10 +227,10 @@ def train_test(train, test, epoch: int, net):
         for t, sample in enumerate(sensor_input_test_dataloader):
             X = sample['matrix'].to(device)
             y = sample['target'].to(device)
+            y_float = sample['target_float']
             pred = model(X)
             pred = pred.data.cpu()
-            y    = y.data.cpu()
-            test_errors.extend(Metrics.localization_error_image(pred, y, Default.grid_length))
+            test_errors.extend(Metrics.localization_error_image_continuous(pred, y_float, Default.grid_length))
 
         print('train loss mean =', np.mean(train_losses))
         print('train loss std  =', np.std(train_losses))
@@ -205,21 +251,21 @@ def train_test(train, test, epoch: int, net):
     print('test error')
     for error in test_errors_epoch:
         print(error)
-    return sorted(test_errors_epoch, key=lambda x:x[0])[0][0]
+    return sorted(test_errors_epoch, key=lambda x:x[0])[0]
 
 
 if __name__ == '__main__':
     start = time.time()
-    segmentation = []
+    translation = []
     training_dataset = ['matrix-train20', 'matrix-train21', 'matrix-train22', 'matrix-train23', 'matrix-train24']
     testing_dataset  = ['matrix-test20',  'matrix-test20',  'matrix-test20',  'matrix-test20',  'matrix-test20']
-    epoches = [10, 20, 30, 30, 30]
+    epoches = [10, 20, 30, 40, 50]
     for train, test, epoch in zip(training_dataset, testing_dataset, epoches):
         tmp = []
         for _ in range(2):
             net = Net2()
             tmp.append(train_test(train, test, epoch, net))
-        segmentation.append(np.mean(tmp))
-        print(segmentation)
-    np.savetxt('experimental/segmentation3.txt', np.array(segmentation), delimiter=',')
+        translation.append(np.mean(tmp, axis=0))
+        print(translation)
+    np.savetxt('experimental/translation2.txt', np.array(translation), delimiter=',')
     print('time = {}'.format(time.time() - start))

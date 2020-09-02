@@ -146,7 +146,7 @@ class GenerateData:
                 grid = np.zeros((self.grid_length, self.grid_length))
                 grid.fill(Default.noise_floor)
                 for sensor in sensors:
-                    dist = Utility.distance(tx, (sensor.x, sensor.y)) * Default.cell_length
+                    dist = Utility.distance_propagation(tx, (sensor.x, sensor.y)) * Default.cell_length
                     pathloss = self.propagation.pathloss(dist)
                     rssi = power - pathloss
                     grid[sensor.x][sensor.y] = rssi if rssi > Default.noise_floor else Default.noise_floor
