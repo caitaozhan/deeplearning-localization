@@ -139,12 +139,12 @@ class GenerateData:
         for label in sorted(labels):
             tx = label           # each label create a directory
             tx_float = (tx[0] + random.uniform(0, 1), tx[1] + random.uniform(0, 1))
-            targets = [tx_float]
             if counter % 100 == 0:
                 print(f'{counter/len(labels)*100}%')
             folder = f'{root_dir}/{counter:06d}'
             os.mkdir(folder)     # update on Aug. 27, change the name of the folder from label to counter index
             for i in range(sample_per_label):
+                targets = [tx_float]
                 grid = np.zeros((self.grid_length, self.grid_length))
                 grid.fill(Default.noise_floor)
                 for sensor in sensors:
