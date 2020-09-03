@@ -139,6 +139,7 @@ class GenerateData:
         for label in sorted(labels):
             tx = label           # each label create a directory
             tx_float = (tx[0] + random.uniform(0, 1), tx[1] + random.uniform(0, 1))
+            targets = [tx_float]
             if counter % 100 == 0:
                 print(f'{counter/len(labels)*100}%')
             folder = f'{root_dir}/{counter:06d}'
@@ -157,6 +158,7 @@ class GenerateData:
                     new_tx = random.sample(population, num_tx-1)
                     for ntx in new_tx:
                         ntx = (ntx[0] + random.uniform(0, 1), ntx[1] + random.uniform(0, 1))
+                        targets.append(ntx)
                         for sensor in sensors:
                             dist = Utility.distance_propagation(ntx, (sensor.x, sensor.y)) * Default.cell_length
                             pathloss = self.propagation.pathloss(dist)
@@ -165,7 +167,7 @@ class GenerateData:
                             grid[sensor.x][sensor.y] = Utility.linear2db(Utility.db2linear(exist_rssi) + Utility.db2linear(rssi))
                     population.append(tx)
                 np.save(f'{folder}/{i}.npy', grid.astype(np.float32))
-                np.save(f'{folder}/{i}.target', np.array(tx).astype(np.float32))
+                np.save(f'{folder}/{i}.target', np.array(targets).astype(np.float32))
                 if i == 0:
                     imageio.imwrite(f'{folder}/{tx}.png', grid)
             counter += 1
