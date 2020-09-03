@@ -5,6 +5,7 @@ common utility
 import math
 import os
 import shutil
+import numpy as np
 
 class Utility:
     '''some common utilities'''
@@ -29,3 +30,32 @@ class Utility:
         if os.path.exists(root_dir):
             shutil.rmtree(root_dir)
         os.mkdir(root_dir)
+
+    @staticmethod
+    def db2linear(db: float):
+        '''Transform power from decibel into linear format
+        Args:
+            db -- power in db
+        Return:
+            float -- power in linear form
+        '''
+        try:
+            if db <=-80:
+                return 0
+            linear = np.power(10, db/10)
+            return linear
+        except Exception as e:
+            print(e, db)
+
+    @staticmethod
+    def linear2db(linear: float):
+        '''Transform power from linear into decibel format
+        Args:
+            linear -- power in linear
+        Return:
+            float -- power in decibel
+        '''
+        db = 10 * np.log10(linear)
+        if db < -80 or db is np.nan:
+            db = -80
+        return db

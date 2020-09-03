@@ -86,7 +86,7 @@ class GenerateData:
         self.noise_floor = noise_floor
         self.propagation = Propagation(self.alpha, self.std)
 
-    def log(self, power, cell_percentage, sample_per_label, sensor_file, root_dir):
+    def log(self, power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx):
         '''the meta data of the data
         '''
         with open(root_dir + '.txt', 'w') as f:
@@ -102,8 +102,9 @@ class GenerateData:
             f.write(f'sample per label = {sample_per_label}\n')
             f.write(f'sensor file      = {sensor_file}\n')
             f.write(f'root file        = {root_dir}\n')
+            f.write(f'number of TX     = {num_tx}\n')
 
-    def generate(self, power: float, cell_percentage: float, sample_per_label: int, sensor_file: str, root_dir: str):
+    def generate(self, power: float, cell_percentage: float, sample_per_label: int, sensor_file: str, root_dir: str, num_tx: int):
         '''
         The generated input data is not images, but instead matrix. Because saving as images will loss some accuracy
         Args:
@@ -114,7 +115,7 @@ class GenerateData:
             root_dir         -- the output directory
         '''
         Utility.remove_make(root_dir)
-        self.log(power, cell_percentage, sample_per_label, sensor_file, root_dir)
+        self.log(power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx)
         random.seed(self.seed)
         np.random.seed(self.seed)
         # 1 read the sensor file, do a checking
@@ -137,7 +138,7 @@ class GenerateData:
         counter = 0
         for label in sorted(labels):
             tx = label           # each label create a directory
-            tx = (tx[0] + random.uniform(0, 1), tx[1] + random.uniform(0, 1))
+            tx_float = (tx[0] + random.uniform(0, 1), tx[1] + random.uniform(0, 1))
             if counter % 100 == 0:
                 print(f'{counter/len(labels)*100}%')
             folder = f'{root_dir}/{counter:06d}'
@@ -146,10 +147,23 @@ class GenerateData:
                 grid = np.zeros((self.grid_length, self.grid_length))
                 grid.fill(Default.noise_floor)
                 for sensor in sensors:
-                    dist = Utility.distance_propagation(tx, (sensor.x, sensor.y)) * Default.cell_length
+                    dist = Utility.distance_propagation(tx_float, (sensor.x, sensor.y)) * Default.cell_length
                     pathloss = self.propagation.pathloss(dist)
                     rssi = power - pathloss
                     grid[sensor.x][sensor.y] = rssi if rssi > Default.noise_floor else Default.noise_floor
+                # Do something here
+                if num_tx > 1:
+                    population.remove(tx)
+                    new_tx = random.sample(population, num_tx-1)
+                    for ntx in new_tx:
+                        ntx = (ntx[0] + random.uniform(0, 1), ntx[1] + random.uniform(0, 1))
+                        for sensor in sensors:
+                            dist = Utility.distance_propagation(ntx, (sensor.x, sensor.y)) * Default.cell_length
+                            pathloss = self.propagation.pathloss(dist)
+                            rssi = power - pathloss
+                            exist_rssi = grid[sensor.x][sensor.y]
+                            grid[sensor.x][sensor.y] = Utility.linear2db(Utility.db2linear(exist_rssi) + Utility.db2linear(rssi))
+                    population.append(tx)
                 np.save(f'{folder}/{i}.npy', grid.astype(np.float32))
                 np.save(f'{folder}/{i}.target', np.array(tx).astype(np.float32))
                 if i == 0:
@@ -158,6 +172,10 @@ class GenerateData:
 
 
 if __name__ == '__main__':
+
+    # python generate.py -gd -rd data/matrix-train31 -sl 10 -rs 0
+    # python generate.py -gd -rd data/matrix-train31 -sl 10 -cp 0.1 -rs 0 -nt 2
+    # python generate.py -gd -rd data/matrix-test30 -sl 2 -cp 1 -rs 1 -nt 2
 
     parser = argparse.ArgumentParser(description='Localize multiple transmitters')
 
@@ -174,12 +192,14 @@ if __name__ == '__main__':
     parser.add_argument('-sl', '--sample_per_label', nargs=1, type=int, default=[Default.sample_per_label], help='# of samples per label')
     parser.add_argument('-rd', '--root_dir', nargs=1, type=str, default=[Default.root_dir], help='the root directory for the images')
     parser.add_argument('-nl', '--noise_floor', nargs=1, type=str, default=[Default.noise_floor], help='RSSI cannot be lower than noise floor')
+    parser.add_argument('-nt', '--num_tx', nargs=1, type=int, default=[Default.num_tx], help='number of transmitters')
 
     args = parser.parse_args()
 
     random_seed = args.random_seed[0]
     grid_length = args.grid_length[0]
     sensor_density = args.sensor_density[0]
+    num_tx = args.num_tx[0]
 
     if args.generate_sensor:
         print('generating sensor')
@@ -195,7 +215,7 @@ if __name__ == '__main__':
         root_dir = args.root_dir[0]
         noise_floor = args.noise_floor[0]
 
-        print('generating data')
+        print(f'generating {num_tx} TX data')
 
         gd = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density, noise_floor)
-        gd.generate(power, cell_percentage, sample_per_label, f'data/sensors/{grid_length}-{sensor_density}', root_dir)
+        gd.generate(power, cell_percentage, sample_per_label, f'data/sensors/{grid_length}-{sensor_density}', root_dir, num_tx)

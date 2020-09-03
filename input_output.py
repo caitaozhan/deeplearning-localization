@@ -23,7 +23,7 @@ class Default:
     cell_percentage  = 1
     sample_per_label = 10
     root_dir         = 'data/images-1'  # the root directory of the data
-
+    num_tx           = 1
 
 @dataclass
 class Input:

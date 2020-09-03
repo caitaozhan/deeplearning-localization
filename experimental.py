@@ -216,6 +216,7 @@ def train_test(train, test, num_epoch, net):
 
 if __name__ == '__main__':
     # time.sleep(60*60*2)
+    start = time.time()
     regression = []
     training_dataset = ['matrix-train20', 'matrix-train21', 'matrix-train22', 'matrix-train23', 'matrix-train24']
     testing_dataset  = ['matrix-test20',  'matrix-test20',  'matrix-test20',  'matrix-test20',  'matrix-test20']
@@ -229,3 +230,4 @@ if __name__ == '__main__':
         regression.append(np.mean(tmp, axis=0))
         print(regression)
     np.savetxt('experimental/regression5.txt', np.array(regression), delimiter=',')
+    print('time = {}'.format(time.time() - start))

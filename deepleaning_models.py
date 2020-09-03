@@ -16,7 +16,7 @@ class Net2(nn.Module):
         self.conv1 = nn.Conv2d(1, 8, 5, padding=2)
         self.conv2 = nn.Conv2d(8, 32, 5, padding=2)
         self.conv3 = nn.Conv2d(32, 1, 5, padding=2)
-        
+
     def forward(self, x):
         x = F.relu(self.conv1(x))
         x = F.relu(self.conv2(x))
