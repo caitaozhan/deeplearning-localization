@@ -7,8 +7,9 @@ import torchvision.transforms as T
 
 
 class Net2(nn.Module):
-    '''Net2 is designed for image segmentation, or image to image segmentation
-       The output dimension of the full connnection layer is 100 x 100 = 10000
+    '''Net2 is a image translation based model
+       There is no max pooling layer. Adding some padding. So he dimension remains the same, i.e. (100, 100)
+       The number of channels first increase to 32, then decrease to 1
        Assuming the input image is 1 x 100 x 100
     '''
     def __init__(self):
@@ -26,7 +27,7 @@ class Net2(nn.Module):
 
 class Net3(nn.Module):
     '''Net3 is designed for regression
-       the output of the fully connected layer is 1x2 array
+       the output of the fully connected layer is (2,) array
        assume the input matrix is 1 x 100 x 100
     '''
     def __init__(self):
