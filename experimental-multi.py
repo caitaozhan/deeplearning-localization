@@ -12,6 +12,7 @@ import numpy as np
 import time
 import os
 import glob
+from torch import tensor
 from skimage import io, transform
 from PIL import Image
 from torch.utils.data import Dataset, DataLoader
@@ -23,7 +24,7 @@ import sys
 sys.path.insert(0, '/home/caitao/Project/dl-localization')
 from input_output import Default
 from utility import Utility
-from deepleaning_models import Net3
+from deepleaning_models import NetRegreesion2
 
 
 class MinMaxNormalize:
@@ -49,16 +50,19 @@ class Metrics:
     '''
     @staticmethod
     def localization_error_regression(pred_batch, truth_batch, debug=False):
-        '''euclidian error when modeling the output representation is a matrix (image)\
+        '''euclidian error when modeling the output representation is a matrix (image)
            both pred and truth are batches, typically a batch of 32
         '''
         error = []
         for pred, truth in zip(pred_batch, truth_batch):
+#             print(pred.shape, truth.shape)
+#             pred_x, pred_y = pred[0], pred[1]
+#             true_x, true_y = truth[0], truth[1]
+#             err = Utility.distance((pred_x, pred_y), (true_x, true_y))
+            err = np.dot(pred-truth, pred-truth)/len(pred)
+            error.append(err)
             if debug:
-                print(pred, truth)
-            pred_x, pred_y = pred[0], pred[1]
-            true_x, true_y = truth[0], truth[1]
-            error.append(Utility.distance((pred_x, pred_y), (true_x, true_y)))
+                print('pred', pred, 'truth', truth, 'err', err)
         return error
 
 # data
@@ -112,6 +116,7 @@ class SensorInputDatasetRegression(Dataset):
         '''
         target_file = os.path.join(self.root_dir, folder, target_name)
         target = np.load(target_file)
+        target = np.reshape(target, -1)
         return target.astype(np.float32)
 
     def min_max_normalize(self, target_arr: np.ndarray):
@@ -130,6 +135,60 @@ tf = T.Compose([
      T.ToTensor()
 ])
 
+def match(pred, y):
+    '''
+    Args:
+        pred: Tensor -- (batch size, num tx * 2)
+        y   : Tensor -- (batch size, num tx * 2)
+    '''
+    batch_size = len(pred)
+    dimension  = len(pred[0])
+    pred_m, y_m = torch.zeros((batch_size, dimension)), torch.zeros((batch_size, dimension))
+    for i in range(batch_size):
+        pred2, y2 = [], []   # for one sample
+        for j in range(0, dimension, 2):
+            pred2.append(pred[i][j:j+2])
+            y2.append(y[i][j:j+2])
+        # print('pred2', pred2, '\n', 'y2', y2, '\n')
+        pred2, y2 = match_helper(pred2, y2)
+        # print('pred2', pred2, '\n', 'y2', y2, '\n')
+        pred_m[i] = pred2
+        y_m[i]    = y2
+    return pred_m, y_m
+        
+def match_helper(pred, y):
+    ''' up to now, assume len(pred) and len(y) is equal
+        do a matching of the predictions and truth
+    Args:
+        pred: list<Tensor<float>> -- pairs of locations
+        y   : list<Tensor> -- pairs of locations
+    Return:
+        Tensor<float>, Tensor<float>
+    '''
+    distances = np.zeros((len(pred), len(y)))
+    for i in range(len(pred)):
+        for j in range(len(y)):
+            distances[i, j] = Utility.distance(pred[i], y[j])
+    print(distances)
+
+    matches = []
+    k = 0
+    while k < min(len(pred), len(y)):
+        min_error = np.min(distances)
+        min_error_index = np.argmin(distances)
+        i = min_error_index // len(y)
+        j = min_error_index % len(y)
+        matches.append((i, j, min_error))
+        distances[i, :] = np.inf
+        distances[:, j] = np.inf
+        k += 1
+
+    pred_m, y_m = [], []
+    for i, j, e in matches:
+        pred_m.append(pred[i])
+        y_m.append(y[j])
+
+    return torch.cat(pred_m), torch.cat(y_m)
 
 def train_test(train, test, num_epoch, net):
     '''
@@ -141,11 +200,11 @@ def train_test(train, test, num_epoch, net):
     # training
     train = os.path.join('.', 'data', train)
     sensor_input_dataset = SensorInputDatasetRegression(root_dir = train, grid_len = Default.grid_length, transform = tf)
-    sensor_input_dataloader = DataLoader(sensor_input_dataset, batch_size=32, shuffle=True, num_workers=3)
+    sensor_input_dataloader = DataLoader(sensor_input_dataset, batch_size=32, shuffle=True, num_workers=0)
     # testing
     test = os.path.join('.', 'data', test)
     sensor_input_test_dataset = SensorInputDatasetRegression(root_dir = test, grid_len = Default.grid_length, transform = tf)
-    sensor_input_test_dataloader = DataLoader(sensor_input_test_dataset, batch_size=32, shuffle=True, num_workers=3)
+    sensor_input_test_dataloader = DataLoader(sensor_input_test_dataset, batch_size=32, shuffle=True, num_workers=0)
 
     print(net)
 
@@ -170,6 +229,7 @@ def train_test(train, test, num_epoch, net):
             X = sample['matrix'].to(device)
             y = sample['target'].to(device)
             pred = model(X)
+            pred, y = match(pred, y)
             loss = criterion(pred, y)
             optimizer.zero_grad()
             loss.backward()
@@ -218,14 +278,14 @@ if __name__ == '__main__':
     # time.sleep(60*60*2)
     start = time.time()
     regression = []
-    training_dataset = ['matrix-train20', 'matrix-train21', 'matrix-train22', 'matrix-train23', 'matrix-train24']
-    testing_dataset  = ['matrix-test20',  'matrix-test20',  'matrix-test20',  'matrix-test20',  'matrix-test20']
+    training_dataset = ['matrix-train30', 'matrix-train31', 'matrix-train32', 'matrix-train33', 'matrix-train34']
+    testing_dataset  = ['matrix-test30',  'matrix-test30',  'matrix-test30',  'matrix-test30',  'matrix-test30']
     epoches = [10, 20, 30, 40, 50]
     for train, test, epoch in zip(training_dataset, testing_dataset, epoches):
         tmp = []
         for i in range(3):
             print(train, i)
-            net = Net3()
+            net = NetRegreesion2()
             tmp.append(np.array(train_test(train, test, epoch, net)))
         regression.append(np.mean(tmp, axis=0))
         print(regression)
