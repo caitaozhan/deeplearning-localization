@@ -6,14 +6,14 @@ import torchvision.transforms as T
 
 
 
-class Net2(nn.Module):
-    '''Net2 is a image translation based model
+class NetTranslation(nn.Module):
+    '''NetTranslation is a image translation based model
        There is no max pooling layer. Adding some padding. So he dimension remains the same, i.e. (100, 100)
        The number of channels first increase to 32, then decrease to 1
        Assuming the input image is 1 x 100 x 100
     '''
     def __init__(self):
-        super(Net2, self).__init__()
+        super(NetTranslation, self).__init__()
         self.conv1 = nn.Conv2d(1, 8, 5, padding=2)
         self.conv2 = nn.Conv2d(8, 32, 5, padding=2)
         self.conv3 = nn.Conv2d(32, 1, 5, padding=2)
@@ -25,13 +25,13 @@ class Net2(nn.Module):
         return x
 
 
-class Net3(nn.Module):
-    '''Net3 is designed for regression
+class NetRegression1(nn.Module):
+    '''NetRegression1 is designed for regression
        the output of the fully connected layer is (2,) array
        assume the input matrix is 1 x 100 x 100
     '''
     def __init__(self):
-        super(Net3, self).__init__()
+        super(NetRegression1, self).__init__()
         self.conv1 = nn.Conv2d(1, 8, 5)
         self.conv2 = nn.Conv2d(8, 16, 5)
         self.conv3 = nn.Conv2d(16, 32, 5)

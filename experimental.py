@@ -23,7 +23,7 @@ import sys
 sys.path.insert(0, '/home/caitao/Project/dl-localization')
 from input_output import Default
 from utility import Utility
-from deepleaning_models import Net3
+from deepleaning_models import NetRegression1
 
 
 class MinMaxNormalize:
@@ -225,7 +225,7 @@ if __name__ == '__main__':
         tmp = []
         for i in range(3):
             print(train, i)
-            net = Net3()
+            net = NetRegression1()
             tmp.append(np.array(train_test(train, test, epoch, net)))
         regression.append(np.mean(tmp, axis=0))
         print(regression)

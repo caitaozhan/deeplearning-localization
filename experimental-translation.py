@@ -19,7 +19,7 @@ import sys
 sys.path.insert(0, '/home/caitao/Project/dl-localization')
 from input_output import Default
 from utility import Utility
-from deepleaning_models import Net2
+from deepleaning_models import NetTranslation
 
 
 class MinMaxNormalize:
@@ -263,7 +263,7 @@ if __name__ == '__main__':
     for train, test, epoch in zip(training_dataset, testing_dataset, epoches):
         tmp = []
         for _ in range(2):
-            net = Net2()
+            net = NetTranslation()
             tmp.append(train_test(train, test, epoch, net))
         translation.append(np.mean(tmp, axis=0))
         print(translation)
