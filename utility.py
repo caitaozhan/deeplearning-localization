@@ -176,7 +176,7 @@ class Utility:
         for match in matches:
             error = match[2]
             if error <= distance_threshold:
-                errors.append(error)
+                errors.append(round(error, 4))
                 detected += 1
                 misses.remove(match[0])
                 falses.remove(match[1])
@@ -196,7 +196,7 @@ class Utility:
                 print(pred_locations[false], end=';  ')
             print()
         try:
-            return errors, (len(true_locations) - detected) / len(true_locations), (len(pred_locations) - detected) / len(true_locations)
+            return errors, len(true_locations) - detected, len(pred_locations) - detected
         except:
             return [], 0, 0
 
