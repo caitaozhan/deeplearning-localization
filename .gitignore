@@ -4,3 +4,4 @@ __pycache__
 visualize
 data/*
 *.ipynb_checkpoints
+test.txt

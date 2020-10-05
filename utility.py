@@ -83,27 +83,27 @@ class Utility:
             threshold_mask = image < threshold
             image[threshold_mask] = 0
             neighborhood = np.array([[True for _ in range(size)] for _ in range((size))])
-            #apply the local maximum filter; all pixel of maximal value 
+            #apply the local maximum filter; all pixel of maximal value
             #in their neighborhood are set to 1
             local_max = maximum_filter(image, footprint=neighborhood)==image
-            #local_max is a mask that contains the peaks we are 
+            #local_max is a mask that contains the peaks we are
             #looking for, but also the background.
             #In order to isolate the peaks we must remove the background from the mask.
             #we create the mask of the background
             background = (image < threshold)
-            #a little technicality: we must erode the background in order to 
-            #successfully subtract it form local_max, otherwise a line will 
+            #a little technicality: we must erode the background in order to
+            #successfully subtract it form local_max, otherwise a line will
             #appear along the background border (artifact of the local maximum filter)
             eroded_background = binary_erosion(background, structure=neighborhood, border_value=1)
-            #we obtain the final mask, containing only peaks, 
+            #we obtain the final mask, containing only peaks,
             #by removing the background from the local_max mask (xor operation)
             detected_peaks = local_max ^ eroded_background
-            
+
             memo[size] = detected_peaks
             return detected_peaks
-        
+
         memo = {}
-        size = [20, 15, 10, 5]
+        size = [30, 20, 15, 10, 5]
         peaks = []
         peaks_num = []
         for s in size:               # first pass with coarse grain size
@@ -203,5 +203,5 @@ class Utility:
 
 if __name__ == '__main__':
     pred_image = np.loadtxt('test.txt')
-    peaks = Utility.detect_peak(pred_image, 2.1)
+    peaks = Utility.detect_peak(pred_image, 2)
     print(peaks)
