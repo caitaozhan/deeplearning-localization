@@ -63,7 +63,7 @@ class Utility:
         return db
 
     @staticmethod
-    def detect_peak(image, num_tx: int, threshold=0.05):
+    def detect_peak(image, num_tx: int, threshold=0.05):  # TUNE: a larger threshold will decrease false
         """
         Returns a boolean mask of the peaks (i.e. 1 when
         the pixel's value is the neighborhood maximum, 0 otherwise)
@@ -103,13 +103,15 @@ class Utility:
             return detected_peaks
 
         memo = {}
-        size = [30, 20, 15, 10, 5]
+        size = [40, 30, 20, 15, 10, 5]             # TUNE: a larger size will decrease false
         peaks = []
         peaks_num = []
-        for s in size:               # first pass with coarse grain size
+        for i, s in enumerate(size):               # first pass with coarse grain size
             peaks = detect_helper(s)
             peaks = np.where(peaks == True)
             peaks_num.append(len(peaks[0]))
+            if i == 0 and peaks_num[0] > num_tx:
+                return [(x, y) for x, y in zip(peaks[0], peaks[1])], s
             if len(peaks[0]) == num_tx:
                 return [(x, y) for x, y in zip(peaks[0], peaks[1])], s
         else:
@@ -196,7 +198,7 @@ class Utility:
                 print(pred_locations[false], end=';  ')
             print()
         try:
-            return errors, len(true_locations) - detected, len(pred_locations) - detected
+            return errors, len(true_locations) - detected, len(pred_locations) - detected  # error, miss, false
         except:
             return [], 0, 0
 

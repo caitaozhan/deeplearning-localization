@@ -86,7 +86,7 @@ class GenerateData:
         self.noise_floor = noise_floor
         self.propagation = Propagation(self.alpha, self.std)
 
-    def log(self, power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx):
+    def log(self, power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx, min_dist):
         '''the meta data of the data
         '''
         with open(root_dir + '.txt', 'w') as f:
@@ -103,8 +103,9 @@ class GenerateData:
             f.write(f'sensor file      = {sensor_file}\n')
             f.write(f'root file        = {root_dir}\n')
             f.write(f'number of TX     = {num_tx}\n')
+            f.write(f'min distance     = {min_dist}\n')
 
-    def generate(self, power: float, cell_percentage: float, sample_per_label: int, sensor_file: str, root_dir: str, num_tx: int):
+    def generate(self, power: float, cell_percentage: float, sample_per_label: int, sensor_file: str, root_dir: str, num_tx: int, min_dist: int):
         '''
         The generated input data is not images, but instead matrix. Because saving as images will loss some accuracy
         Args:
@@ -115,7 +116,7 @@ class GenerateData:
             root_dir         -- the output directory
         '''
         Utility.remove_make(root_dir)
-        self.log(power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx)
+        self.log(power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx, min_dist)
         random.seed(self.seed)
         np.random.seed(self.seed)
         # 1 read the sensor file, do a checking
@@ -152,10 +153,12 @@ class GenerateData:
                     pathloss = self.propagation.pathloss(dist)
                     rssi = power - pathloss
                     grid[sensor.x][sensor.y] = rssi if rssi > Default.noise_floor else Default.noise_floor
-                # Do something here
-                if num_tx > 1:
-                    population.remove(tx)
-                    new_tx = random.sample(population, num_tx-1)
+                # the other TX
+                population_set = set(population)
+                num_tx_copy = num_tx
+                while num_tx_copy > 1:
+                    self.update_population(population_set, tx, Default.grid_length, min_dist)
+                    new_tx = random.sample(population_set, 1)
                     for ntx in new_tx:
                         ntx = (ntx[0] + random.uniform(0, 1), ntx[1] + random.uniform(0, 1))
                         targets.append(ntx)
@@ -165,12 +168,24 @@ class GenerateData:
                             rssi = power - pathloss
                             exist_rssi = grid[sensor.x][sensor.y]
                             grid[sensor.x][sensor.y] = Utility.linear2db(Utility.db2linear(exist_rssi) + Utility.db2linear(rssi))
-                    population.append(tx)
+                    num_tx_copy -= 1
                 np.save(f'{folder}/{i}.npy', grid.astype(np.float32))
                 np.save(f'{folder}/{i}.target', np.array(targets).astype(np.float32))
                 if i == 0:
                     imageio.imwrite(f'{folder}/{tx}.png', grid)
             counter += 1
+
+
+    def update_population(self, population_set, intruder, grid_len, min_dist):
+        cur_x = intruder[0]
+        cur_y = intruder[1]
+        for x in range(-min_dist, min_dist+1):
+            for y in range(-min_dist, min_dist+1):
+                nxt_x = cur_x + x
+                nxt_y = cur_y + y
+                if 0 <= nxt_x < grid_len and 0 <= nxt_y < grid_len and Utility.distance(intruder, (nxt_x, nxt_y)) < min_dist:
+                    if (nxt_x, nxt_y) in population_set:
+                        population_set.remove((nxt_x, nxt_y))
 
 
 if __name__ == '__main__':
@@ -195,6 +210,7 @@ if __name__ == '__main__':
     parser.add_argument('-rd', '--root_dir', nargs=1, type=str, default=[Default.root_dir], help='the root directory for the images')
     parser.add_argument('-nl', '--noise_floor', nargs=1, type=str, default=[Default.noise_floor], help='RSSI cannot be lower than noise floor')
     parser.add_argument('-nt', '--num_tx', nargs=1, type=int, default=[Default.num_tx], help='number of transmitters')
+    parser.add_argument('-md', '--min_dist', nargs=1, type=int, default=[Default.min_dist], help='minimum distance between intruders')
 
     args = parser.parse_args()
 
@@ -208,16 +224,17 @@ if __name__ == '__main__':
         GenerateSensors.random(grid_length, sensor_density, random_seed, f'data/sensors-{grid_length}-{sensor_density}')
 
     if args.generate_data:
-        alpha = args.alpha[0]
-        std = args.std[0]
+        alpha       = args.alpha[0]
+        std         = args.std[0]
         cell_length = args.cell_length[0]
-        power = args.power[0]
-        cell_percentage = args.cell_percentage[0]
+        power       = args.power[0]
+        cell_percentage  = args.cell_percentage[0]
         sample_per_label = args.sample_per_label[0]
-        root_dir = args.root_dir[0]
+        root_dir    = args.root_dir[0]
         noise_floor = args.noise_floor[0]
+        min_dist    = args.min_dist[0]
 
         print(f'generating {num_tx} TX data')
 
         gd = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density, noise_floor)
-        gd.generate(power, cell_percentage, sample_per_label, f'data/sensors/{grid_length}-{sensor_density}', root_dir, num_tx)
+        gd.generate(power, cell_percentage, sample_per_label, f'data/sensors/{grid_length}-{sensor_density}', root_dir, num_tx, min_dist)
