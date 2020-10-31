@@ -5,6 +5,7 @@ common utility
 import math
 import os
 import shutil
+import time
 import numpy as np
 from scipy.ndimage.filters import maximum_filter
 from scipy.ndimage.morphology import generate_binary_structure, binary_erosion
@@ -205,5 +206,6 @@ class Utility:
 
 if __name__ == '__main__':
     pred_image = np.loadtxt('test.txt')
+    print(pred_image[1, 3])
     peaks = Utility.detect_peak(pred_image, 2)
     print(peaks)
