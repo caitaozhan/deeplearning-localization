@@ -119,7 +119,7 @@ class Utility:
             new_size = []            # second pass with fine coarse size
             for i in range(len(peaks_num)-1):
                 if peaks_num[i] < num_tx < peaks_num[i+1]:
-                    new_size = list(range(size[i], size[i+1]+1, -1))
+                    new_size = list(range(size[i], size[i+1]-1, -1))
                     break
             else:
                 new_size = [5, 4, 3, 2]
@@ -206,6 +206,6 @@ class Utility:
 
 if __name__ == '__main__':
     pred_image = np.loadtxt('test.txt')
-    print(pred_image[1, 3])
+    # print(pred_image[1, 3])
     peaks = Utility.detect_peak(pred_image, 2)
     print(peaks)
