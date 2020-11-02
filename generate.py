@@ -176,16 +176,27 @@ class GenerateData:
             counter += 1
 
 
-    def update_population(self, population_set, intruder, grid_len, min_dist):
-        cur_x = intruder[0]
-        cur_y = intruder[1]
-        for x in range(-min_dist, min_dist+1):
-            for y in range(-min_dist, min_dist+1):
-                nxt_x = cur_x + x
-                nxt_y = cur_y + y
-                if 0 <= nxt_x < grid_len and 0 <= nxt_y < grid_len and Utility.distance(intruder, (nxt_x, nxt_y)) < min_dist:
-                    if (nxt_x, nxt_y) in population_set:
-                        population_set.remove((nxt_x, nxt_y))
+    def update_population(self, population_set, intruder, grid_len, min_dist=1, max_dist=None):
+        '''Update the population (the TX candidate locations)
+        Args:
+            population_set -- set             -- the TX candidate locations
+            intruder       -- tuple<int, int> -- the new selected TX
+            grid_len       -- int             -- grid length
+            min_dist       -- int             -- minimum distance between two TX. for far away sensors
+            max_dist       -- int             -- maximum distance between two TX. for close by sensors
+        '''
+        if max_dist is None:
+            cur_x = intruder[0]
+            cur_y = intruder[1]
+            for x in range(-min_dist, min_dist+1):
+                for y in range(-min_dist, min_dist+1):
+                    nxt_x = cur_x + x
+                    nxt_y = cur_y + y
+                    if 0 <= nxt_x < grid_len and 0 <= nxt_y < grid_len and Utility.distance(intruder, (nxt_x, nxt_y)) < min_dist:
+                        if (nxt_x, nxt_y) in population_set:
+                            population_set.remove((nxt_x, nxt_y))
+        else:
+            # TODO
 
 
 if __name__ == '__main__':

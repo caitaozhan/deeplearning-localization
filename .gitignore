@@ -5,3 +5,4 @@ visualize
 data/*
 *.ipynb_checkpoints
 test.txt
+.virtual*
