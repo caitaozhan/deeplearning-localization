@@ -25,7 +25,8 @@ class Default:
     root_dir         = 'data/images-1'  # the root directory of the data
     num_tx           = 1
     error_threshold  = 0.2
-    min_dist         = 10
+    min_dist         = 1
+    max_dist         = None
 
 @dataclass
 class Input:
