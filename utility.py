@@ -2,6 +2,7 @@
 common utility
 '''
 
+import torch
 import math
 import os
 import shutil
@@ -9,9 +10,17 @@ import time
 import numpy as np
 from scipy.ndimage.filters import maximum_filter
 from scipy.ndimage.morphology import generate_binary_structure, binary_erosion
+from torch._six import container_abcs, string_classes, int_classes
+import re
+np_str_obj_array_pattern = re.compile(r'[SaUO]')
+default_collate_err_msg_format = (
+    "default_collate: batch must contain tensors, numpy arrays, numbers, "
+    "dicts or lists; found {}")
+
 
 class Utility:
     '''some common utilities'''
+
     @staticmethod
     def distance_propagation(indx2d_1: tuple, indx2d_2: tuple):
         '''euclidean distance for propagation model'''
@@ -115,32 +124,32 @@ class Utility:
                 return [(x, y) for x, y in zip(peaks[0], peaks[1])], s
             if len(peaks[0]) == num_tx:
                 return [(x, y) for x, y in zip(peaks[0], peaks[1])], s
+
+        new_size = []            # second pass with fine coarse size
+        for i in range(len(peaks_num)-1):
+            if peaks_num[i] < num_tx < peaks_num[i+1]:
+                new_size = list(range(size[i], size[i+1]-1, -1))
+                break
         else:
-            new_size = []            # second pass with fine coarse size
-            for i in range(len(peaks_num)-1):
-                if peaks_num[i] < num_tx < peaks_num[i+1]:
-                    new_size = list(range(size[i], size[i+1]-1, -1))
-                    break
-            else:
-                new_size = [5, 4, 3, 2]
-            peaks_num = []
-            for s in new_size:
-                peaks = detect_helper(s)
-                peaks = np.where(peaks == True)
-                peaks_num.append(len(peaks[0]))
-                if len(peaks[0]) == num_tx:
-                    return [(x, y) for x, y in zip(peaks[0], peaks[1])], s
-            else:
-                min_diff = 100
-                min_i = 0
-                for i in range(len(peaks_num)):
-                    diff = abs(num_tx - peaks_num[i])
-                    if diff < min_diff:
-                        min_diff = diff
-                        min_i = i
-                peaks = detect_helper(new_size[min_i])
-                peaks = np.where(peaks == True)
-                return [(x, y) for x, y in zip(peaks[0], peaks[1])], new_size[min_i]
+            new_size = [5, 4, 3, 2]
+        peaks_num = []
+        for s in new_size:
+            peaks = detect_helper(s)
+            peaks = np.where(peaks == True)
+            peaks_num.append(len(peaks[0]))
+            if len(peaks[0]) == num_tx:
+                return [(x, y) for x, y in zip(peaks[0], peaks[1])], s
+
+        min_diff = 100
+        min_i = 0
+        for i in range(len(peaks_num)):
+            diff = abs(num_tx - peaks_num[i])
+            if diff < min_diff:
+                min_diff = diff
+                min_i = i
+        peaks = detect_helper(new_size[min_i])
+        peaks = np.where(peaks == True)
+        return [(x, y) for x, y in zip(peaks[0], peaks[1])], new_size[min_i]
 
 
     @staticmethod
