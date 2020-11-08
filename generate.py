@@ -216,6 +216,8 @@ if __name__ == '__main__':
     # python generate.py -gd -rd data/matrix-train31 -sl 10 -cp 0.1 -rs 0 -nt 2
     # python generate.py -gd -rd data/matrix-test30 -sl 2 -cp 1 -rs 1 -nt 2
 
+    # python generate.py -gd -rd data/matrix-train52 -sl 10 -rs 0 -nt 2 -ntup -mind 1 -maxd 10
+
     parser = argparse.ArgumentParser(description='Localize multiple transmitters')
 
     parser.add_argument('-gs', '--generate_sensor', action='store_true')
