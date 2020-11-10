@@ -216,5 +216,5 @@ class Utility:
 if __name__ == '__main__':
     pred_image = np.loadtxt('test.txt')
     # print(pred_image[1, 3])
-    peaks = Utility.detect_peak(pred_image, 2, 0.1)
+    peaks = Utility.detect_peak(pred_image, 5, 1)
     print(peaks)
