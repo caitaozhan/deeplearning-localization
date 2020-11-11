@@ -144,7 +144,7 @@ class Utility:
         min_i = 0
         for i in range(len(peaks_num)):
             diff = abs(num_tx - peaks_num[i])
-            if diff < min_diff:
+            if diff <= min_diff:
                 min_diff = diff
                 min_i = i
         peaks = detect_helper(new_size[min_i])
