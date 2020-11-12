@@ -145,15 +145,13 @@ class GenerateData:
                 indx += 1
 
         # 2 start from (0, 0), generate data, might skip some locations
-        label_count = int(self.grid_length * self.grid_length * cell_percentage)
-        population = [(i, j) for j in range(self.grid_length) for i in range(self.grid_length)]
+        population = [(i, j) for i in range(self.grid_length) for j in range(self.grid_length) if self.check_edge((i, j), edge)]  # Tx is not at edge
+        label_count = int(len(population)*cell_percentage)
         labels = random.sample(population, label_count)
 
         counter = 0
         for label in sorted(labels):
             tx = label           # each label create a directory
-            if not self.check(tx, edge):
-                continue
             tx_float = (tx[0] + random.uniform(0, 1), tx[1] + random.uniform(0, 1))
             if counter % 100 == 0:
                 print(f'{counter/len(labels)*100}%')
@@ -178,8 +176,6 @@ class GenerateData:
                 while num_tx_copy > 1:   # get one new TX at a time
                     self.update_population(population_set, intru, Default.grid_length, min_dist, max_dist)
                     ntx = random.sample(population_set, 1)[0]
-                    while not self.check(ntx, edge):
-                        ntx = random.sample(population_set, 1)[0]
                     ntx = (ntx[0] + random.uniform(0, 1), ntx[1] + random.uniform(0, 1))  # TX is not at the center of grid cell
                     targets.append(ntx)
                     for sensor in sensors:
@@ -192,8 +188,8 @@ class GenerateData:
                     intru = ntx
                 np.save(f'{folder}/{i}.npy', grid.astype(np.float32))
                 np.save(f'{folder}/{i}.target', np.array(targets).astype(np.float32))
-                if i == 0:
-                    imageio.imwrite(f'{folder}/{tx}.png', grid)
+                # if i == 0:
+                #     imageio.imwrite(f'{folder}/{tx}.png', grid)
             counter += 1
 
 

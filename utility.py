@@ -218,3 +218,6 @@ if __name__ == '__main__':
     # print(pred_image[1, 3])
     peaks = Utility.detect_peak(pred_image, 5, 1)
     print(peaks)
+
+
+# NOTE: there are some cases where predicting num of TX is wrong, but the output peaks are right
