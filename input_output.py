@@ -27,6 +27,7 @@ class Default:
     error_threshold  = 0.2
     min_dist         = 1
     max_dist         = None
+    edge             = 2
 
 @dataclass
 class Input:

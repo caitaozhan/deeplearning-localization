@@ -86,7 +86,7 @@ class GenerateData:
         self.noise_floor = noise_floor
         self.propagation = Propagation(self.alpha, self.std)
 
-    def log(self, power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx, num_tx_upper, min_dist, max_dist):
+    def log(self, power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx, num_tx_upper, min_dist, max_dist, edge):
         '''the meta data of the data
         '''
         with open(root_dir + '.txt', 'w') as f:
@@ -106,8 +106,19 @@ class GenerateData:
             f.write(f'num TX upperbound = {num_tx_upper}\n')
             f.write(f'min distance      = {min_dist}\n')
             f.write(f'max distance      = {max_dist}\n')
+            f.write(f'edge              = {edge}\n')
 
-    def generate(self, power: float, cell_percentage: float, sample_per_label: int, sensor_file: str, root_dir: str, num_tx: int, num_tx_upper: bool, min_dist: int, max_dist: int):
+    def check_edge(self, tx, edge):
+        '''if tx is at the edge, return false
+        Args:
+            tx -- tuple<int, int>
+        '''
+        if edge <= tx[0] < self.grid_length-edge and edge <= tx[1] < self.grid_length-edge:
+            return True
+        return False
+
+    def generate(self, power: float, cell_percentage: float, sample_per_label: int, sensor_file: str,\
+                 root_dir: str, num_tx: int, num_tx_upper: bool, min_dist: int, max_dist: int, edge: int):
         '''
         The generated input data is not images, but instead matrix. Because saving as images will loss some accuracy
         Args:
@@ -118,7 +129,7 @@ class GenerateData:
             root_dir         -- the output directory
         '''
         Utility.remove_make(root_dir)
-        self.log(power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx, num_tx_upper, min_dist, max_dist)
+        self.log(power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx, num_tx_upper, min_dist, max_dist, edge)
         random.seed(self.seed)
         np.random.seed(self.seed)
         # 1 read the sensor file, do a checking
@@ -141,6 +152,8 @@ class GenerateData:
         counter = 0
         for label in sorted(labels):
             tx = label           # each label create a directory
+            if not self.check(tx, edge):
+                continue
             tx_float = (tx[0] + random.uniform(0, 1), tx[1] + random.uniform(0, 1))
             if counter % 100 == 0:
                 print(f'{counter/len(labels)*100}%')
@@ -165,6 +178,8 @@ class GenerateData:
                 while num_tx_copy > 1:   # get one new TX at a time
                     self.update_population(population_set, intru, Default.grid_length, min_dist, max_dist)
                     ntx = random.sample(population_set, 1)[0]
+                    while not self.check(ntx, edge):
+                        ntx = random.sample(population_set, 1)[0]
                     ntx = (ntx[0] + random.uniform(0, 1), ntx[1] + random.uniform(0, 1))  # TX is not at the center of grid cell
                     targets.append(ntx)
                     for sensor in sensors:
@@ -237,6 +252,7 @@ if __name__ == '__main__':
     parser.add_argument('-mind', '--min_dist', nargs=1, type=int, default=[Default.min_dist], help='minimum distance between intruders')
     parser.add_argument('-maxd', '--max_dist', nargs=1, type=int, default=[None], help='maximum distance between intruders')
     parser.add_argument('-ntup', '--num_tx_upbound', action='store_true', help='if yes, then generate [1, ntx] number of TX')
+    parser.add_argument('-ed', '--edge', nargs=1, type=int, default=[Default.edge], help='no TX at the edge')
 
     args = parser.parse_args()
 
@@ -261,8 +277,9 @@ if __name__ == '__main__':
         min_dist    = args.min_dist[0]
         max_dist    = args.max_dist[0]
         num_tx_upbound = args.num_tx_upbound
+        edge        = args.edge[0]
 
         print(f'generating {num_tx} TX data')
 
         gd = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density, noise_floor)
-        gd.generate(power, cell_percentage, sample_per_label, f'data/sensors/{grid_length}-{sensor_density}', root_dir, num_tx, num_tx_upbound, min_dist, max_dist)
+        gd.generate(power, cell_percentage, sample_per_label, f'data/sensors/{grid_length}-{sensor_density}', root_dir, num_tx, num_tx_upbound, min_dist, max_dist, edge)
