@@ -50,8 +50,8 @@ class Input:
             str
         '''
         inputdict = {
-            'num_intruder':self.num_intruder,
             'experiment_num':self.experiment_num,
+            'num_intruder':self.num_intruder,
             'image_index':self.image_index,
             'methods':self.methods,
             'data_source':self.data_source,
@@ -79,8 +79,8 @@ class Input:
             Input
         '''
         myinput = cls([])
-        myinput.num_intruder   = json_dict['num_intruder']
         myinput.experiment_num = json_dict['experiment_num']
+        myinput.num_intruder   = json_dict['num_intruder']
         myinput.image_index    = json_dict['image_index']
         myinput.methods        = json_dict['methods']
         myinput.data_source    = json_dict['data_source']
@@ -109,6 +109,8 @@ class Output:
         Return:
             str
         '''
+        self.preds = [(round(x, 2), round(y, 2)) for x, y in self.preds]
+        self.time = round(self.time, 3)
         outputdict = {
             "method":self.method,
             "error":self.error,
@@ -117,7 +119,7 @@ class Output:
             "preds":self.preds,
             "time":self.time
         }
-        return outputdict
+        return json.dumps(outputdict)
 
     @classmethod
     def from_json_str(cls, json_str):
@@ -145,3 +147,6 @@ class Output:
         preds = json_dict['preds']
         time = json_dict['time']
         return cls(method, error, false_alarm, miss, preds, time)
+
+    def log(self):
+        return self.to_json_str()
