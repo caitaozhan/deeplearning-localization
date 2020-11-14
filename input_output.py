@@ -2,7 +2,7 @@
 Encapsulate the input, output variables, as well as some default configurations
 '''
 from dataclasses import dataclass
-from typing import List
+from typing import List, Dict
 import json
 
 
@@ -90,6 +90,34 @@ class Input:
     def log(self):
         '''log'''
         return self.to_json_str()
+
+
+@dataclass
+class IpsnInput:
+    '''input data of IPSN20 localization method
+    '''
+    ground_truth: Dict
+    sensor_data:  Dict
+
+    def to_json_str(self):
+        '''return json formated string
+        Return:
+            str
+        '''
+        outputdict = {
+            "ground_truth": self.ground_truth,
+            "sensor_data":  self.sensor_data
+        }
+        return json.dumps(outputdict)
+
+    @classmethod
+    def from_file(cls, file):
+        '''init from a file
+        '''
+        with open(file, 'r') as f:
+            line = f.readline()
+            json_dict = json.loads(line)
+            return cls(json_dict['ground_truth'], json_dict['sensor_data'])
 
 
 @dataclass

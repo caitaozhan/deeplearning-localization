@@ -90,7 +90,7 @@ if __name__ == 'server':
     output_dir = f'result/{date}'
     output_file = 'log'
     server = Server(output_dir, output_file)
-    
+
     max_ntx = 5
     path1 = 'model/model1-11.12.pt'
     path2 = 'model/model2-11.12-2.pt'
@@ -105,7 +105,7 @@ if __name__ == 'server':
     model1.eval()
     model2.eval()
     print('process time', time.process_time())
-    
+
 
 
 

@@ -11,7 +11,7 @@ import argparse
 import os
 from visualize import Visualize
 from propagation import Propagation
-from input_output import Default
+from input_output import Default, IpsnInput
 from node import Sensor
 from utility import Utility
 
@@ -188,9 +188,72 @@ class GenerateData:
                     intru = ntx
                 np.save(f'{folder}/{i}.npy', grid.astype(np.float32))
                 np.save(f'{folder}/{i}.target', np.array(targets).astype(np.float32))
+                if not args.train:  # when generating testing data, args.train == False
+                    self.save_ipsn_input(grid, targets, power,  sensors, f'{folder}/{i}.json')
                 # if i == 0:
                 #     imageio.imwrite(f'{folder}/{tx}.png', grid)
             counter += 1
+
+
+    def save_ipsn_input(self, grid, targets, power, sensors, output_file):
+        '''
+        Args:
+            grid        -- np.ndarray, n = 2
+            targets     -- list<tuple<float, float>>
+            power       -- int                        -- power of the TX, currently fixed
+            sensors     -- list<Sensors>
+            output_file -- str
+        '''
+        tx_data = {}
+        for i, tx in enumerate(targets):
+            tx_data[str(i)] = {
+                "location": (round(tx[0], 3), round(tx[1], 3)),
+                "gain": power
+            }
+        sensor_data = {}
+        for i, sen in enumerate(sensors):
+            sensor_data[str(i)] = round(grid[sen.x][sen.y], 3)
+        ipsn_input = IpsnInput(tx_data, sensor_data)
+        with open(output_file, 'w') as f:
+            f.write(ipsn_input.to_json_str())
+
+
+    def generate_ipsn(self, power: str, sensor_file: str, root_dir: str):
+        '''generate the training data for the IPSN20 localization algorithm
+        '''
+        # sensors
+        Utility.remove_make(root_dir)
+        sensors = []
+        with open(sensor_file, 'r') as f, open(root_dir + '/sensors', 'w') as f_out:
+            indx = 0
+            for line in f:
+                x, y = line.split()
+                f_out.write('{} {} {} {}\n'.format(x, y, 1, 1))  # uniform cost
+                sensors.append(Sensor(int(x), int(y), indx))
+                indx += 1
+
+        # covariance matrix
+        sen_num = len(sensors)
+        with open(root_dir + '/cov', 'w') as f:
+            cov = np.zeros((sen_num, sen_num))
+            for i in range(sen_num):
+                for j in range(sen_num):
+                    if i == j:
+                        cov[i, j] = 1   # assume the std is 1
+                    f.write('{} '.format(cov[i, j]))
+                f.write('\n')
+
+        # hypothesis
+        total_loc = self.grid_length*self.grid_length
+        with open(root_dir + '/hypothesis', 'w') as f:
+            for tx_1dindex in range(total_loc):
+                t_x = tx_1dindex // self.grid_length
+                t_y = tx_1dindex % self.grid_length
+                for sen in sensors:
+                    dist = Utility.distance_propagation((t_x, t_y), (sen.x, sen.y)) * Default.cell_length
+                    pathloss = self.propagation.pathloss(dist)
+                    f.write('{} {} {} {} {:.2f} {}\n'.format(t_x, t_y, sen.x, sen.y, power - pathloss, 1))
+
 
 
     def update_population(self, population_set, intruder, grid_len, min_dist, max_dist):
@@ -233,6 +296,7 @@ if __name__ == '__main__':
 
     parser.add_argument('-gs', '--generate_sensor', action='store_true')
     parser.add_argument('-gd', '--generate_data', action='store_true')
+    parser.add_argument('-train', '--train', action='store_true')
     parser.add_argument('-al', '--alpha', nargs=1, type=float, default=[Default.alpha], help='the slope of pathloss')
     parser.add_argument('-st', '--std', nargs=1, type=float, default=[Default.std], help='the standard deviation zero mean Guassian')
     parser.add_argument('-gl', '--grid_length', nargs=1, type=int, default=[Default.grid_length], help='the length of the grid')
@@ -279,3 +343,7 @@ if __name__ == '__main__':
 
         gd = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density, noise_floor)
         gd.generate(power, cell_percentage, sample_per_label, f'data/sensors/{grid_length}-{sensor_density}', root_dir, num_tx, num_tx_upbound, min_dist, max_dist, edge)
+
+    if args.train:  # only in training dataset
+        gd.generate_ipsn(power, f'data/sensors/{grid_length}-{sensor_density}-ipsn', root_dir)
+        # the relationship between the deep learning root_dir and the ipsn root_dir is a difference of "-ipsn" suffix
