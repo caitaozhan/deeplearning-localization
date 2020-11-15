@@ -252,7 +252,7 @@ class GenerateData:
                 for sen in sensors:
                     dist = Utility.distance_propagation((t_x, t_y), (sen.x, sen.y)) * Default.cell_length
                     pathloss = self.propagation.pathloss(dist)
-                    f.write('{} {} {} {} {:.2f} {}\n'.format(t_x, t_y, sen.x, sen.y, power - pathloss, 1))
+                    f.write('{} {} {} {} {:.3f} {}\n'.format(t_x, t_y, sen.x, sen.y, power - pathloss, 1))
 
 
 
@@ -345,5 +345,6 @@ if __name__ == '__main__':
         gd.generate(power, cell_percentage, sample_per_label, f'data/sensors/{grid_length}-{sensor_density}', root_dir, num_tx, num_tx_upbound, min_dist, max_dist, edge)
 
     if args.train:  # only in training dataset
-        gd.generate_ipsn(power, f'data/sensors/{grid_length}-{sensor_density}-ipsn', root_dir)
+        root_dir += '-ipsn'
+        gd.generate_ipsn(power, f'data/sensors/{grid_length}-{sensor_density}', root_dir)
         # the relationship between the deep learning root_dir and the ipsn root_dir is a difference of "-ipsn" suffix

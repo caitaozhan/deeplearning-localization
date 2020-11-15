@@ -178,3 +178,29 @@ class Output:
 
     def log(self):
         return self.to_json_str()
+
+
+@dataclass
+class DataInfo:
+    '''the data set used for training and testing
+    '''
+    test_data: str
+    train_data: str
+    ipsn_cov: str
+    ipsn_sensors: str
+    ipsn_hypothesis: str
+    dl_model1: str     # image translation
+    dl_model2: str     # predict num of TX
+
+    @classmethod
+    def naive_factory(cls, data_source):
+        '''factory'''
+        if data_source == 'data/60test':
+            test_data = 'data/60test'
+            train_data = 'data/60train'
+            ipsn_cov = 'data/60train-ipsn/cov'
+            ipsn_sensors = 'data/60train-ipsn/sensors'
+            ipsn_hypothesis = 'data/60train-ipsn/hypothesis'
+            dl_model1 = 'model/model1-11.12.pt'
+            dl_model2 = 'model/model2-11.12-2.pt'
+            return cls(test_data, train_data, ipsn_cov, ipsn_sensors, ipsn_hypothesis, dl_model1, dl_model2)
