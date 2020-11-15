@@ -204,3 +204,31 @@ class DataInfo:
             dl_model1 = 'model/model1-11.12.pt'
             dl_model2 = 'model/model2-11.12-2.pt'
             return cls(test_data, train_data, ipsn_cov, ipsn_sensors, ipsn_hypothesis, dl_model1, dl_model2)
+
+
+class IOUtility:
+    '''input/output utility'''
+    @staticmethod
+    def read_logs(logs):
+        '''reading logs
+        Args:
+            logs -- list<str> -- a list of filenames
+        Return:
+            data -- list<(Input, dic{str:Output}>
+        '''
+        data = []
+        for log in logs:
+            f = open(log, 'r')
+            while True:
+                line = f.readline()
+                if line == '':
+                    break
+                myinput = Input.from_json_str(line)
+                output_by_method = {}
+                line = f.readline()
+                while line != '' and line != '\n':
+                    output = Output.from_json_str(line)
+                    output_by_method[output.method] = output
+                    line = f.readline()
+                data.append((myinput, output_by_method))
+        return data
