@@ -23,6 +23,10 @@ class GenerateSensors:
     def random(cls, grid_length: int, sensor_density: int, seed: int, filename: str):
         '''randomly generate some sensors in a grid
         '''
+        print('grid_length', grid_length)
+        print('sensor density', sensor_density)
+        print('seed', seed)
+        print('filename', filename)
         random.seed(seed)
         all_sensors = list(range(grid_length * grid_length))
         subset_sensors = random.sample(all_sensors, sensor_density)
@@ -290,7 +294,7 @@ if __name__ == '__main__':
     # python generate.py -gd -rd data/matrix-train31 -sl 10 -cp 0.1 -rs 0 -nt 2
     # python generate.py -gd -rd data/matrix-test30 -sl 2 -cp 1 -rs 1 -nt 2
 
-    # python generate.py -gd -rd data/matrix-train52 -sl 10 -rs 0 -nt 2 -ntup -mind 1 -maxd 10
+    # python generate.py -gd -rd data/61test -sl 2 rs 100 -nt 5 -ntup -mind 1
 
     parser = argparse.ArgumentParser(description='Localize multiple transmitters')
 
@@ -323,7 +327,7 @@ if __name__ == '__main__':
 
     if args.generate_sensor:
         print('generating sensor')
-        GenerateSensors.random(grid_length, sensor_density, random_seed, f'data/sensors-{grid_length}-{sensor_density}')
+        GenerateSensors.random(grid_length, sensor_density, random_seed, f'data/sensors/{grid_length}-{sensor_density}-{random_seed}')
 
     if args.generate_data:
         alpha       = args.alpha[0]
@@ -342,9 +346,17 @@ if __name__ == '__main__':
         print(f'generating {num_tx} TX data')
 
         gd = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density, noise_floor)
-        gd.generate(power, cell_percentage, sample_per_label, f'data/sensors/{grid_length}-{sensor_density}', root_dir, num_tx, num_tx_upbound, min_dist, max_dist, edge)
+        gd.generate(power, cell_percentage, sample_per_label, f'data/sensors/{grid_length}-{sensor_density}-{random_seed}', root_dir, num_tx, num_tx_upbound, min_dist, max_dist, edge)
 
     if args.train:  # only in training dataset
+        # python generate.py -train -rd data/61train -sl 2 -rs 100 -nt 5 -ntup -mind 1
+        root_dir    = args.root_dir[0]
+        power       = args.power[0]
+        alpha       = args.alpha[0]
+        std         = args.std[0]
+        cell_length = args.cell_length[0]
+        noise_floor = args.noise_floor[0]
         root_dir += '-ipsn'
-        gd.generate_ipsn(power, f'data/sensors/{grid_length}-{sensor_density}', root_dir)
+        gd = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density, noise_floor)
+        gd.generate_ipsn(power, f'data/sensors/{grid_length}-{sensor_density}-{random_seed}', root_dir)
         # the relationship between the deep learning root_dir and the ipsn root_dir is a difference of "-ipsn" suffix

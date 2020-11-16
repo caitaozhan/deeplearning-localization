@@ -46,7 +46,7 @@ if __name__ == '__main__':
     sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=data_source, transform=mydnn_util.tf)
     total = sensor_input_dataset.__len__()
     myrange = range(experimemts[0], experimemts[1])
-    random.seed(0)
+    random.seed(1)
     index = random.sample(range(total), len(myrange))
     # index = get_index_from_log('result/11.14/log')
 

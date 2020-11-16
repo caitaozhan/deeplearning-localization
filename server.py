@@ -208,7 +208,7 @@ if __name__ == 'server':
 
 if __name__ == '__main__':
 
-    hint = 'python server.py -src data/60test'
+    hint = 'python server.py -src data/61test'
     parser = argparse.ArgumentParser(description='Server side. ' + hint)
     parser.add_argument('-src', '--data_source', type=str,  nargs=1, default=[None], help='the testing data source')
     args = parser.parse_args()
@@ -217,9 +217,9 @@ if __name__ == '__main__':
 
     data = DataInfo.naive_factory(data_source=data_source)
     # 1: init server utilities
-    date = '11.15'
+    date = '11.15'                                                 # 1
     output_dir = f'result/{date}'
-    output_file = 'log'
+    output_file = 'log-differentsensor'                            # 2
     server = Server(output_dir, output_file)
 
     # 2: init deep learning model
@@ -239,8 +239,9 @@ if __name__ == '__main__':
 
     # 3: init IPSN20
     grid_len = 100
+    debug = False                                                   # 3
     case = 'lognormal2'
-    ll = Localization(grid_len=grid_len, case=case, debug=False)
+    ll = Localization(grid_len=grid_len, case=case, debug=debug)
     ll.init_data(data.ipsn_cov, data.ipsn_sensors, data.ipsn_hypothesis, None)
     print('process time:', time.process_time())
 
