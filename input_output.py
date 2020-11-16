@@ -4,6 +4,7 @@ Encapsulate the input, output variables, as well as some default configurations
 from dataclasses import dataclass
 from typing import List, Dict
 import json
+import numpy as np
 
 
 @dataclass
@@ -125,12 +126,24 @@ class Output:
     '''encapsulate the output variables
     '''
     method: List[str]
-    error: List            # error of the detected TX
+    error: List[float]            # error of the detected TX
     false_alarm: int
     miss: int
     preds: List
     time: float
 
+    def get_metric(self, metric):
+        '''get the evaluation metrics'''
+        if metric == 'error':
+            return round(np.mean(self.error), 3)
+        elif metric == 'miss':
+            return self.miss
+        elif metric == 'false_alarm':
+            return self.false_alarm
+        elif metric == 'time':
+            return self.time
+        else:
+            raise Exception('unknown metrics')
 
     def to_json_str(self):
         '''return json formated string

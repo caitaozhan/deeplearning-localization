@@ -8,9 +8,24 @@ from input_output import Input
 from input_output import Default
 import mydnn_util
 
+
+def get_index_from_log(log: str):
+    '''for repeating experiments
+    '''
+    index = []
+    with open(log, 'r') as f:
+        for line in f:
+            try:
+                myinput = Input.from_json_str(line)
+                index.append(myinput.image_index)
+            except:
+                pass
+    return index
+
+
 if __name__ == '__main__':
 
-    hint = 'python client.py -num 5 -met dl -idx 0'
+    hint = 'python client.py -exp 0 1 -met dl map -src data/60test'
 
     parser = argparse.ArgumentParser(description='client side | hint:' + hint)
     parser.add_argument('-exp', '--exp_number', type=int, nargs='+', default=[0, 10], help='number of experiments to repeat')
@@ -31,7 +46,10 @@ if __name__ == '__main__':
     sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=data_source, transform=mydnn_util.tf)
     total = sensor_input_dataset.__len__()
     myrange = range(experimemts[0], experimemts[1])
+    random.seed(0)
     index = random.sample(range(total), len(myrange))
+    # index = get_index_from_log('result/11.14/log')
+
     for i, idx in zip(myrange, index):
         print(i, idx, end=' ')
         myinput.experiment_num = i

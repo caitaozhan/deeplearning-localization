@@ -74,6 +74,9 @@ def localize():
     if 'dtxf' in myinput.methods:
         pass
 
+    if 'shahrokh' in myinput.methods:
+        pass
+
     server.log(myinput, outputs)
     return 'hello world'
 
@@ -214,7 +217,7 @@ if __name__ == '__main__':
 
     data = DataInfo.naive_factory(data_source=data_source)
     # 1: init server utilities
-    date = '11.14'
+    date = '11.15'
     output_dir = f'result/{date}'
     output_file = 'log'
     server = Server(output_dir, output_file)
