@@ -2,6 +2,7 @@
 '''
 
 import argparse
+import time
 import random
 from subprocess import PIPE, Popen
 from input_output import Input
@@ -49,9 +50,9 @@ if __name__ == '__main__':
     random.seed(1)
     index = random.sample(range(total), len(myrange))
     # index = get_index_from_log('result/11.14/log')
-
+    print(len(myrange), len(index))
     for i, idx in zip(myrange, index):
-        print(i, idx, end=' ')
+        print(i, idx)
         myinput.experiment_num = i
         myinput.image_index = idx
         myinput.num_intruder = sensor_input_dataset[idx]['target_num']

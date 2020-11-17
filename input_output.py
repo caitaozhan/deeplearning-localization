@@ -224,7 +224,7 @@ class DataInfo:
             ipsn_sensors = 'data/61train-ipsn/sensors'
             ipsn_hypothesis = 'data/61train-ipsn/hypothesis'
             dl_model1 = 'model/model1-11.12.pt'
-            dl_model2 = 'model/model2-11.12-2.pt'
+            dl_model2 = 'model/model2-11.16-2.pt'
             return cls(test_data, train_data, ipsn_cov, ipsn_sensors, ipsn_hypothesis, dl_model1, dl_model2)
 
 

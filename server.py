@@ -10,7 +10,7 @@ import json
 import numpy as np
 from flask import Flask, request
 from dataclasses import dataclass
-from mydnn import NetTranslation, NetNumTx
+from mydnn import NetTranslation, NetNumTx, NetNumTx2
 import mydnn_util
 import myplots
 from input_output import Input, Output, Default, DataInfo
@@ -217,7 +217,7 @@ if __name__ == '__main__':
 
     data = DataInfo.naive_factory(data_source=data_source)
     # 1: init server utilities
-    date = '11.15'                                                 # 1
+    date = '11.16'                                                 # 1
     output_dir = f'result/{date}'
     output_file = 'log-differentsensor'                            # 2
     server = Server(output_dir, output_file)
@@ -230,7 +230,7 @@ if __name__ == '__main__':
     model1 = NetTranslation()
     model1.load_state_dict(torch.load(path1))
     model1 = model1.to(device)
-    model2 = NetNumTx(max_ntx)
+    model2 = NetNumTx2(max_ntx)
     model2.load_state_dict(torch.load(path2))
     model2.to(device)
     model2 = model2.to(device)
