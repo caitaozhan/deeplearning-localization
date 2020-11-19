@@ -145,6 +145,12 @@ class Output:
         else:
             raise Exception('unknown metrics')
 
+    def get_pred_len(self):
+        '''Get the number of predicted TX
+        '''
+        size = len(self.preds)
+        return size if size != 0 else 1  # if len(self.preds) equals 0, then the false alarm rate will be zero anyway because the false alarm (numerator is 0)
+
     def to_json_str(self):
         '''return json formated string
         Return:
