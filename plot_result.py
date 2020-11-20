@@ -24,7 +24,7 @@ class PlotResults:
 
 
 def test():
-    logs = ['result/11.19/log-differentsensor2']
+    logs = ['result/11.19/log-differentsensor']
     data = IOUtility.read_logs(logs)
     methods = ['dl', 'dl2', 'map']
     table = defaultdict(list)
