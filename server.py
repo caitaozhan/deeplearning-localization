@@ -64,7 +64,7 @@ def localize():
         pred_ntx = (pred_ntx + 1).numpy()
         preds, errors, misses, falses = mydnn_util.Metrics.localization_error_image_continuous(pred_matrix.copy(), pred_ntx, y_f, indx, Default.grid_length, peak_threshold=1, debug=True)
         end = time.time()
-        outputs.append(Output('dl', errors[0], falses[0], misses[0], preds[0], end-start))
+        outputs.append(Output('dl2', errors[0], falses[0], misses[0], preds[0], end-start))
 
     if 'map' in myinput.methods:
         json_dict = server.get_json_dict(myinput.image_index, sensor_input_dataset)
@@ -184,41 +184,41 @@ class Server:
         return pred_center
 
 
-if __name__ == 'server':
+# if __name__ == 'server':
 
-    hint = 'python server.py -src data/60test'
-    parser = argparse.ArgumentParser(description='Server side. ' + hint)
-    parser.add_argument('-src', '--data_source', type=str,  nargs=1, default=[None], help='the testing data source')
-    args = parser.parse_args()
+    # hint = 'python server.py -src data/60test'
+    # parser = argparse.ArgumentParser(description='Server side. ' + hint)
+    # parser.add_argument('-src', '--data_source', type=str,  nargs=1, default=[None], help='the testing data source')
+    # args = parser.parse_args()
 
-    data_source = args.data_source[0]
+    # data_source = args.data_source[0]
 
-    data = DataInfo.naive_factory(data_source=data_source)
-    # 1: init server utilities
-    date = '11.13'
-    output_dir = f'result/{date}'
-    output_file = 'log'
-    server = Server(output_dir, output_file)
+    # data = DataInfo.naive_factory(data_source=data_source)
+    # # 1: init server utilities
+    # date = '11.13'
+    # output_dir = f'result/{date}'
+    # output_file = 'log'
+    # server = Server(output_dir, output_file)
 
-    # 2: init deep learning model
-    # max_ntx = 5
-    # path1 = data.dl_model1
-    # path2 = data.dl_model2
-    # device = torch.device('cuda')
-    # model1 = NetTranslation()
-    # model1.load_state_dict(torch.load(path1))
-    # model1 = model1.to(device)
-    # model2 = NetNumTx(max_ntx)
-    # model2.load_state_dict(torch.load(path2))
-    # model2.to(device)
-    # model2 = model2.to(device)
-    # model1.eval()
-    # model2.eval()
-    # print('process time', time.process_time())
+    # # 2: init deep learning model
+    # # max_ntx = 5
+    # # path1 = data.dl_model1
+    # # path2 = data.dl_model2
+    # # device = torch.device('cuda')
+    # # model1 = NetTranslation()
+    # # model1.load_state_dict(torch.load(path1))
+    # # model1 = model1.to(device)
+    # # model2 = NetNumTx(max_ntx)
+    # # model2.load_state_dict(torch.load(path2))
+    # # model2.to(device)
+    # # model2 = model2.to(device)
+    # # model1.eval()
+    # # model2.eval()
+    # # print('process time', time.process_time())
 
-    # 3: init IPSN20
-    ll = Localization(data.ipsn_cov, data.ipsn_sensors, data.ipsn_hypothesis, None)
-    print('caitao')
+    # # 3: init IPSN20
+    # ll = Localization(data.ipsn_cov, data.ipsn_sensors, data.ipsn_hypothesis, None)
+    # print('caitao')
 
 
 if __name__ == '__main__':
