@@ -93,3 +93,40 @@ class NetNumTx2(nn.Module):
         for s in size:
             num_features *= s
         return num_features
+
+
+class NetNumTx3(nn.Module):
+    """this CNN predicts # of TX """
+
+    def __init__(self, max_ntx):
+        super(NetNumTx3, self).__init__()
+        self.conv1 = nn.Conv2d(1, 2, 3, padding=1)
+        self.conv2 = nn.Conv2d(2, 4, 3, padding=1)
+        self.conv3 = nn.Conv2d(4, 8, 3, padding=1)
+        self.conv4 = nn.Conv2d(8, 16, 3, padding=1)
+        self.conv5 = nn.Conv2d(16, 16, 3, padding=1)
+        self.norm1 = nn.GroupNorm(1, 2)
+        self.norm2 = nn.GroupNorm(2, 4)
+        self.norm3 = nn.GroupNorm(4, 8)
+        self.norm4 = nn.GroupNorm(8, 16)
+        self.norm5 = nn.GroupNorm(8, 16)
+        self.fc1 = nn.Linear(144, 8)
+        self.fc2 = nn.Linear(8, max_ntx)
+
+    def forward(self, x):
+        x = F.max_pool2d(F.relu(self.norm1(self.conv1(x))), 2)
+        x = F.max_pool2d(F.relu(self.norm2(self.conv2(x))), 2)
+        x = F.max_pool2d(F.relu(self.norm3(self.conv3(x))), 2)
+        x = F.max_pool2d(F.relu(self.norm4(self.conv4(x))), 2)
+        x = F.max_pool2d(F.relu(self.norm5(self.conv5(x))), 2)
+        x = x.view(-1, self.num_flat_features(x))
+        x = F.relu(self.fc1(x))
+        y = self.fc2(x)
+        return y
+
+    def num_flat_features(self, x):
+        size = x.size()[1:]
+        num_features = 1
+        for s in size:
+            num_features *= s
+        return num_features

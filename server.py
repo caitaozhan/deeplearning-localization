@@ -10,7 +10,7 @@ import json
 import numpy as np
 from flask import Flask, request
 from dataclasses import dataclass
-from mydnn import NetTranslation, NetNumTx, NetNumTx2
+from mydnn import NetTranslation, NetNumTx, NetNumTx2, NetNumTx3
 import mydnn_util
 import myplots
 from input_output import Input, Output, Default, DataInfo
@@ -36,7 +36,7 @@ def localize():
     myinput = Input.from_json_dict(request.get_json())
     sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=myinput.data_source, transform=mydnn_util.tf)
     outputs = []
-    if 'dl' in myinput.methods:
+    if 'dl' in myinput.methods:  # two CNN completely parallel
         sample = sensor_input_dataset[myinput.image_index]
         X      = torch.as_tensor(sample['matrix']).unsqueeze(0).to(device)
         y_f    = np.expand_dims(sample['target_float'], 0)
@@ -44,6 +44,21 @@ def localize():
         start = time.time()
         pred_matrix = model1(X)
         pred_ntx    = model2(X)
+        pred_matrix = pred_matrix.data.cpu().numpy()
+        _, pred_ntx = pred_ntx.data.cpu().max(1)
+        pred_ntx = (pred_ntx + 1).numpy()
+        preds, errors, misses, falses = mydnn_util.Metrics.localization_error_image_continuous(pred_matrix.copy(), pred_ntx, y_f, indx, Default.grid_length, peak_threshold=1, debug=True)
+        end = time.time()
+        outputs.append(Output('dl', errors[0], falses[0], misses[0], preds[0], end-start))
+
+    if 'dl2' in myinput.methods:  # two CNN in sequence
+        sample = sensor_input_dataset[myinput.image_index]
+        X      = torch.as_tensor(sample['matrix']).unsqueeze(0).to(device)
+        y_f    = np.expand_dims(sample['target_float'], 0)
+        indx   = np.expand_dims(np.array(sample['index']), 0)
+        start = time.time()
+        pred_matrix = model1(X)
+        pred_ntx    = model3(pred_matrix)
         pred_matrix = pred_matrix.data.cpu().numpy()
         _, pred_ntx = pred_ntx.data.cpu().max(1)
         pred_ntx = (pred_ntx + 1).numpy()
@@ -217,7 +232,7 @@ if __name__ == '__main__':
 
     data = DataInfo.naive_factory(data_source=data_source)
     # 1: init server utilities
-    date = '11.16'                                                 # 1
+    date = '11.19'                                                 # 1
     output_dir = f'result/{date}'
     output_file = 'log-differentsensor'                            # 2
     server = Server(output_dir, output_file)
@@ -226,16 +241,24 @@ if __name__ == '__main__':
     max_ntx = 5
     path1 = data.dl_model1
     path2 = data.dl_model2
+    path3 = data.dl_model3
     device = torch.device('cuda')
+
     model1 = NetTranslation()
     model1.load_state_dict(torch.load(path1))
     model1 = model1.to(device)
+    model1.eval()
+
     model2 = NetNumTx2(max_ntx)
     model2.load_state_dict(torch.load(path2))
-    model2.to(device)
     model2 = model2.to(device)
-    model1.eval()
     model2.eval()
+
+    model3 = NetNumTx3(max_ntx)
+    model3.load_state_dict(torch.load(path3))
+    model3 = model3.to(device)
+    model3.eval()
+
 
     # 3: init IPSN20
     grid_len = 100

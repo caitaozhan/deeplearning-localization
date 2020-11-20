@@ -1,0 +1,70 @@
+{"experiment_num": 0, "num_intruder": 3, "image_index": 4402, "methods": ["dl", "dl2", "map"], "data_source": "data/61test", "sensor_density": 500}
+{"method": "dl", "error": [0.6586, 0.685, 0.9987], "false_alarm": 0, "miss": 0, "preds": [[14.76, 95.18], [22.5, 11.33], [23.59, 92.34]], "time": 0.208}
+{"method": "dl", "error": [0.6586, 0.685, 0.9987], "false_alarm": 0, "miss": 0, "preds": [[14.76, 95.18], [22.5, 11.33], [23.59, 92.34]], "time": 0.045}
+{"method": "map", "error": [0.5459, 0.936, 1.1394], "false_alarm": 1, "miss": 0, "preds": [[22.5, 10.5], [24.5, 92.5], [15.5, 94.5], [17.5, 96.5]], "time": 11.072}
+
+{"experiment_num": 1, "num_intruder": 3, "image_index": 2067, "methods": ["dl", "dl2", "map"], "data_source": "data/61test", "sensor_density": 500}
+{"method": "dl", "error": [0.3974, 0.5104, 0.5158], "false_alarm": 0, "miss": 0, "preds": [[12.48, 75.38], [13.49, 90.54], [78.48, 57.35]], "time": 0.035}
+{"method": "dl", "error": [0.3974, 0.5104, 0.5158], "false_alarm": 0, "miss": 0, "preds": [[12.48, 75.38], [13.49, 90.54], [78.48, 57.35]], "time": 0.037}
+{"method": "map", "error": [0.6338, 1.0015, 1.0088], "false_alarm": 0, "miss": 0, "preds": [[78.5, 57.5], [13.5, 75.5], [14.5, 91.5]], "time": 13.589}
+
+{"experiment_num": 2, "num_intruder": 2, "image_index": 8358, "methods": ["dl", "dl2", "map"], "data_source": "data/61test", "sensor_density": 500}
+{"method": "dl", "error": [0.2392, 0.4977], "false_alarm": 0, "miss": 0, "preds": [[45.38, 53.45], [66.37, 92.4]], "time": 0.025}
+{"method": "dl", "error": [0.2392, 0.4977], "false_alarm": 0, "miss": 0, "preds": [[45.38, 53.45], [66.37, 92.4]], "time": 0.026}
+{"method": "map", "error": [0.641, 1.1695], "false_alarm": 0, "miss": 0, "preds": [[46.5, 53.5], [66.5, 92.5]], "time": 13.847}
+
+{"experiment_num": 3, "num_intruder": 3, "image_index": 3863, "methods": ["dl", "dl2", "map"], "data_source": "data/61test", "sensor_density": 500}
+{"method": "dl", "error": [0.0782, 0.1415, 0.3314], "false_alarm": 0, "miss": 0, "preds": [[19.57, 65.64], [22.69, 13.45], [26.53, 62.34]], "time": 0.041}
+{"method": "dl", "error": [0.0782, 0.1415, 0.3314], "false_alarm": 0, "miss": 0, "preds": [[19.57, 65.64], [22.69, 13.45], [26.53, 62.34]], "time": 0.042}
+{"method": "map", "error": [0.2033, 0.7885], "false_alarm": 0, "miss": 1, "preds": [[23.5, 13.5], [26.5, 62.5]], "time": 18.984}
+
+{"experiment_num": 4, "num_intruder": 5, "image_index": 16234, "methods": ["dl", "dl2", "map"], "data_source": "data/61test", "sensor_density": 500}
+{"method": "dl", "error": [0.2938, 0.354, 0.3623, 0.4895], "false_alarm": 0, "miss": 1, "preds": [[12.46, 83.5], [79.48, 5.49], [86.72, 55.46], [88.58, 22.63]], "time": 0.035}
+{"method": "dl", "error": [0.2938, 0.354, 0.3623, 0.4895, 0.6803], "false_alarm": 0, "miss": 0, "preds": [[12.46, 83.5], [79.48, 5.49], [86.72, 55.46], [88.58, 22.63], [95.55, 12.74]], "time": 0.04}
+{"method": "map", "error": [0.6739, 0.6949, 0.8188, 0.8628], "false_alarm": 0, "miss": 1, "preds": [[87.5, 55.5], [13.5, 83.5], [80.5, 5.5], [89.5, 23.5]], "time": 14.541}
+
+{"experiment_num": 5, "num_intruder": 5, "image_index": 14728, "methods": ["dl", "dl2", "map"], "data_source": "data/61test", "sensor_density": 500}
+{"method": "dl", "error": [0.2038, 0.2847, 0.2928, 0.3118, 0.652], "false_alarm": 0, "miss": 0, "preds": [[34.66, 17.43], [39.34, 34.33], [57.57, 8.32], [70.67, 39.57], [77.56, 70.45]], "time": 0.035}
+{"method": "dl", "error": [0.2038, 0.2847, 0.2928, 0.3118, 0.652], "false_alarm": 0, "miss": 0, "preds": [[34.66, 17.43], [39.34, 34.33], [57.57, 8.32], [70.67, 39.57], [77.56, 70.45]], "time": 0.034}
+{"method": "map", "error": [0.3278, 0.5412, 0.82, 0.8327, 2.8116], "false_alarm": 0, "miss": 0, "preds": [[59.5, 6.5], [78.5, 70.5], [35.5, 17.5], [39.5, 34.5], [70.5, 40.5]], "time": 16.853}
+
+{"experiment_num": 6, "num_intruder": 2, "image_index": 15474, "methods": ["dl", "dl2", "map"], "data_source": "data/61test", "sensor_density": 500}
+{"method": "dl", "error": [0.274, 0.5408], "false_alarm": 0, "miss": 0, "preds": [[78.67, 39.42], [82.48, 59.63]], "time": 0.029}
+{"method": "dl", "error": [0.274, 0.5408], "false_alarm": 0, "miss": 0, "preds": [[78.67, 39.42], [82.48, 59.63]], "time": 0.03}
+{"method": "map", "error": [0.7978, 1.1134], "false_alarm": 0, "miss": 0, "preds": [[79.5, 40.5], [83.5, 60.5]], "time": 8.593}
+
+{"experiment_num": 7, "num_intruder": 5, "image_index": 12439, "methods": ["dl", "dl2", "map"], "data_source": "data/61test", "sensor_density": 500}
+{"method": "dl", "error": [0.1267, 0.2509, 0.3522, 0.4205, 0.5826], "false_alarm": 0, "miss": 0, "preds": [[8.57, 10.47], [29.34, 79.41], [66.75, 77.38], [72.72, 9.38], [86.33, 96.32]], "time": 0.035}
+{"method": "dl", "error": [0.1267, 0.2509, 0.3522, 0.4205, 0.5826], "false_alarm": 0, "miss": 0, "preds": [[8.57, 10.47], [29.34, 79.41], [66.75, 77.38], [72.72, 9.38], [86.33, 96.32]], "time": 0.038}
+{"method": "map", "error": [0.3698, 0.5393, 0.8095, 0.8852, 1.1313], "false_alarm": 0, "miss": 0, "preds": [[9.5, 10.5], [67.5, 77.5], [30.5, 79.5], [73.5, 9.5], [86.5, 96.5]], "time": 16.477}
+
+{"experiment_num": 8, "num_intruder": 3, "image_index": 6879, "methods": ["dl", "dl2", "map"], "data_source": "data/61test", "sensor_density": 500}
+{"method": "dl", "error": [0.3041, 0.5567, 1.0677], "false_alarm": 0, "miss": 0, "preds": [[28.55, 6.55], [30.68, 17.48], [38.4, 81.46]], "time": 0.04}
+{"method": "dl", "error": [0.3041, 0.5567, 1.0677], "false_alarm": 0, "miss": 0, "preds": [[28.55, 6.55], [30.68, 17.48], [38.4, 81.46]], "time": 0.039}
+{"method": "map", "error": [0.6646, 1.0177, 1.022], "false_alarm": 0, "miss": 0, "preds": [[32.5, 18.5], [38.5, 81.5], [28.5, 7.5]], "time": 11.355}
+
+{"experiment_num": 9, "num_intruder": 4, "image_index": 3075, "methods": ["dl", "dl2", "map"], "data_source": "data/61test", "sensor_density": 500}
+{"method": "dl", "error": [0.1474, 0.2937, 0.3942, 0.5323], "false_alarm": 0, "miss": 0, "preds": [[14.3, 89.56], [15.32, 47.46], [18.57, 3.59], [36.33, 80.53]], "time": 0.026}
+{"method": "dl", "error": [0.1474, 0.2937, 0.3942, 0.5323], "false_alarm": 0, "miss": 0, "preds": [[14.3, 89.56], [15.32, 47.46], [18.57, 3.59], [36.33, 80.53]], "time": 0.025}
+{"method": "map", "error": [0.6051, 0.6095, 0.7688, 1.1944], "false_alarm": 0, "miss": 0, "preds": [[15.5, 48.5], [19.5, 3.5], [14.5, 90.5], [36.5, 80.5]], "time": 13.09}
+
+{"experiment_num": 10, "num_intruder": 1, "image_index": 15986, "methods": ["dl", "dl2", "map"], "data_source": "data/61test", "sensor_density": 500}
+{"method": "dl", "error": [0.4299], "false_alarm": 0, "miss": 0, "preds": [[84.66, 27.47]], "time": 0.027}
+{"method": "dl", "error": [0.4299], "false_alarm": 0, "miss": 0, "preds": [[84.66, 27.47]], "time": 0.027}
+{"method": "map", "error": [0.4757], "false_alarm": 0, "miss": 0, "preds": [[85.5, 27.5]], "time": 5.883}
+
+{"experiment_num": 11, "num_intruder": 1, "image_index": 928, "methods": ["dl", "dl2", "map"], "data_source": "data/61test", "sensor_density": 500}
+{"method": "dl", "error": [0.4627], "false_alarm": 0, "miss": 0, "preds": [[5.65, 82.38]], "time": 0.027}
+{"method": "dl", "error": [0.4627], "false_alarm": 0, "miss": 0, "preds": [[5.65, 82.38]], "time": 0.026}
+{"method": "map", "error": [0.5637], "false_alarm": 0, "miss": 0, "preds": [[6.5, 82.5]], "time": 6.364}
+
+{"experiment_num": 12, "num_intruder": 4, "image_index": 12773, "methods": ["dl", "dl2", "map"], "data_source": "data/61test", "sensor_density": 500}
+{"method": "dl", "error": [0.3173, 0.5472, 0.5614, 1.1597], "false_alarm": 0, "miss": 0, "preds": [[14.33, 58.41], [29.65, 47.5], [45.51, 93.56], [68.31, 51.67]], "time": 0.041}
+{"method": "dl", "error": [0.3173, 0.5472, 0.5614, 1.1597], "false_alarm": 0, "miss": 0, "preds": [[14.33, 58.41], [29.65, 47.5], [45.51, 93.56], [68.31, 51.67]], "time": 0.037}
+{"method": "map", "error": [0.529, 0.6927, 0.7353, 0.995], "false_alarm": 0, "miss": 0, "preds": [[68.5, 53.5], [14.5, 58.5], [30.5, 48.5], [45.5, 94.5]], "time": 15.841}
+
+{"experiment_num": 13, "num_intruder": 4, "image_index": 14180, "methods": ["dl", "dl2", "map"], "data_source": "data/61test", "sensor_density": 500}
+{"method": "dl", "error": [0.3414, 0.3962, 0.4242, 0.4903], "false_alarm": 0, "miss": 0, "preds": [[40.69, 3.52], [49.47, 21.45], [59.54, 67.61], [75.51, 83.67]], "time": 0.046}
+{"method": "dl", "error": [0.3414, 0.3962, 0.4242, 0.4903], "false_alarm": 0, "miss": 0, "preds": [[40.69, 3.52], [49.47, 21.45], [59.54, 67.61], [75.51, 83.67]], "time": 0.043}
+{"method": "map", "error": [0.4301, 0.6318, 1.1796, 1.3915], "false_alarm": 0, "miss": 0, "preds": [[59.5, 66.5], [76.5, 84.5], [41.5, 3.5], [50.5, 21.5]], "time": 13.74}
+

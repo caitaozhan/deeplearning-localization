@@ -208,7 +208,7 @@ class Utility:
                 print(pred_locations[false], end=';  ')
             print()
         try:
-            return errors, len(true_locations) - detected, len(pred_locations) - detected  # error, miss, false
+            return errors, len(true_locations) - detected, len(pred_locations) - detected  # error, miss (FN), false (FP)
         except:
             return [], 0, 0
 

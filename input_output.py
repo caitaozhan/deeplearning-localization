@@ -210,6 +210,7 @@ class DataInfo:
     ipsn_hypothesis: str
     dl_model1: str     # image translation
     dl_model2: str     # predict num of TX
+    dl_model3: str     # predict num of TX, using the output of dl_model1
 
     @classmethod
     def naive_factory(cls, data_source):
@@ -230,8 +231,9 @@ class DataInfo:
             ipsn_sensors = 'data/61train-ipsn/sensors'
             ipsn_hypothesis = 'data/61train-ipsn/hypothesis'
             dl_model1 = 'model/model1-11.12.pt'
-            dl_model2 = 'model/model2-11.16-2.pt'
-            return cls(test_data, train_data, ipsn_cov, ipsn_sensors, ipsn_hypothesis, dl_model1, dl_model2)
+            dl_model2 = 'model/model2-11.16-2.pt'   # dl1
+            dl_model3 = 'model/model2-11.19.pt'     # dl2
+            return cls(test_data, train_data, ipsn_cov, ipsn_sensors, ipsn_hypothesis, dl_model1, dl_model2, dl_model3)
 
 
 class IOUtility:
