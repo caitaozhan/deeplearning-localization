@@ -26,10 +26,10 @@ def get_index_from_log(log: str):
 
 if __name__ == '__main__':
 
-    hint = 'python client.py -exp 0 1 -met dl map -src data/60test'
+    hint = 'python client.py -exp 0 1 -met dl map -src data/61test'
 
     parser = argparse.ArgumentParser(description='client side | hint:' + hint)
-    parser.add_argument('-exp', '--exp_number', type=int, nargs='+', default=[0, 10], help='number of experiments to repeat')
+    parser.add_argument('-exp', '--exp_number', type=int, nargs='+', default=[0, 1], help='number of experiments to repeat')
     parser.add_argument('-src', '--data_source', type=str, nargs=1, default=[Default.data_source], help='data source')
     parser.add_argument('-met', '--methods', type=str, nargs='+', default=Default.methods, help='methods to compare')
     parser.add_argument('-sen', '--sen_density', type=int, nargs=1, default=[Default.sen_density], help='sensor density')

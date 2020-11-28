@@ -30,7 +30,7 @@ class Default:
     min_dist         = 1
     max_dist         = None
     edge             = 2
-    methods          = ['dl', 'map', 'splot', 'dtxf']
+    methods          = ['dl1', 'dl2', 'dl3', 'map', 'splot', 'dtxf']
     server_ip        = '0.0.0.0'
 
 

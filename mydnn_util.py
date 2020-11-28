@@ -128,10 +128,7 @@ class Metrics:
                 new_pred_peaks.append((pred_x, pred_y))
             return new_pred_peaks
 
-        pred_locs = []
-        errors = []
-        misses = []
-        falses = []
+        pred_locs, errors, misses, falses = [], [], [], []
         for i, pred, pred_n, truth, indx in zip(range(len(pred_batch)), pred_batch, pred_ntx, truth_batch, index):
             # 1: get the multiple predicted locations
             pred = pred[0]           # there is only one channel
@@ -148,6 +145,38 @@ class Metrics:
                 print(i, indx, 'pred', [(round(loc[0], 2), round(loc[1], 2)) for loc in pred_peaks], '; truth', \
                       [(round(loc[0], 2), round(loc[1], 2)) for loc in truth], ' ; error', error, ' ; miss', miss, ' ; false', false)
         return pred_locs, errors, misses, falses
+
+
+    @staticmethod
+    def localization_error_image_continuous_detection(pred_batch, truth_batch, index, debug=False):
+        '''This is for the output of object detection, where there is no need to pass in num of TX. Because the output is directly (x, y)
+           Continuous -- for single TX
+           euclidian error when modeling the output representation is a matrix (image)
+           both pred and truth are batches, typically a batch of 32
+           now both prediction and truth are continuous numbers
+        Args:
+            pred_batch:  numpy.ndarray -- size=(N, num_tx, 2)
+            truth_batch: numpy.ndarray -- size=(N, num_tx, 2)
+        Return:
+            pred_locs -- list<np.ndarray>
+            errors    -- list<list>
+            misses    -- list
+            false     -- list
+        '''
+        pred_locs, errors, misses, falses = [], [], [], []
+        for i, pred, truth, indx in zip(range(len(pred_batch)), pred_batch, truth_batch, index):
+            # do a matching and get the error
+            radius_threshold = Default.grid_length * Default.error_threshold
+            error, miss, false = Utility.compute_error(pred, truth, radius_threshold, False)
+            pred_locs.append(pred)
+            errors.append(error)
+            misses.append(miss)
+            falses.append(false)
+            if debug:
+                print(i, indx, 'pred', [(round(loc[0], 2), round(loc[1], 2)) for loc in pred], '; truth', \
+                      [(round(loc[0], 2), round(loc[1], 2)) for loc in truth], ' ; error', error, ' ; miss', miss, ' ; false', false)
+        return pred_locs, errors, misses, falses
+
 
     @staticmethod
     def loss(pred, y):

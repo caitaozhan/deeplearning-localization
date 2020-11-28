@@ -15,13 +15,22 @@ import mydnn_util
 import myplots
 from input_output import Input, Output, Default, DataInfo
 
-
+# The IPSN20 algo
 try:
     sys.path.append('../Localization')
     from localize import Localization
     from plots import visualize_localization
 except Exception as e:
-    print(e)
+    raise(e)
+
+# The dl3 algo (image translation + detection)
+try:
+    sys.path.append('../PyTorch-YOLOv3')
+    from models import Darknet
+    from utils.utils import non_max_suppression
+    from utils.datasets import resize
+except Exception as e:
+    raise(e)
 
 app = Flask(__name__)
 
@@ -66,6 +75,23 @@ def localize():
         end = time.time()
         outputs.append(Output('dl2', errors[0], falses[0], misses[0], preds[0], end-start))
 
+    if 'dl3' in myinput.methods:  # two CNN in sequence, the second CNN is object detection
+        sample = sensor_input_dataset[myinput.image_index]
+        X      = torch.as_tensor(sample['matrix']).unsqueeze(0).to(device)
+        y_f    = np.expand_dims(sample['target_float'], 0)
+        indx   = np.expand_dims(np.array(sample['index']), 0)
+        start = time.time()
+        pred_matrix = model1(X)
+        pred_matrix = pred_matrix[0][0]  # one batch, one dimension
+        img = torch.stack((pred_matrix, pred_matrix, pred_matrix), axis=0) # stack 3 together
+        img = resize(img, server.DETECT_IMG_SIZE).unsqueeze(0)
+        detections = darknet(img)
+        detections = non_max_suppression(detections, conf_thres=0.9, nms_thres=0.4)
+        pred_xy = [server.box2xy(detections[0].numpy())]  # add a batch dimension
+        preds, errors, misses, falses = mydnn_util.Metrics.localization_error_image_continuous_detection(pred_xy, y_f, indx, debug=True)
+        end = time.time()
+        outputs.append(Output('dl3', errors[0], falses[0], misses[0], preds[0], end-start))
+
     if 'map' in myinput.methods:
         json_dict = server.get_json_dict(myinput.image_index, sensor_input_dataset)
         ground_truth = json_dict['ground_truth']
@@ -99,6 +125,8 @@ def localize():
 class Server:
     '''Misc things to support the server running
     '''
+    DETECT_IMG_SIZE = 416
+
     def __init__(self, outout_dir, output_file):
         self.output = self.init_output(outout_dir, output_file)
 
@@ -183,6 +211,19 @@ class Server:
             pred_center.append(center)
         return pred_center
 
+    def box2xy(self, detections):
+        '''object detections model returns bounding boxes. transform this into (x, y) by computing the center
+        '''
+        pred_locs = []
+        for detect in detections:
+            x1 = detect[0]
+            y1 = detect[1]
+            x2 = detect[2]
+            y2 = detect[3]
+            x = (x1 + x2) / 2 * (Default.grid_length / server.DETECT_IMG_SIZE)  # assume no padding (every image is square)
+            y = (y1 + y2) / 2 * (Default.grid_length / server.DETECT_IMG_SIZE)
+            pred_locs.append((y, x))                                            # note that in YOLO v3, the (x, y) are opposite to my (x, y)
+        return pred_locs
 
 # if __name__ == 'server':
 
@@ -232,9 +273,9 @@ if __name__ == '__main__':
 
     data = DataInfo.naive_factory(data_source=data_source)
     # 1: init server utilities
-    date = '11.19'                                                 # 1
+    date = '11.27'                                                 # 1
     output_dir = f'result/{date}'
-    output_file = 'log-differentsensor'                            # 2
+    output_file = 'log-differentsensor-2'                            # 2
     server = Server(output_dir, output_file)
 
     # 2: init deep learning model
@@ -259,15 +300,21 @@ if __name__ == '__main__':
     model3 = model3.to(device)
     model3.eval()
 
-
     # 3: init IPSN20
     grid_len = 100
     debug = False                                                   # 3
     case = 'lognormal2'
     ll = Localization(grid_len=grid_len, case=case, debug=debug)
     ll.init_data(data.ipsn_cov, data.ipsn_sensors, data.ipsn_hypothesis, None)
-    print('process time:', time.process_time())
 
-    # 4 start the web server
+    # 4: init the darknet in dl3
+    model_def_path = '../PyTorch-YOLOv3/config/yolov3-custom.cfg'
+    weights_path   = '../PyTorch-YOLOv3/checkpoints/yolov3_ckpt_5.pth'
+    darknet = Darknet(model_def_path, img_size=server.DETECT_IMG_SIZE).to(device)
+    darknet.load_state_dict(torch.load(weights_path))
+    darknet.eval()
+
+    # 5: start the web server
+    print('process time:', time.process_time())
     app.run(host="0.0.0.0", port=5000, debug=True, use_reloader=False)
 
