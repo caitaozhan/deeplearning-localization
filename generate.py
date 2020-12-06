@@ -31,17 +31,27 @@ class GenerateSensors:
         all_sensors = list(range(grid_length * grid_length))
         subset_sensors = random.sample(all_sensors, sensor_density)
         Visualize.sensors(subset_sensors, grid_length, 1)
-        subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length)
+        subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
         Visualize.sensors(subset_sensors, grid_length, 2)
-        subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length)
+        subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
         Visualize.sensors(subset_sensors, grid_length, 3)
+        subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
+        Visualize.sensors(subset_sensors, grid_length, 4)
         subset_sensors.sort()
         GenerateSensors.save(subset_sensors, grid_length, filename)
 
     @classmethod
-    def relocate_sensors(cls, random_sensors: List, grid_len: int):
+    def relocate_sensors(cls, random_sensors: List, grid_len: int, sensor_density: int):
         '''Relocate sensors that are side by side
         '''
+        if sensor_density == 100:
+            neighbor = [(i, j) for i in range(-5, 6) for j in range(-5, 6)]
+        elif sensor_density == 300:
+            neighbor = [(i, j) for i in range(-2, 3) for j in range(-2, 3)]
+        elif sensor_density in [500, 700, 1000]:
+            neighbor = [(i, j) for i in range(-2, 2) for j in range(-2, 2)]
+        else:
+            pass
         new_random_sensors = []
         need_to_relocate = []
         ocupy_grid = np.zeros((grid_len, grid_len), dtype=int)
@@ -53,7 +63,7 @@ class GenerateSensors:
                 need_to_relocate.append(sen)
             else:
                 new_random_sensors.append(sen)
-                for x, y in [(0, 0), (-1, 0), (0, -1), (0, 1), (1, 0), (1, 1), (1, -1), (-1, -1), (-1, 1)]:
+                for x, y in neighbor:
                     try:
                         ocupy_grid[s_x + x][s_y + y] = 1
                     except:
@@ -325,6 +335,7 @@ if __name__ == '__main__':
     sensor_density = args.sensor_density[0]
     num_tx = args.num_tx[0]
 
+    # python generate.py -gs -rs 0 -sd 100
     if args.generate_sensor:
         print('generating sensor')
         GenerateSensors.random(grid_length, sensor_density, random_seed, f'data/sensors/{grid_length}-{sensor_density}-{random_seed}')
