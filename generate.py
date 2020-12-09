@@ -37,6 +37,8 @@ class GenerateSensors:
         Visualize.sensors(subset_sensors, grid_length, 3)
         subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
         Visualize.sensors(subset_sensors, grid_length, 4)
+        subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
+        Visualize.sensors(subset_sensors, grid_length, 5)
         subset_sensors.sort()
         GenerateSensors.save(subset_sensors, grid_length, filename)
 
@@ -44,11 +46,17 @@ class GenerateSensors:
     def relocate_sensors(cls, random_sensors: List, grid_len: int, sensor_density: int):
         '''Relocate sensors that are side by side
         '''
-        if sensor_density == 100:
+        if sensor_density <= 100:
             neighbor = [(i, j) for i in range(-5, 6) for j in range(-5, 6)]
-        elif sensor_density == 300:
+        elif sensor_density <= 200:
+            neighbor = [(i, j) for i in range(-4, 5) for j in range(-4, 5)]
+        elif sensor_density <= 400:
+            neighbor = [(i, j) for i in range(-3, 3) for j in range(-3, 3)]
+        elif sensor_density <= 600:
             neighbor = [(i, j) for i in range(-2, 3) for j in range(-2, 3)]
-        elif sensor_density in [500, 700, 1000]:
+        elif sensor_density <= 800:
+            neighbor = [(i, j) for i in range(-2, 2) for j in range(-2, 3)]
+        elif sensor_density <= 1000:
             neighbor = [(i, j) for i in range(-2, 2) for j in range(-2, 2)]
         else:
             pass
@@ -144,8 +152,7 @@ class GenerateData:
         '''
         Utility.remove_make(root_dir)
         self.log(power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx, num_tx_upper, min_dist, max_dist, edge)
-        random.seed(self.seed)
-        np.random.seed(self.seed)
+        # random.seed(self.seed)   # need to comment this line when running simulate_data.py, or they will generate the same TX locations
         # 1 read the sensor file, do a checking
         if str(self.grid_length) not in sensor_file[:sensor_file.find('-')]:
             print(f'grid length {self.grid_length} and sensor file {sensor_file} not match')
