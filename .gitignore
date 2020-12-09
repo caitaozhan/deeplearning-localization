@@ -6,3 +6,4 @@ data/*
 *.ipynb_checkpoints
 test.txt
 .virtual*
+.vscode/.ropeproject/*

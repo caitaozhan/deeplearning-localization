@@ -105,11 +105,11 @@ class IpsnInput:
         Return:
             str
         '''
-        outputdict = {
+        inputdict = {
             "ground_truth": self.ground_truth,
-            "sensor_data":  self.sensor_data
+            "sensor_data":  self.sensor_data,
         }
-        return json.dumps(outputdict)
+        return json.dumps(inputdict)
 
     @classmethod
     def from_file(cls, file):

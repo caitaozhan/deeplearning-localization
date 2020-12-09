@@ -132,7 +132,7 @@ class GenerateData:
         return False
 
     def generate(self, power: float, cell_percentage: float, sample_per_label: int, sensor_file: str,\
-                 root_dir: str, num_tx: int, num_tx_upper: bool, min_dist: int, max_dist: int, edge: int):
+                 root_dir: str, num_tx: int, num_tx_upper: bool, min_dist: int, max_dist: int, edge: int, vary_power: int):
         '''
         The generated input data is not images, but instead matrix. Because saving as images will loss some accuracy
         Args:
@@ -172,13 +172,15 @@ class GenerateData:
             folder = f'{root_dir}/{counter:06d}'
             os.mkdir(folder)     # update on Aug. 27, change the name of the folder from label to counter index
             for i in range(sample_per_label):
-                targets = [tx_float]
+                power_delta  = random.uniform(-vary_power, vary_power)
+                targets      = [tx_float]          # ground truth location
+                power_deltas = [power_delta]       # ground truth power
                 grid = np.zeros((self.grid_length, self.grid_length))
                 grid.fill(Default.noise_floor)
                 for sensor in sensors:
                     dist = Utility.distance_propagation(tx_float, (sensor.x, sensor.y)) * Default.cell_length
                     pathloss = self.propagation.pathloss(dist)
-                    rssi = power - pathloss
+                    rssi = (power + power_delta) - pathloss
                     grid[sensor.x][sensor.y] = rssi if rssi > Default.noise_floor else Default.noise_floor
                 # the other TX
                 population_set = set(population)
@@ -191,38 +193,40 @@ class GenerateData:
                     self.update_population(population_set, intru, Default.grid_length, min_dist, max_dist)
                     ntx = random.sample(population_set, 1)[0]
                     ntx = (ntx[0] + random.uniform(0, 1), ntx[1] + random.uniform(0, 1))  # TX is not at the center of grid cell
+                    power_delta = random.uniform(-vary_power, vary_power)
                     targets.append(ntx)
+                    power_deltas.append(power_delta)
                     for sensor in sensors:
                         dist = Utility.distance_propagation(ntx, (sensor.x, sensor.y)) * Default.cell_length
                         pathloss = self.propagation.pathloss(dist)
-                        rssi = power - pathloss
+                        rssi = (power + power_delta) - pathloss
                         exist_rssi = grid[sensor.x][sensor.y]
                         grid[sensor.x][sensor.y] = Utility.linear2db(Utility.db2linear(exist_rssi) + Utility.db2linear(rssi))
                     num_tx_copy -= 1
                     intru = ntx
                 np.save(f'{folder}/{i}.npy', grid.astype(np.float32))
                 np.save(f'{folder}/{i}.target', np.array(targets).astype(np.float32))
-                if not args.train:  # when generating testing data, args.train == False
-                    self.save_ipsn_input(grid, targets, power,  sensors, f'{folder}/{i}.json')
+                np.savetxt(f'{folder}/{i}.txt', np.array(power_deltas).astype(np.float32))  # Dec. 12, 2020: save in txt format (currently not used in the CNN)
+                self.save_ipsn_input(grid, targets, power_deltas, sensors, f'{folder}/{i}.json')
                 # if i == 0:
                 #     imageio.imwrite(f'{folder}/{tx}.png', grid)
             counter += 1
 
 
-    def save_ipsn_input(self, grid, targets, power, sensors, output_file):
+    def save_ipsn_input(self, grid, targets, power_deltas, sensors, output_file):
         '''
         Args:
-            grid        -- np.ndarray, n = 2
-            targets     -- list<tuple<float, float>>
-            power       -- int                        -- power of the TX, currently fixed
-            sensors     -- list<Sensors>
-            output_file -- str
+            grid         -- np.ndarray, n = 2
+            targets      -- list<tuple<float, float>>
+            power_deltas -- list<float>                        -- power of the TX, varying
+            sensors      -- list<Sensors>
+            output_file  -- str
         '''
         tx_data = {}
         for i, tx in enumerate(targets):
             tx_data[str(i)] = {
                 "location": (round(tx[0], 3), round(tx[1], 3)),
-                "gain": power
+                "gain": round(power_deltas[i], 3)
             }
         sensor_data = {}
         for i, sen in enumerate(sensors):
@@ -310,7 +314,7 @@ if __name__ == '__main__':
 
     parser.add_argument('-gs', '--generate_sensor', action='store_true')
     parser.add_argument('-gd', '--generate_data', action='store_true')
-    parser.add_argument('-train', '--train', action='store_true')
+    parser.add_argument('-ipsn', '--ipsn', action='store_true')
     parser.add_argument('-al', '--alpha', nargs=1, type=float, default=[Default.alpha], help='the slope of pathloss')
     parser.add_argument('-st', '--std', nargs=1, type=float, default=[Default.std], help='the standard deviation zero mean Guassian')
     parser.add_argument('-gl', '--grid_length', nargs=1, type=int, default=[Default.grid_length], help='the length of the grid')
@@ -327,6 +331,7 @@ if __name__ == '__main__':
     parser.add_argument('-maxd', '--max_dist', nargs=1, type=int, default=[None], help='maximum distance between intruders')
     parser.add_argument('-ntup', '--num_tx_upbound', action='store_true', help='if yes, then generate [1, ntx] number of TX')
     parser.add_argument('-ed', '--edge', nargs=1, type=int, default=[Default.edge], help='no TX at the edge')
+    parser.add_argument('-vp', '--vary_power', nargs=1, type=int, default=[0], help='varying power amount')
 
     args = parser.parse_args()
 
@@ -353,14 +358,15 @@ if __name__ == '__main__':
         max_dist    = args.max_dist[0]
         num_tx_upbound = args.num_tx_upbound
         edge        = args.edge[0]
+        vary_power  = args.vary_power[0]
 
         print(f'generating {num_tx} TX data')
 
         gd = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density, noise_floor)
-        gd.generate(power, cell_percentage, sample_per_label, f'data/sensors/{grid_length}-{sensor_density}-{random_seed}', root_dir, num_tx, num_tx_upbound, min_dist, max_dist, edge)
+        gd.generate(power, cell_percentage, sample_per_label, f'data/sensors/{grid_length}-{sensor_density}-{random_seed}', root_dir, num_tx, num_tx_upbound, min_dist, max_dist, edge, vary_power)
 
-    if args.train:  # only in training dataset
-        # python generate.py -train -rd data/61train -sl 2 -rs 100 -nt 5 -ntup -mind 1
+    if args.ipsn:  # only in training dataset
+        # python generate.py -ipsn -rd data/100test -rs 100 -nt 5 -ntup -mind 1
         root_dir    = args.root_dir[0]
         power       = args.power[0]
         alpha       = args.alpha[0]

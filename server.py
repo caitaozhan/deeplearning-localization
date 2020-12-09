@@ -115,9 +115,6 @@ def localize():
     if 'dtxf' in myinput.methods:
         pass
 
-    if 'shahrokh' in myinput.methods:
-        pass
-
     server.log(myinput, outputs)
     return 'hello world'
 
@@ -300,7 +297,7 @@ if __name__ == '__main__':
     model3 = model3.to(device)
     model3.eval()
 
-    # 3: init IPSN20
+    # 3: init IPSN20 (also splot)
     grid_len = 100
     debug = False                                                   # 3
     case = 'lognormal2'
