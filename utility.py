@@ -73,6 +73,34 @@ class Utility:
         return db
 
     @staticmethod
+    def detect_peak_simple(image, peak_threshold, size):
+        '''Takes an image and detect the peaks using the local maximum filter
+        '''
+        threshold_mask = image < peak_threshold
+        image[threshold_mask] = 0
+        neighborhood = np.array([[True for _ in range(size)] for _ in range((size))])
+        #apply the local maximum filter; all pixel of maximal value
+        #in their neighborhood are set to 1
+        local_max = maximum_filter(image, footprint=neighborhood)==image
+        #local_max is a mask that contains the peaks we are
+        #looking for, but also the background.
+        #In order to isolate the peaks we must remove the background from the mask.
+        #we create the mask of the background
+        background = (image < peak_threshold)
+        #a little technicality: we must erode the background in order to
+        #successfully subtract it form local_max, otherwise a line will
+        #appear along the background border (artifact of the local maximum filter)
+        eroded_background = binary_erosion(background, structure=neighborhood, border_value=1)
+        #we obtain the final mask, containing only peaks,
+        #by removing the background from the local_max mask (xor operation)
+        detected_peaks = local_max ^ eroded_background
+
+        peaks = np.where(detected_peaks == True)
+        return [(x, y) for x, y in zip(peaks[0], peaks[1])]
+
+
+
+    @staticmethod
     def detect_peak(image, num_tx: int, threshold=0.05):  # TUNE: a larger threshold will decrease false
         """
         Returns a boolean mask of the peaks (i.e. 1 when

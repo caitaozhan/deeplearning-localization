@@ -15,10 +15,10 @@ class Default:
     std              = 1       # the standard deviation of the zero mean shadowing
     data_source      = 'log-distance'
     methods          = ['dl']
-    sen_density      = 500
+    sen_density      = 200
+    num_intruder     = 5
     grid_length      = 100
     cell_length      = 10
-    num_intruder     = 1
     random_seed      = 0
     noise_floor      = -80
     power            = 10
@@ -30,7 +30,7 @@ class Default:
     min_dist         = 1
     max_dist         = None
     edge             = 2
-    methods          = ['dl1', 'dl2', 'dl3', 'map', 'splot', 'dtxf']
+    methods          = ['deepmtl', 'deepmtl-simple', 'deepmtl-yolo', 'map', 'splot', 'dtxf']
     server_ip        = '0.0.0.0'
 
 
@@ -203,37 +203,34 @@ class Output:
 class DataInfo:
     '''the data set used for training and testing
     '''
+    max_ntx: int
     test_data: str
     train_data: str
-    ipsn_cov: str
-    ipsn_sensors: str
-    ipsn_hypothesis: str
-    dl_model1: str     # image translation
-    dl_model2: str     # predict num of TX
-    dl_model3: str     # predict num of TX, using the output of dl_model1
+    ipsn_cov: List            # there are five ipsn dataset for five differnent set of sensors
+    ipsn_sensors: List
+    ipsn_hypothesis: List
+    translate_net: str        # image translation
+    yolocust_def: str         # our yolo cust model definition
+    yolocust_weights: str     # our yolo cust model weights
+    yolo_def: str             # yolo model definition  
+    yolo_weights: str         # yolo model weights
 
     @classmethod
     def naive_factory(cls, data_source):
         '''factory'''
-        if data_source == 'data/60test':
-            test_data = 'data/60test'
-            train_data = 'data/60train'
-            ipsn_cov = 'data/60train-ipsn/cov'
-            ipsn_sensors = 'data/60train-ipsn/sensors'
-            ipsn_hypothesis = 'data/60train-ipsn/hypothesis'
-            dl_model1 = 'model/model1-11.12.pt'
-            dl_model2 = 'model/model2-11.12-2.pt'
-            return cls(test_data, train_data, ipsn_cov, ipsn_sensors, ipsn_hypothesis, dl_model1, dl_model2)
-        if data_source == 'data/61test':
-            test_data = 'data/61test'
-            train_data = 'data/61train'
-            ipsn_cov = 'data/61train-ipsn/cov'
-            ipsn_sensors = 'data/61train-ipsn/sensors'
-            ipsn_hypothesis = 'data/61train-ipsn/hypothesis'
-            dl_model1 = 'model/model1-11.12.pt'
-            dl_model2 = 'model/model2-11.16-2.pt'   # dl1
-            dl_model3 = 'model/model2-11.19.pt'     # dl2
-            return cls(test_data, train_data, ipsn_cov, ipsn_sensors, ipsn_hypothesis, dl_model1, dl_model2, dl_model3)
+        if data_source == 'data/205test':
+            max_ntx = 10
+            test_data  = 'data/205test'
+            train_data = 'data/205train'
+            ipsn_cov_list  = ['data/200test/cov', 'data/201test/cov', 'data/202test/cov', 'data/203test/cov', 'data/204test/cov']
+            ipsn_sen_list  = ['data/200test/sensors', 'data/201test/sensors', 'data/202test/sensors', 'data/203test/sensors', 'data/204test/sensors']
+            ipsn_hypo_list = ['data/200test/hypothesis', 'data/201test/hypothesis', 'data/202test/hypothesis', 'data/203test/hypothesis', 'data/204test/hypothesis']
+            translate_net = 'model/model1-12.8-net5-norm-32.pt'
+            yolocust_def     = '../PyTorch-YOLOv3/config/yolov3-custom.cfg'
+            yolocust_weights = '../PyTorch-YOLOv3/checkpoints_logdistance/yolov3_ckpt_5.pth'
+            yolo_def         = '../PyTorch-YOLOv3/config/yolov3-custom-class.cfg'
+            yolo_weights     = ''
+            return cls(max_ntx, test_data, train_data, ipsn_cov_list, ipsn_sen_list, ipsn_hypo_list, translate_net, yolocust_def, yolocust_weights, yolo_def, yolo_weights)
 
 
 class IOUtility:

@@ -10,7 +10,7 @@ import json
 import numpy as np
 from flask import Flask, request
 from dataclasses import dataclass
-from mydnn import NetTranslation, NetNumTx, NetNumTx2, NetNumTx3
+from mydnn import NetTranslation5
 import mydnn_util
 import myplots
 from input_output import Input, Output, Default, DataInfo
@@ -45,52 +45,51 @@ def localize():
     myinput = Input.from_json_dict(request.get_json())
     sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=myinput.data_source, transform=mydnn_util.tf)
     outputs = []
-    if 'dl' in myinput.methods:  # two CNN completely parallel
+    if 'deepmtl-simple' in myinput.methods:  # two CNN in sequence, the second CNN is object detection
         sample = sensor_input_dataset[myinput.image_index]
         X      = torch.as_tensor(sample['matrix']).unsqueeze(0).to(device)
         y_f    = np.expand_dims(sample['target_float'], 0)
         indx   = np.expand_dims(np.array(sample['index']), 0)
         start = time.time()
-        pred_matrix = model1(X)
-        pred_ntx    = model2(X)
+        pred_matrix = translate_net(X)
         pred_matrix = pred_matrix.data.cpu().numpy()
-        _, pred_ntx = pred_ntx.data.cpu().max(1)
-        pred_ntx = (pred_ntx + 1).numpy()
-        preds, errors, misses, falses = mydnn_util.Metrics.localization_error_image_continuous(pred_matrix.copy(), pred_ntx, y_f, indx, Default.grid_length, peak_threshold=1, debug=True)
+        preds, errors, misses, falses = mydnn_util.Metrics.localization_error_image_continuous_simple(pred_matrix, y_f, indx, Default.grid_length, peak_threshold=2, size=3, debug=True)
         end = time.time()
-        outputs.append(Output('dl', errors[0], falses[0], misses[0], preds[0], end-start))
+        outputs.append(Output('deepmtl-simple', errors[0], falses[0], misses[0], preds[0], end-start))
 
-    if 'dl2' in myinput.methods:  # two CNN in sequence
+    if 'deepmtl-yolo' in myinput.methods:  # two CNN in sequence, the second CNN is object detection
         sample = sensor_input_dataset[myinput.image_index]
         X      = torch.as_tensor(sample['matrix']).unsqueeze(0).to(device)
         y_f    = np.expand_dims(sample['target_float'], 0)
         indx   = np.expand_dims(np.array(sample['index']), 0)
         start = time.time()
-        pred_matrix = model1(X)
-        pred_ntx    = model3(pred_matrix)
-        pred_matrix = pred_matrix.data.cpu().numpy()
-        _, pred_ntx = pred_ntx.data.cpu().max(1)
-        pred_ntx = (pred_ntx + 1).numpy()
-        preds, errors, misses, falses = mydnn_util.Metrics.localization_error_image_continuous(pred_matrix.copy(), pred_ntx, y_f, indx, Default.grid_length, peak_threshold=1, debug=True)
-        end = time.time()
-        outputs.append(Output('dl2', errors[0], falses[0], misses[0], preds[0], end-start))
-
-    if 'dl3' in myinput.methods:  # two CNN in sequence, the second CNN is object detection
-        sample = sensor_input_dataset[myinput.image_index]
-        X      = torch.as_tensor(sample['matrix']).unsqueeze(0).to(device)
-        y_f    = np.expand_dims(sample['target_float'], 0)
-        indx   = np.expand_dims(np.array(sample['index']), 0)
-        start = time.time()
-        pred_matrix = model1(X)
+        pred_matrix = translate_net(X)
         pred_matrix = pred_matrix[0][0]  # one batch, one dimension
         img = torch.stack((pred_matrix, pred_matrix, pred_matrix), axis=0) # stack 3 together
         img = resize(img, server.DETECT_IMG_SIZE).unsqueeze(0)
-        detections = darknet(img)
+        # detections = darknet(img)
         detections = non_max_suppression(detections, conf_thres=0.9, nms_thres=0.4)
         pred_xy = [server.box2xy(detections[0].numpy())]  # add a batch dimension
         preds, errors, misses, falses = mydnn_util.Metrics.localization_error_image_continuous_detection(pred_xy, y_f, indx, debug=True)
         end = time.time()
-        outputs.append(Output('dl3', errors[0], falses[0], misses[0], preds[0], end-start))
+        outputs.append(Output('deepmtl-yolo', errors[0], falses[0], misses[0], preds[0], end-start))
+
+    if 'deepmtl' in myinput.methods:  # two CNN in sequence, the second CNN is object detection
+        sample = sensor_input_dataset[myinput.image_index]
+        X      = torch.as_tensor(sample['matrix']).unsqueeze(0).to(device)
+        y_f    = np.expand_dims(sample['target_float'], 0)
+        indx   = np.expand_dims(np.array(sample['index']), 0)
+        start = time.time()
+        pred_matrix = translate_net(X)
+        pred_matrix = pred_matrix[0][0]  # one batch, one dimension
+        img = torch.stack((pred_matrix, pred_matrix, pred_matrix), axis=0) # stack 3 together
+        img = resize(img, server.DETECT_IMG_SIZE).unsqueeze(0)
+        detections = darknet_cust(img)
+        detections = non_max_suppression(detections, conf_thres=0.9, nms_thres=0.5)
+        pred_xy = [server.box2xy(detections[0].numpy())]  # add a batch dimension
+        preds, errors, misses, falses = mydnn_util.Metrics.localization_error_image_continuous_detection(pred_xy, y_f, indx, debug=True)
+        end = time.time()
+        outputs.append(Output('deepmtl', errors[0], falses[0], misses[0], preds[0], end-start))
 
     if 'map' in myinput.methods:
         json_dict = server.get_json_dict(myinput.image_index, sensor_input_dataset)
@@ -261,7 +260,7 @@ class Server:
 
 if __name__ == '__main__':
 
-    hint = 'python server.py -src data/61test'
+    hint = 'python server.py -src data/205test'
     parser = argparse.ArgumentParser(description='Server side. ' + hint)
     parser.add_argument('-src', '--data_source', type=str,  nargs=1, default=[None], help='the testing data source')
     args = parser.parse_args()
@@ -270,46 +269,38 @@ if __name__ == '__main__':
 
     data = DataInfo.naive_factory(data_source=data_source)
     # 1: init server utilities
-    date = '11.27'                                                 # 1
+    date = '12.9'                                                 # 1
     output_dir = f'result/{date}'
-    output_file = 'log-differentsensor-2'                            # 2
+    output_file = 'log-deepmtl-simple2'                            # 2
     server = Server(output_dir, output_file)
 
-    # 2: init deep learning model
-    max_ntx = 5
-    path1 = data.dl_model1
-    path2 = data.dl_model2
-    path3 = data.dl_model3
+    # 2: init image to image translation model
     device = torch.device('cuda')
 
-    model1 = NetTranslation()
-    model1.load_state_dict(torch.load(path1))
-    model1 = model1.to(device)
-    model1.eval()
+    translate_net = NetTranslation5()
+    translate_net.load_state_dict(torch.load(data.translate_net))
+    translate_net = translate_net.to(device)
+    translate_net.eval()
 
-    model2 = NetNumTx2(max_ntx)
-    model2.load_state_dict(torch.load(path2))
-    model2 = model2.to(device)
-    model2.eval()
+    # 3: init the darknet_cust
+    darknet_cust = Darknet(data.yolocust_def, img_size=server.DETECT_IMG_SIZE).to(device)
+    darknet_cust.load_state_dict(torch.load(data.yolocust_weights))
+    darknet_cust.eval()
 
-    model3 = NetNumTx3(max_ntx)
-    model3.load_state_dict(torch.load(path3))
-    model3 = model3.to(device)
-    model3.eval()
+    # 4: init IPSN20
+    # grid_len = 100
+    # debug = False                                                   # 3
+    # case = 'lognormal2'
+    # lls = []
+    # for i in range(len(data.ipsn_cov_list)):
+    #     ll = Localization(grid_len=grid_len, case=case, debug=debug)
+    #     ll.init_data(data.ipsn_cov_list[i], data.ipsn_sensors_list[i], data.ipsn_hypothesis_list[i], None)
+    #     lls.append(ll)
 
-    # 3: init IPSN20 (also splot)
-    grid_len = 100
-    debug = False                                                   # 3
-    case = 'lognormal2'
-    ll = Localization(grid_len=grid_len, case=case, debug=debug)
-    ll.init_data(data.ipsn_cov, data.ipsn_sensors, data.ipsn_hypothesis, None)
+    # 6 init SPLOT TODO
 
-    # 4: init the darknet in dl3
-    model_def_path = '../PyTorch-YOLOv3/config/yolov3-custom.cfg'
-    weights_path   = '../PyTorch-YOLOv3/checkpoints/yolov3_ckpt_5.pth'
-    darknet = Darknet(model_def_path, img_size=server.DETECT_IMG_SIZE).to(device)
-    darknet.load_state_dict(torch.load(weights_path))
-    darknet.eval()
+    # 7 init deeptxfinder TODO
+
 
     # 5: start the web server
     print('process time:', time.process_time())

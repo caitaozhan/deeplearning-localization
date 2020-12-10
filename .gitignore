@@ -3,6 +3,7 @@
 __pycache__
 visualize
 data/*
+data2/*
 *.ipynb_checkpoints
 test.txt
 .virtual*

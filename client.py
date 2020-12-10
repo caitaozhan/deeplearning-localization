@@ -1,6 +1,8 @@
 '''The client side, send localization request to the server
 '''
 
+import os
+import json
 import argparse
 import time
 import random
@@ -24,6 +26,16 @@ def get_index_from_log(log: str):
     return index
 
 
+def get_sen_num(idx, root_dir='data/205test', sample_per_label=5):
+    folder = int(idx / sample_per_label)
+    folder = format(folder, '06d')
+    json_name = str(idx % sample_per_label) + '.json'
+    json_path = os.path.join(root_dir, folder, json_name)
+    with open(json_path, 'r') as f:
+        json_dict = json.loads(f.read())
+    return len(json_dict['sensor_data'])
+
+
 if __name__ == '__main__':
 
     hint = 'python client.py -exp 0 1 -met dl map -src data/61test'
@@ -42,7 +54,7 @@ if __name__ == '__main__':
     sensor_density = args.sen_density[0]
     port = args.port[0]
 
-    myinput = Input(data_source=data_source, methods=methods, sensor_density=sensor_density)
+    myinput = Input(data_source=data_source, methods=methods)
 
     sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=data_source, transform=mydnn_util.tf)
     total = sensor_input_dataset.__len__()
@@ -56,6 +68,7 @@ if __name__ == '__main__':
         myinput.experiment_num = i
         myinput.image_index = idx
         myinput.num_intruder = sensor_input_dataset[idx]['target_num']
+        myinput.sensor_density = get_sen_num(idx, data_source, sensor_input_dataset.sample_per_label)
         curl = "curl -d \'{}\' -H \'Content-Type: application/json\' -X POST http://{}:{}/localize"
         command = curl.format(myinput.to_json_str(), Default.server_ip, port)
         p = Popen(command, stdout=PIPE, shell=True)

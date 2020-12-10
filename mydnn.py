@@ -130,3 +130,28 @@ class NetNumTx3(nn.Module):
         for s in size:
             num_features *= s
         return num_features
+
+
+class NetTranslation5(nn.Module):
+    '''The chosen one! In the Jupyter Notebook, it's name is NetTranslation5_norm
+       Image translation. Comparing with version 4, it adds a layer so it is symetric, it also has group normalization
+       the first CNN is the same as NetTranslation, 
+       the second one uses the output of the first CNN and output the # of Tx
+       Assuming the input image is 1 x 100 x 100
+    '''
+    def __init__(self):
+        super(NetTranslation5, self).__init__()
+        self.conv1 = nn.Conv2d(1,  8,  5, padding=2)   # TUNE: a larger filter decrease miss, decrease localization error
+        self.conv2 = nn.Conv2d(8,  32, 5, padding=2)
+        self.conv3 = nn.Conv2d(32, 8,  5, padding=2)
+        self.conv4 = nn.Conv2d(8,  1,  5, padding=2)
+        self.norm1 = nn.GroupNorm(4,  8)
+        self.norm2 = nn.GroupNorm(16, 32)
+        self.norm3 = nn.GroupNorm(4,  8)
+
+    def forward(self, x):
+        x = F.relu(self.norm1(self.conv1(x)))
+        x = F.relu(self.norm2(self.conv2(x)))
+        x = F.relu(self.norm3(self.conv3(x)))
+        y = self.conv4(x)
+        return y
