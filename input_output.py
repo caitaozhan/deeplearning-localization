@@ -206,9 +206,9 @@ class DataInfo:
     max_ntx: int
     test_data: str
     train_data: str
-    ipsn_cov: List            # there are five ipsn dataset for five differnent set of sensors
-    ipsn_sensors: List
-    ipsn_hypothesis: List
+    ipsn_cov_list: List            # there are five ipsn dataset for five differnent set of sensors
+    ipsn_sensors_list: List
+    ipsn_hypothesis_list: List
     translate_net: str        # image translation
     yolocust_def: str         # our yolo cust model definition
     yolocust_weights: str     # our yolo cust model weights
@@ -222,9 +222,9 @@ class DataInfo:
             max_ntx = 10
             test_data  = 'data/205test'
             train_data = 'data/205train'
-            ipsn_cov_list  = ['data/200test/cov', 'data/201test/cov', 'data/202test/cov', 'data/203test/cov', 'data/204test/cov']
-            ipsn_sen_list  = ['data/200test/sensors', 'data/201test/sensors', 'data/202test/sensors', 'data/203test/sensors', 'data/204test/sensors']
-            ipsn_hypo_list = ['data/200test/hypothesis', 'data/201test/hypothesis', 'data/202test/hypothesis', 'data/203test/hypothesis', 'data/204test/hypothesis']
+            ipsn_cov_list  = ['data/200test-ipsn/cov',        'data/201test-ipsn/cov',        'data/202test-ipsn/cov',        'data/203test-ipsn/cov',        'data/204test-ipsn/cov']
+            ipsn_sen_list  = ['data/200test-ipsn/sensors',    'data/201test-ipsn/sensors',    'data/202test-ipsn/sensors',    'data/203test-ipsn/sensors',    'data/204test-ipsn/sensors']
+            ipsn_hypo_list = ['data/200test-ipsn/hypothesis', 'data/201test-ipsn/hypothesis', 'data/202test-ipsn/hypothesis', 'data/203test-ipsn/hypothesis', 'data/204test-ipsn/hypothesis']
             translate_net = 'model/model1-12.8-net5-norm-32.pt'
             yolocust_def     = '../PyTorch-YOLOv3/config/yolov3-custom.cfg'
             yolocust_weights = '../PyTorch-YOLOv3/checkpoints_logdistance/yolov3_ckpt_5.pth'

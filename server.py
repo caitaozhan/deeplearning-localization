@@ -43,9 +43,11 @@ def localize():
     '''localize
     '''
     myinput = Input.from_json_dict(request.get_json())
-    if myinput.num_intruder in [2, 4, 6, 8, 9]:
+    if port == 5000 and myinput.sensor_density in [200, 400, 800, 1000]:       # ipsn: 5000 port is for varying num of intruders
         return 'hello world'
-    
+    if port == 5001 and myinput.num_intruder in [1, 2, 3, 4, 6, 7, 8, 9, 10]:  # ipsn: 5001 port is for varying sensor density
+        return 'hello world'
+
     sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=myinput.data_source, transform=mydnn_util.tf)
     outputs = []
     if 'deepmtl-simple' in myinput.methods:  # two CNN in sequence, the second CNN is object detection
@@ -95,6 +97,7 @@ def localize():
         outputs.append(Output('deepmtl', errors[0], falses[0], misses[0], preds[0], end-start))
 
     if 'map' in myinput.methods:
+        ll = lls[ll_index[myinput.sensor_density]]
         json_dict = server.get_json_dict(myinput.image_index, sensor_input_dataset)
         ground_truth = json_dict['ground_truth']
         sensor_data = json_dict['sensor_data']
@@ -102,8 +105,8 @@ def localize():
         for idx, rss in sensor_data.items():
             sensor_outputs[int(idx)] = rss
         true_locations, true_powers, intruders = server.parse_ground_truth(ground_truth, ll)
-        image = sensor_input_dataset[myinput.image_index]['matrix']
-        myplots.visualize_sensor_output(image, true_locations)
+        # image = sensor_input_dataset[myinput.image_index]['matrix']
+        # myplots.visualize_sensor_output(image, true_locations)
         start = time.time()
         pred_locations, pred_power = ll.our_localization(np.copy(sensor_outputs), intruders, myinput.experiment_num)
         end = time.time()
@@ -265,46 +268,49 @@ if __name__ == '__main__':
 
     hint = 'python server.py -src data/205test'
     parser = argparse.ArgumentParser(description='Server side. ' + hint)
-    parser.add_argument('-src', '--data_source', type=str,  nargs=1, default=[None], help='the testing data source')
+    parser.add_argument('-src', '--data_source', type=str, nargs=1, default=[None], help='the testing data source')
+    parser.add_argument('-p', '--port', type=int, nargs=1, default=[5000], help='the port number')
     args = parser.parse_args()
 
     data_source = args.data_source[0]
+    port = args.port[0]
 
     data = DataInfo.naive_factory(data_source=data_source)
     # 1: init server utilities
-    date = '12.10'                                                 # 1
+    date = '12.11'                                                 # 1
     output_dir = f'result/{date}'
-    output_file = 'log-deepmtl-all-time'                            # 2
+    output_file = f'log-map-{port}'                                        # 2
     server = Server(output_dir, output_file)
 
-    # 2: init image to image translation model
-    device = torch.device('cuda')
+    # # 2: init image to image translation model
+    # device = torch.device('cuda')
 
-    translate_net = NetTranslation5()
-    translate_net.load_state_dict(torch.load(data.translate_net))
-    translate_net = translate_net.to(device)
-    translate_net.eval()
+    # translate_net = NetTranslation5()
+    # translate_net.load_state_dict(torch.load(data.translate_net))
+    # translate_net = translate_net.to(device)
+    # translate_net.eval()
 
-    # 3: init the darknet_cust
-    darknet_cust = Darknet(data.yolocust_def, img_size=server.DETECT_IMG_SIZE).to(device)
-    darknet_cust.load_state_dict(torch.load(data.yolocust_weights))
-    darknet_cust.eval()
+    # # 3: init the darknet_cust
+    # darknet_cust = Darknet(data.yolocust_def, img_size=server.DETECT_IMG_SIZE).to(device)
+    # darknet_cust.load_state_dict(torch.load(data.yolocust_weights))
+    # darknet_cust.eval()
 
     # 3.1: init the darknet
-    darknet = Darknet(data.yolo_def, img_size=server.DETECT_IMG_SIZE).to(device)
-    darknet.load_state_dict(torch.load(data.yolo_weights))
-    darknet.eval()
+    # darknet = Darknet(data.yolo_def, img_size=server.DETECT_IMG_SIZE).to(device)
+    # darknet.load_state_dict(torch.load(data.yolo_weights))
+    # darknet.eval()
 
 
     # 4: init IPSN20
-    # grid_len = 100
-    # debug = False                                                   # 3
-    # case = 'lognormal2'
-    # lls = []
-    # for i in range(len(data.ipsn_cov_list)):
-    #     ll = Localization(grid_len=grid_len, case=case, debug=debug)
-    #     ll.init_data(data.ipsn_cov_list[i], data.ipsn_sensors_list[i], data.ipsn_hypothesis_list[i], None)
-    #     lls.append(ll)
+    grid_len = 100
+    debug = False                                                   # 3
+    case = 'lognormal2'
+    lls = []
+    ll_index = {200:0, 400:1, 600:2, 800:3, 1000:4}
+    for i in range(len(data.ipsn_cov_list)):
+        ll = Localization(grid_len=grid_len, case=case, debug=debug)
+        ll.init_data(data.ipsn_cov_list[i], data.ipsn_sensors_list[i], data.ipsn_hypothesis_list[i], None)
+        lls.append(ll)
 
     # 6 init SPLOT TODO
 
@@ -313,5 +319,5 @@ if __name__ == '__main__':
 
     # 5: start the web server
     print('process time:', time.process_time())
-    app.run(host="0.0.0.0", port=5000, debug=True, use_reloader=False)
+    app.run(host="0.0.0.0", port=port, debug=False, use_reloader=False)
 
