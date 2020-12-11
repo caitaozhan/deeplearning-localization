@@ -15,7 +15,7 @@ class Default:
     std              = 1       # the standard deviation of the zero mean shadowing
     data_source      = 'log-distance'
     methods          = ['dl']
-    sen_density      = 200
+    sen_density      = 600
     num_intruder     = 5
     grid_length      = 100
     cell_length      = 10
@@ -157,7 +157,7 @@ class Output:
             str
         '''
         self.preds = [(round(x, 2), round(y, 2)) for x, y in self.preds]
-        self.time = round(self.time, 3)
+        self.time = round(self.time, 5)
         outputdict = {
             "method":self.method,
             "error":self.error,
@@ -229,7 +229,7 @@ class DataInfo:
             yolocust_def     = '../PyTorch-YOLOv3/config/yolov3-custom.cfg'
             yolocust_weights = '../PyTorch-YOLOv3/checkpoints_logdistance/yolov3_ckpt_5.pth'
             yolo_def         = '../PyTorch-YOLOv3/config/yolov3-custom-class.cfg'
-            yolo_weights     = ''
+            yolo_weights     = '../PyTorch-YOLOv3/checkpoints_logdistance_class/yolov3_ckpt_5.pth'
             return cls(max_ntx, test_data, train_data, ipsn_cov_list, ipsn_sen_list, ipsn_hypo_list, translate_net, yolocust_def, yolocust_weights, yolo_def, yolo_weights)
 
 

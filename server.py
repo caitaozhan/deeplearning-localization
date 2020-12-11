@@ -43,6 +43,9 @@ def localize():
     '''localize
     '''
     myinput = Input.from_json_dict(request.get_json())
+    if myinput.num_intruder in [2, 4, 6, 8, 9]:
+        return 'hello world'
+    
     sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=myinput.data_source, transform=mydnn_util.tf)
     outputs = []
     if 'deepmtl-simple' in myinput.methods:  # two CNN in sequence, the second CNN is object detection
@@ -67,7 +70,7 @@ def localize():
         pred_matrix = pred_matrix[0][0]  # one batch, one dimension
         img = torch.stack((pred_matrix, pred_matrix, pred_matrix), axis=0) # stack 3 together
         img = resize(img, server.DETECT_IMG_SIZE).unsqueeze(0)
-        # detections = darknet(img)
+        detections = darknet(img)
         detections = non_max_suppression(detections, conf_thres=0.9, nms_thres=0.4)
         pred_xy = [server.box2xy(detections[0].numpy())]  # add a batch dimension
         preds, errors, misses, falses = mydnn_util.Metrics.localization_error_image_continuous_detection(pred_xy, y_f, indx, debug=True)
@@ -269,9 +272,9 @@ if __name__ == '__main__':
 
     data = DataInfo.naive_factory(data_source=data_source)
     # 1: init server utilities
-    date = '12.9'                                                 # 1
+    date = '12.10'                                                 # 1
     output_dir = f'result/{date}'
-    output_file = 'log-deepmtl-simple2'                            # 2
+    output_file = 'log-deepmtl-all-time'                            # 2
     server = Server(output_dir, output_file)
 
     # 2: init image to image translation model
@@ -286,6 +289,12 @@ if __name__ == '__main__':
     darknet_cust = Darknet(data.yolocust_def, img_size=server.DETECT_IMG_SIZE).to(device)
     darknet_cust.load_state_dict(torch.load(data.yolocust_weights))
     darknet_cust.eval()
+
+    # 3.1: init the darknet
+    darknet = Darknet(data.yolo_def, img_size=server.DETECT_IMG_SIZE).to(device)
+    darknet.load_state_dict(torch.load(data.yolo_weights))
+    darknet.eval()
+
 
     # 4: init IPSN20
     # grid_len = 100
