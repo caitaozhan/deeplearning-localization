@@ -47,6 +47,13 @@ def localize():
         return 'hello world'
     if port == 5001 and myinput.num_intruder in [1, 2, 3, 4, 6, 7, 8, 9, 10]:  # ipsn: 5001 port is for varying sensor density
         return 'hello world'
+    if port == 5002 and myinput.sensor_density in [200, 400, 800, 1000] and myinput.num_intruder in [1, 3, 5, 7, 10]:       # deepmtl: 5002 port is for varying num of intruders
+        return 'hello world'
+    if port == 5003 and myinput.sensor_density in [200, 400, 800, 1000]:       # splot: 5003 port is for varying num of intruders
+        return 'hello world'
+    if port == 5004 and myinput.num_intruder in [1, 2, 3, 4, 6, 7, 8, 9, 10]:  # splot: 5004 port is for varying sensor density
+        return 'hello world'
+
 
     sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=myinput.data_source, transform=mydnn_util.tf)
     outputs = []
@@ -100,22 +107,39 @@ def localize():
         ll = lls[ll_index[myinput.sensor_density]]
         json_dict = server.get_json_dict(myinput.image_index, sensor_input_dataset)
         ground_truth = json_dict['ground_truth']
-        sensor_data = json_dict['sensor_data']
+        sensor_data  = json_dict['sensor_data']
         sensor_outputs = np.zeros(len(sensor_data))
         for idx, rss in sensor_data.items():
             sensor_outputs[int(idx)] = rss
         true_locations, true_powers, intruders = server.parse_ground_truth(ground_truth, ll)
-        # image = sensor_input_dataset[myinput.image_index]['matrix']
-        # myplots.visualize_sensor_output(image, true_locations)
+        if debug:
+            image = sensor_input_dataset[myinput.image_index]['matrix']
+            myplots.visualize_sensor_output(image, true_locations)
         start = time.time()
         pred_locations, pred_power = ll.our_localization(np.copy(sensor_outputs), intruders, myinput.experiment_num)
         end = time.time()
         pred_locations = server.pred_loc_to_center(pred_locations)
-        errors, miss, false_alarm, power_errors = ll.compute_error(true_locations, true_powers, pred_locations, pred_power)
+        errors, miss, false_alarm, _ = ll.compute_error(true_locations, true_powers, pred_locations, pred_power)
         outputs.append(Output('map', errors, false_alarm, miss, pred_locations, end-start))
 
     if 'splot' in myinput.methods:
-        pass
+        ll = lls[ll_index[myinput.sensor_density]]
+        json_dict = server.get_json_dict(myinput.image_index, sensor_input_dataset)
+        ground_truth = json_dict['ground_truth']
+        sensor_data  = json_dict['sensor_data']
+        sensor_outputs = np.zeros(len(sensor_data))
+        for idx, rss in sensor_data.items():
+            sensor_outputs[int(idx)] = rss
+        true_locations, true_powers, intruders = server.parse_ground_truth(ground_truth, ll)
+        if debug:
+            image = sensor_input_dataset[myinput.image_index]['matrix']
+            myplots.visualize_sensor_output(image, true_locations)
+        start = time.time()
+        pred_locations = ll.splot_localization(np.copy(sensor_outputs), intruders, myinput.experiment_num)
+        end = time.time()
+        pred_locations = server.pred_loc_to_center(pred_locations)
+        errors, miss, false_alarm = ll.compute_error2(true_locations, pred_locations)
+        outputs.append(Output('splot', errors, false_alarm, miss, pred_locations, end-start))
 
     if 'dtxf' in myinput.methods:
         pass
@@ -269,7 +293,7 @@ if __name__ == '__main__':
     hint = 'python server.py -src data/205test'
     parser = argparse.ArgumentParser(description='Server side. ' + hint)
     parser.add_argument('-src', '--data_source', type=str, nargs=1, default=[None], help='the testing data source')
-    parser.add_argument('-p', '--port', type=int, nargs=1, default=[5000], help='the port number')
+    parser.add_argument('-p', '--port', type=int, nargs=1, default=[5002], help='the port number')
     args = parser.parse_args()
 
     data_source = args.data_source[0]
@@ -279,21 +303,22 @@ if __name__ == '__main__':
     # 1: init server utilities
     date = '12.11'                                                 # 1
     output_dir = f'result/{date}'
-    output_file = f'log-map-{port}'                                        # 2
+    # output_file = f'log-map-{port}'                                        # 2
+    output_file = f'log-deepmtl-vary_numintru'                                        # 2
+    # output_file = f'log-splot-{port}'                                        # 2
     server = Server(output_dir, output_file)
 
     # # 2: init image to image translation model
-    # device = torch.device('cuda')
+    device = torch.device('cuda')
+    translate_net = NetTranslation5()
+    translate_net.load_state_dict(torch.load(data.translate_net))
+    translate_net = translate_net.to(device)
+    translate_net.eval()
 
-    # translate_net = NetTranslation5()
-    # translate_net.load_state_dict(torch.load(data.translate_net))
-    # translate_net = translate_net.to(device)
-    # translate_net.eval()
-
-    # # 3: init the darknet_cust
-    # darknet_cust = Darknet(data.yolocust_def, img_size=server.DETECT_IMG_SIZE).to(device)
-    # darknet_cust.load_state_dict(torch.load(data.yolocust_weights))
-    # darknet_cust.eval()
+    # 3: init the darknet_cust
+    darknet_cust = Darknet(data.yolocust_def, img_size=server.DETECT_IMG_SIZE).to(device)
+    darknet_cust.load_state_dict(torch.load(data.yolocust_weights))
+    darknet_cust.eval()
 
     # 3.1: init the darknet
     # darknet = Darknet(data.yolo_def, img_size=server.DETECT_IMG_SIZE).to(device)
@@ -301,23 +326,33 @@ if __name__ == '__main__':
     # darknet.eval()
 
 
-    # 4: init IPSN20
-    grid_len = 100
-    debug = False                                                   # 3
-    case = 'lognormal2'
-    lls = []
-    ll_index = {200:0, 400:1, 600:2, 800:3, 1000:4}
-    for i in range(len(data.ipsn_cov_list)):
-        ll = Localization(grid_len=grid_len, case=case, debug=debug)
-        ll.init_data(data.ipsn_cov_list[i], data.ipsn_sensors_list[i], data.ipsn_hypothesis_list[i], None)
-        lls.append(ll)
+    # 4: init MAP* (and SPLOT)
+    # grid_len = 100
+    # debug = False                                                   # 3
+    # case = 'lognormal2'
+    # lls = []
+    # ll_index = {200:0, 400:1, 600:2, 800:3, 1000:4}
+    # for i in range(len(data.ipsn_cov_list)):
+    #     ll = Localization(grid_len=grid_len, case=case, debug=debug)
+    #     ll.init_data(data.ipsn_cov_list[i], data.ipsn_sensors_list[i], data.ipsn_hypothesis_list[i], None)
+    #     lls.append(ll)
 
-    # 6 init SPLOT TODO
+    # ll = Localization(grid_len=grid_len, case=case, debug=debug)
+    # ll.init_data(data.ipsn_cov_list[2], data.ipsn_sensors_list[2], data.ipsn_hypothesis_list[2], None)
+    # for i in range(len(data.ipsn_cov_list)):
+    #     lls.append(ll)
 
-    # 7 init deeptxfinder TODO
+
+    # 5 init deeptxfinder TODO
 
 
-    # 5: start the web server
+    # 6: start the web server
     print('process time:', time.process_time())
     app.run(host="0.0.0.0", port=port, debug=False, use_reloader=False)
 
+
+
+# python server.py -src data/205test -p 5000
+# python server.py -src data/205test -p 5001
+# python server.py -src data/205test -p 5003
+# python server.py -src data/205test -p 5004

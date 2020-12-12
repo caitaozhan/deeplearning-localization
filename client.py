@@ -76,4 +76,8 @@ if __name__ == '__main__':
 
 # python client.py -exp 0 10 -met dl map -src data/matrix-test60
 
-    
+
+# python client.py -src data/205test -met map -exp 0 200 -p 5000
+# python client.py -src data/205test -met map -exp 0 200 -p 5001
+# python client.py -src data/205test -met splot -exp 0 5000 -p 5003
+# python client.py -src data/205test -met splot -exp 0 5000 -p 5004
