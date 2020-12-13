@@ -6,6 +6,7 @@ import glob
 import os
 import numpy as np
 from torch.utils.data import Dataset, DataLoader
+import torch
 
 from input_output import Default
 from utility import Utility
@@ -243,3 +244,140 @@ tf = T.Compose([
      UniformNormalize(Default.noise_floor),                 # TUNE: Uniform normalization is better than the above minmax normalization
      T.ToTensor()])
 
+
+
+############# Below are for DeepTxFinder #################3
+
+
+class SensorInputDatasetRegression(Dataset):
+    '''Sensor reading input dataset -- for multi TX
+       Output is image, model as a image segmentation problem
+    '''
+    def __init__(self, root_dir: str, grid_len:int, transform=None):
+        '''
+        Args:
+            root_dir:  directory with all the images
+            labels:    labels of images
+            transform: optional transform to be applied on a sample
+        '''
+        self.root_dir = root_dir
+        self.transform = transform
+        self.length = len(os.listdir(self.root_dir))
+        self.sample_per_label = self.get_sample_per_label()
+        self.grid_len = grid_len
+
+    def __len__(self):
+        return self.length * self.sample_per_label
+
+    def __getitem__(self, idx):
+        folder = int(idx/self.sample_per_label)
+        folder = format(folder, '06d')
+        matrix_name = str(idx%self.sample_per_label) + '.npy'
+        matrix_path = os.path.join(self.root_dir, folder, matrix_name)
+        target_name = str(idx%self.sample_per_label) + '.target.npy'
+        target_arr = self.get_regression_target(folder, target_name)
+        target_num = int(len(target_arr)/2)
+        matrix = np.load(matrix_path)
+        if self.transform:
+            matrix = self.transform(matrix)
+        target_arr = self.min_max_normalize(target_arr)
+        sample = {'matrix': matrix, 'target': target_arr, 'target_num': target_num, 'index': idx}
+        return sample
+
+    def get_sample_per_label(self):
+        folder = glob.glob(os.path.join(self.root_dir, '*'))[0]
+        samples = glob.glob(os.path.join(folder, '*.npy'))
+        targets = glob.glob(os.path.join(folder, '*.target.npy'))
+        return len(samples) - len(targets)
+
+    def get_regression_target(self, folder: str, target_name: str):
+        '''
+        Args:
+            folder: example of folder is 000001
+        Return:
+            a two dimension matrix
+        '''
+        target_file = os.path.join(self.root_dir, folder, target_name)
+        target = np.load(target_file)
+        target = np.reshape(target, -1)
+        return target.astype(np.float32)
+
+    def min_max_normalize(self, target_arr: np.ndarray):
+        '''scale the localization to a range of (0, 1)
+        '''
+        target_arr /= Default.grid_length
+        return target_arr
+
+    def undo_normalize(self, arr: np.ndarray):
+        arr *= self.grid_len
+        return arr
+
+
+class Normalize:
+    '''dtxf
+    '''
+    def __init__(self, noise_floor):
+        self.noise_floor = noise_floor
+
+    def __call__(self, matrix):
+        matrix -= self.noise_floor
+        max_value = max([max(l) for l in matrix])
+        matrix /= (max_value)
+        return matrix.astype(np.float32)
+
+dtxf_tf = T.Compose([
+     Normalize(Default.noise_floor),
+     T.ToTensor()])
+
+def match(pred, y):
+    '''
+    Args:
+        pred: Tensor -- (batch size, num tx * 2)
+        y   : Tensor -- (batch size, num tx * 2)
+    '''
+    batch_size = len(pred)
+    dimension  = len(pred[0])
+    pred_m, y_m = torch.zeros((batch_size, dimension)), torch.zeros((batch_size, dimension))
+    for i in range(batch_size):
+        pred2, y2 = [], []   # for one sample
+        for j in range(0, dimension, 2):
+            pred2.append(pred[i][j:j+2])
+            y2.append(y[i][j:j+2])
+        pred2, y2 = match_helper(pred2, y2)
+        pred_m[i] = pred2
+        y_m[i]    = y2
+    return pred_m, y_m
+
+
+def match_helper(pred, y):
+    ''' up to now, assume len(pred) and len(y) is equal
+        do a matching of the predictions and truth
+    Args:
+        pred: list<Tensor<float>> -- pairs of locations
+        y   : list<Tensor> -- pairs of locations
+    Return:
+        Tensor<float>, Tensor<float>
+    '''
+    distances = np.zeros((len(pred), len(y)))
+    for i in range(len(pred)):
+        for j in range(len(y)):
+            distances[i, j] = Utility.distance(pred[i], y[j])
+
+    matches = []
+    k = 0
+    while k < min(len(pred), len(y)):
+        min_error = np.min(distances)
+        min_error_index = np.argmin(distances)
+        i = min_error_index // len(y)
+        j = min_error_index % len(y)
+        matches.append((i, j, min_error))
+        distances[i, :] = np.inf
+        distances[:, j] = np.inf
+        k += 1
+
+    pred_m, y_m = [], []
+    for i, j, e in matches:
+        pred_m.append(pred[i])
+        y_m.append(y[j])
+
+    return torch.cat(pred_m), torch.cat(y_m)

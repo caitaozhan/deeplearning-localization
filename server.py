@@ -10,10 +10,11 @@ import json
 import numpy as np
 from flask import Flask, request
 from dataclasses import dataclass
-from mydnn import NetTranslation5
+from mydnn import NetTranslation5, CNN_NoTx, CNN_i
 import mydnn_util
 import myplots
 from input_output import Input, Output, Default, DataInfo
+from utility import Utility
 
 # The IPSN20 algo
 try:
@@ -46,8 +47,6 @@ def localize():
     if port == 5000 and myinput.sensor_density in [200, 400, 800, 1000]:       # ipsn: 5000 port is for varying num of intruders
         return 'hello world'
     if port == 5001 and myinput.num_intruder in [1, 2, 3, 4, 6, 7, 8, 9, 10]:  # ipsn: 5001 port is for varying sensor density
-        return 'hello world'
-    if port == 5002 and myinput.sensor_density in [200, 400, 800, 1000] and myinput.num_intruder in [1, 3, 5, 7, 10]:       # deepmtl: 5002 port is for varying num of intruders
         return 'hello world'
     if port == 5003 and myinput.sensor_density in [200, 400, 800, 1000]:       # splot: 5003 port is for varying num of intruders
         return 'hello world'
@@ -91,7 +90,7 @@ def localize():
         X      = torch.as_tensor(sample['matrix']).unsqueeze(0).to(device)
         y_f    = np.expand_dims(sample['target_float'], 0)
         indx   = np.expand_dims(np.array(sample['index']), 0)
-        start = time.time()
+        start  = time.time()
         pred_matrix = translate_net(X)
         pred_matrix = pred_matrix[0][0]  # one batch, one dimension
         img = torch.stack((pred_matrix, pred_matrix, pred_matrix), axis=0) # stack 3 together
@@ -102,6 +101,29 @@ def localize():
         preds, errors, misses, falses = mydnn_util.Metrics.localization_error_image_continuous_detection(pred_xy, y_f, indx, debug=True)
         end = time.time()
         outputs.append(Output('deepmtl', errors[0], falses[0], misses[0], preds[0], end-start))
+
+    if 'dtxf' in myinput.methods:
+        sensor_input_dataset_regress = mydnn_util.SensorInputDatasetRegression(root_dir=myinput.data_source, grid_len=Default.grid_length, transform=mydnn_util.dtxf_tf)
+        sample = sensor_input_dataset_regress[myinput.image_index]
+        X      = torch.as_tensor(sample['matrix']).unsqueeze(0).to(device)
+        y      = np.array(sample['target'])
+        indx   = np.expand_dims(np.array(sample['index']), 0)
+        start  = time.time()
+        pred_ntx = cnn1(X)
+        _, pred_ntx = pred_ntx.data.cpu().max(1)
+        pred_ntx = pred_ntx[0]
+        cnn2 = cnn2s[pred_ntx]    # select the cnn2 according to pred_ntx
+        pred_loc = cnn2(X)
+        pred_loc = pred_loc.data.cpu().numpy()[0]
+        pred_loc = sensor_input_dataset_regress.undo_normalize(pred_loc)
+        y        = sensor_input_dataset_regress.undo_normalize(y)
+        pred_loc = np.reshape(pred_loc, (len(pred_loc)//2, 2))
+        y        = np.reshape(y, (len(y)//2, 2))
+        radius_threshold = Default.grid_length * 0.5
+        error, miss, false = Utility.compute_error(pred_loc, y, radius_threshold, False)
+        end = time.time()
+        pred_loc = [(float(x), float(y)) for x, y in pred_loc]
+        outputs.append(Output('deeptxfinder', error, false, miss, pred_loc, end-start))
 
     if 'map' in myinput.methods:
         ll = lls[ll_index[myinput.sensor_density]]
@@ -141,8 +163,6 @@ def localize():
         errors, miss, false_alarm = ll.compute_error2(true_locations, pred_locations)
         outputs.append(Output('splot', errors, false_alarm, miss, pred_locations, end-start))
 
-    if 'dtxf' in myinput.methods:
-        pass
 
     server.log(myinput, outputs)
     return 'hello world'
@@ -293,7 +313,7 @@ if __name__ == '__main__':
     hint = 'python server.py -src data/205test'
     parser = argparse.ArgumentParser(description='Server side. ' + hint)
     parser.add_argument('-src', '--data_source', type=str, nargs=1, default=[None], help='the testing data source')
-    parser.add_argument('-p', '--port', type=int, nargs=1, default=[5002], help='the port number')
+    parser.add_argument('-p', '--port', type=int, nargs=1, default=[5000], help='the port number')
     args = parser.parse_args()
 
     data_source = args.data_source[0]
@@ -301,24 +321,24 @@ if __name__ == '__main__':
 
     data = DataInfo.naive_factory(data_source=data_source)
     # 1: init server utilities
-    date = '12.11'                                                 # 1
+    date = '12.12'                                                 # 1
     output_dir = f'result/{date}'
     # output_file = f'log-map-{port}'                                        # 2
-    output_file = f'log-deepmtl-vary_numintru'                                        # 2
+    output_file = f'log-dtxf-{port}'                                        # 2
     # output_file = f'log-splot-{port}'                                        # 2
     server = Server(output_dir, output_file)
 
     # # 2: init image to image translation model
-    device = torch.device('cuda')
-    translate_net = NetTranslation5()
-    translate_net.load_state_dict(torch.load(data.translate_net))
-    translate_net = translate_net.to(device)
-    translate_net.eval()
+    # device = torch.device('cuda')
+    # translate_net = NetTranslation5()
+    # translate_net.load_state_dict(torch.load(data.translate_net))
+    # translate_net = translate_net.to(device)
+    # translate_net.eval()
 
-    # 3: init the darknet_cust
-    darknet_cust = Darknet(data.yolocust_def, img_size=server.DETECT_IMG_SIZE).to(device)
-    darknet_cust.load_state_dict(torch.load(data.yolocust_weights))
-    darknet_cust.eval()
+    # # 3: init the darknet_cust
+    # darknet_cust = Darknet(data.yolocust_def, img_size=server.DETECT_IMG_SIZE).to(device)
+    # darknet_cust.load_state_dict(torch.load(data.yolocust_weights))
+    # darknet_cust.eval()
 
     # 3.1: init the darknet
     # darknet = Darknet(data.yolo_def, img_size=server.DETECT_IMG_SIZE).to(device)
@@ -343,7 +363,23 @@ if __name__ == '__main__':
     #     lls.append(ll)
 
 
-    # 5 init deeptxfinder TODO
+    # 5 init deeptxfinder
+    device = torch.device('cuda')
+    max_ntx = 10
+    cnn1  = CNN_NoTx(max_ntx)
+    cnn1.load_state_dict(torch.load(data.dtxf_cnn1))
+    cnn1 = cnn1.to(device)
+    cnn1.eval()
+    cnn2s = []
+    cnn2_template = data.dtxf_cnn2_template
+    for i in range(max_ntx):
+        num_ntx = i + 1
+        cnn2 = CNN_i(num_ntx)
+        cnn2.load_state_dict(torch.load(cnn2_template.format(num_ntx)))
+        cnn2 = cnn2.to(device)
+        cnn2.eval()
+        cnn2s.append(cnn2)
+
 
 
     # 6: start the web server

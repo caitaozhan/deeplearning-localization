@@ -155,3 +155,63 @@ class NetTranslation5(nn.Module):
         x = F.relu(self.norm3(self.conv3(x)))
         y = self.conv4(x)
         return y
+
+
+
+########## Below are for DeepTxFinder ###############
+
+class CNN_NoTx(nn.Module):
+    """this CNN predicts # of TX """
+    def __init__(self, max_ntx):
+        super(CNN_NoTx, self).__init__()
+        self.conv1 = nn.Conv2d(1, 32, kernel_size=(3, 3))
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=(3, 3))
+        self.conv3 = nn.Conv2d(64, 128, kernel_size=(3, 3))
+        self.conv4 = nn.Conv2d(128, 128, kernel_size=(3, 3))
+        self.flat = nn.Flatten()
+        self.drop = nn.Dropout(p=0.5)
+        self.dense = nn.Linear(8192, 512)
+        self.dense1 = nn.Linear(512, max_ntx)
+
+    def forward(self, x):
+        x = F.max_pool2d(F.relu(self.conv1(x)), 2)
+        x = F.max_pool2d(F.relu(self.conv2(x)), 2)
+        x = F.max_pool2d(F.relu(self.conv3(x)), 2)
+        x = F.relu(self.conv4(x))
+        x = self.flat(x)
+        x = self.drop(x)
+        x = F.relu(self.dense(x))
+        x = self.dense1(x)
+        return x
+
+    def num_flat_features(self, x):
+        size = x.size()[1:]
+        num_features = 1
+        for s in size:
+            num_features *= s
+        return num_features
+
+
+class CNN_i(nn.Module):
+
+    def __init__(self, ntx):
+        super(CNN_i, self).__init__()
+        self.conv1 = nn.Conv2d(1, 32, kernel_size=(3, 3))
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=(3, 3))
+        self.conv3 = nn.Conv2d(64, 128, kernel_size=(3, 3))
+        self.conv4 = nn.Conv2d(128, 128, kernel_size=(3, 3))
+        self.flat = nn.Flatten()
+        self.drop = nn.Dropout(p=0.5)
+        self.dense = nn.Linear(8192, 512)
+        self.dense1 = nn.Linear(512, 2*ntx)
+
+    def forward(self, x):
+        x = F.max_pool2d(F.relu(self.conv1(x)), 2)
+        x = F.max_pool2d(F.relu(self.conv2(x)), 2)
+        x = F.max_pool2d(F.relu(self.conv3(x)), 2)
+        x = F.relu(self.conv4(x))
+        x = self.flat(x)
+        x = self.drop(x)
+        x = F.relu(self.dense(x))
+        x = self.dense1(x)
+        return x

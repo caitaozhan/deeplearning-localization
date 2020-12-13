@@ -19,12 +19,12 @@ class PlotResults:
     plt.rcParams['font.weight'] = 'bold'
     plt.rcParams['axes.labelweight'] = 'bold'
 
-    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple']
-    _LEGEND = ['DeepMTL', 'DeepMTL-yolo', 'DeepMTL-peak']
+    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',     'splot', 'dtxf']
+    _LEGEND = ['DeepMTL', 'DeepMTL-yolo', 'DeepMTL-peak',   'MAP$^*$', 'SPLOT', 'DeepTxFinder']
     LEGEND  = dict(zip(METHOD, _LEGEND))
 
-    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple']
-    _COLOR  = ['r',       'tab:cyan',     'tab:orange']
+    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',       'splot',       'dtxf']
+    _COLOR  = ['r',       'tab:cyan',     'tab:orange',     'limegreen', 'deepskyblue', 'violet']
     COLOR   = dict(zip(METHOD, _COLOR))
 
     METRIC = ['miss', 'false']
@@ -274,7 +274,7 @@ class PlotResults:
     def error_missfalse_vary_numintru(data, data_source, sen_density, fignames: List):
         # step 1: prepare for data
         metric = 'error'
-        methods = ['map', 'splot', 'deepmtl']
+        methods = ['deepmtl', 'map', 'splot', 'deeptxfinder']
         table = defaultdict(list)
         reduce_f = PlotResults.reduce_avg
         for myinput, output_by_method in data:
@@ -286,10 +286,11 @@ class PlotResults:
             print_table.append([x] + tmp_list)
         print('Metric:', metric)
         print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
-        # arr = np.array(print_table)
-        # deepmtl_error      = arr[:, 1] * Default.cell_length
-        # deepmtl_yolo_error = arr[:, 2] * Default.cell_length
-        # deepmtl_peak_error = arr[:, 3] * Default.cell_length
+        arr = np.array(print_table)
+        deepmtl_error = arr[:, 1] * Default.cell_length
+        map_error     = arr[:, 2] * Default.cell_length
+        splot_error   = arr[:, 3] * Default.cell_length
+        dtxf_error    = arr[:, 4] * Default.cell_length
 
         metric = 'miss'
         table = defaultdict(list)
@@ -303,10 +304,11 @@ class PlotResults:
             print_table.append([x] + tmp_list)
         print('Metric:', metric)
         print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
-        # arr = np.array(print_table)
-        # deepmtl_miss      = arr[:, 1] * 100
-        # deepmtl_yolo_miss = arr[:, 2] * 100
-        # deepmtl_peak_miss = arr[:, 3] * 100
+        arr = np.array(print_table)
+        deepmtl_miss = arr[:, 1] * 100
+        map_miss     = arr[:, 2] * 100
+        splot_miss   = arr[:, 3] * 100
+        dtxf_miss    = arr[:, 4] * 100
 
         metric = 'false_alarm'
         table = defaultdict(list)
@@ -321,51 +323,68 @@ class PlotResults:
         print('Metric:', metric)
         print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
         arr = np.array(print_table)
-        # deepmtl_false      = arr[:, 1] * 100
-        # deepmtl_yolo_false = arr[:, 2] * 100
-        # deepmtl_peak_false = arr[:, 3] * 100
-        # X_label            = arr[:, 0]
-
-        return
+        deepmtl_false = arr[:, 1] * 100
+        map_false     = arr[:, 2] * 100
+        splot_false   = arr[:, 3] * 100
+        dtxf_false    = arr[:, 4] * 100
+        X_label       = arr[:, 0]
 
         # step 2: the plot
         plt.rcParams['font.size'] = 65
         ind = np.arange(len(deepmtl_error))
-        fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(40, 20))
+        fig, ax = plt.subplots(1, 1, figsize=(40, 20))
         fig.subplots_adjust(left=0.08, right=0.99, top=0.86, bottom=0.12)
-        width = 0.24
-        pos1 = ind - width - 0.005
-        pos2 = ind
-        pos3 = ind + width + 0.005
-        ax0.bar(pos1, deepmtl_error, width, edgecolor='black', label=PlotResults.LEGEND['deepmtl'], color=PlotResults.COLOR['deepmtl'])
-        ax0.bar(pos2, deepmtl_yolo_error, width, edgecolor='black', label=PlotResults.LEGEND['deepmtl-yolo'], color=PlotResults.COLOR['deepmtl-yolo'])
-        ax0.bar(pos3, deepmtl_peak_error, width, edgecolor='black', label=PlotResults.LEGEND['deepmtl-simple'], color=PlotResults.COLOR['deepmtl-simple'])
-        ax0.set_xticks(ind)
-        ax0.set_xticklabels([str(int(x)) for x in X_label])
-        ax0.tick_params(axis='x', pad=15)
-        ax0.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
-        ax0.set_ylabel('Mean Localization Error (m)')
-        ax0.set_xlabel('Number of Intruders', labelpad=20)
-        handles, labels = ax0.get_legend_handles_labels()
-        fig.legend(handles, labels, loc='upper center', ncol=3, fontsize=70)
+        width = 0.2
+        pos1 = ind - 1.5 * width
+        pos2 = ind - 0.5 * width
+        pos3 = ind + 0.5 * width
+        pos4 = ind + 1.5 * width
+        ax.bar(pos1, deepmtl_error, width, edgecolor='black', label=PlotResults.LEGEND['deepmtl'], color=PlotResults.COLOR['deepmtl'])
+        ax.bar(pos2, map_error, width, edgecolor='black', label=PlotResults.LEGEND['map'], color=PlotResults.COLOR['map'])
+        ax.bar(pos3, splot_error, width, edgecolor='black', label=PlotResults.LEGEND['splot'], color=PlotResults.COLOR['splot'])
+        ax.bar(pos4, dtxf_error, width, edgecolor='black', label=PlotResults.LEGEND['dtxf'], color=PlotResults.COLOR['dtxf'])
+        ax.set_xticks(ind)
+        ax.set_xticklabels([str(int(x)) for x in X_label])
+        ax.tick_params(axis='x', pad=15)
+        ax.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
+        ax.set_ylabel('Mean Localization Error (m)')
+        ax.set_xlabel('Number of Intruders', labelpad=20)
+        handles, labels = ax.get_legend_handles_labels()
+        fig.legend(handles, labels, loc='upper center', ncol=4, fontsize=70)
+        for figname in fignames[:2]:
+            fig.savefig(figname)
 
-        ax1.bar(pos1, deepmtl_miss, width, edgecolor='black',       color=PlotResults.COLOR['deepmtl'],        hatch=PlotResults.HATCH['miss'])
-        ax1.bar(pos1, deepmtl_false, width, edgecolor='black',      color=PlotResults.COLOR['deepmtl'],        hatch=PlotResults.HATCH['false'], bottom=deepmtl_miss)
-        ax1.bar(pos2, deepmtl_yolo_miss, width, edgecolor='black',  color=PlotResults.COLOR['deepmtl-yolo'],   hatch=PlotResults.HATCH['miss'])
-        ax1.bar(pos2, deepmtl_yolo_false, width, edgecolor='black', color=PlotResults.COLOR['deepmtl-yolo'],   hatch=PlotResults.HATCH['false'], bottom=deepmtl_yolo_miss)
-        ax1.bar(pos3, deepmtl_peak_miss, width, edgecolor='black',  color=PlotResults.COLOR['deepmtl-simple'], hatch=PlotResults.HATCH['miss'])
-        ax1.bar(pos3, deepmtl_peak_false, width, edgecolor='black', color=PlotResults.COLOR['deepmtl-simple'], hatch=PlotResults.HATCH['false'], bottom=deepmtl_peak_miss)
+        plt.rcParams['font.size'] = 70
+        ind = np.arange(len(deepmtl_error))
+        fig, ax = plt.subplots(1, 1, figsize=(40, 20))
+        fig.subplots_adjust(left=0.08, right=0.99, top=0.86, bottom=0.12)
+        ax.bar(pos1, deepmtl_miss, width, edgecolor='black',  color=PlotResults.COLOR['deepmtl'], hatch=PlotResults.HATCH['miss'])
+        ax.bar(pos1, deepmtl_false, width, edgecolor='black', color=PlotResults.COLOR['deepmtl'], hatch=PlotResults.HATCH['false'], bottom=deepmtl_miss)
+        ax.bar(pos2, map_miss, width, edgecolor='black',      color=PlotResults.COLOR['map'],     hatch=PlotResults.HATCH['miss'])
+        ax.bar(pos2, map_false, width, edgecolor='black',     color=PlotResults.COLOR['map'],     hatch=PlotResults.HATCH['false'], bottom=map_miss)
+        ax.bar(pos3, splot_miss, width, edgecolor='black',    color=PlotResults.COLOR['splot'],   hatch=PlotResults.HATCH['miss'])
+        ax.bar(pos3, splot_false, width, edgecolor='black',   color=PlotResults.COLOR['splot'],   hatch=PlotResults.HATCH['false'], bottom=splot_miss)
+        ax.bar(pos4, dtxf_miss, width, edgecolor='black',     color=PlotResults.COLOR['dtxf'],    hatch=PlotResults.HATCH['miss'])
+        ax.bar(pos4, dtxf_false, width, edgecolor='black',    color=PlotResults.COLOR['dtxf'],    hatch=PlotResults.HATCH['false'], bottom=dtxf_miss)
+
         miss_patch = mpatches.Patch(facecolor='0.95', hatch=PlotResults.HATCH['miss'], label='Miss Rate')
         false_patch = mpatches.Patch(facecolor='0.95', hatch=PlotResults.HATCH['false'], label='False Alarm Rate')
-        ax1.legend(handles=[miss_patch, false_patch], bbox_to_anchor=(0.32, 0.52, 0.5, 0.5))
-        ax1.set_xticks(ind)
-        ax1.set_xticklabels([str(int(x)) for x in X_label])
-        ax1.tick_params(axis='x', pad=15)
-        ax1.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
-        ax1.set_xlabel('Number of Intruders', labelpad=20)
-        ax1.set_ylabel('Percentage (%)')
+        first_legend = plt.legend(handles=[miss_patch, false_patch], bbox_to_anchor=(0.18, 0.45, 0.5, 0.5))
+        plt.gca().add_artist(first_legend)
 
-        for figname in fignames:
+        deepmtl_patch = mpatches.Patch(label=PlotResults.LEGEND['deepmtl'], color=PlotResults.COLOR['deepmtl'])
+        map_patch = mpatches.Patch(label=PlotResults.LEGEND['map'], color=PlotResults.COLOR['map'])
+        splot_patch = mpatches.Patch(label=PlotResults.LEGEND['splot'], color=PlotResults.COLOR['splot'])
+        dtxf_patch = mpatches.Patch(label=PlotResults.LEGEND['dtxf'], color=PlotResults.COLOR['dtxf'])
+        plt.legend(handles=[deepmtl_patch, map_patch, splot_patch, dtxf_patch], bbox_to_anchor=(0.5, 0.68, 0.5, 0.5), ncol=4)
+
+        ax.set_xticks(ind)
+        ax.set_xticklabels([str(int(x)) for x in X_label])
+        ax.tick_params(axis='x', pad=15)
+        ax.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
+        ax.set_xlabel('Number of Intruders', labelpad=20)
+        ax.set_ylabel('Percentage (%)')
+        for figname in fignames[2:]:
             fig.savefig(figname)
 
 
@@ -373,7 +392,7 @@ class PlotResults:
     def error_missfalse_vary_sendensity(data, data_source, num_intruder, fignames: List):
         # step 1: prepare for data
         metric = 'error'
-        methods = ['map', 'splot', 'deepmtl']
+        methods = ['deepmtl', 'map', 'splot', 'deeptxfinder']
         table = defaultdict(list)
         reduce_f = PlotResults.reduce_avg
         for myinput, output_by_method in data:
@@ -385,10 +404,11 @@ class PlotResults:
             print_table.append([x] + tmp_list)
         print('Metric:', metric)
         print(tabulate.tabulate(print_table, headers=['SEN DEN'] + methods))
-        # arr = np.array(print_table)
-        # deepmtl_error      = arr[:, 1] * Default.cell_length
-        # deepmtl_yolo_error = arr[:, 2] * Default.cell_length
-        # deepmtl_peak_error = arr[:, 3] * Default.cell_length
+        arr = np.array(print_table)
+        deepmtl_error = arr[:, 1] * Default.cell_length
+        map_error     = arr[:, 2] * Default.cell_length
+        splot_error   = arr[:, 3] * Default.cell_length
+        dtxf_error    = arr[:, 4] * Default.cell_length
 
         metric = 'miss'
         table = defaultdict(list)
@@ -402,10 +422,11 @@ class PlotResults:
             print_table.append([x] + tmp_list)
         print('Metric:', metric)
         print(tabulate.tabulate(print_table, headers=['SEN DEN'] + methods))
-        # arr = np.array(print_table)
-        # deepmtl_miss      = arr[:, 1] * 100
-        # deepmtl_yolo_miss = arr[:, 2] * 100
-        # deepmtl_peak_miss = arr[:, 3] * 100
+        arr = np.array(print_table)
+        deepmtl_miss = arr[:, 1] * 100
+        map_miss     = arr[:, 2] * 100
+        splot_miss   = arr[:, 3] * 100
+        dtxf_miss    = arr[:, 4] * 100
 
         metric = 'false_alarm'
         table = defaultdict(list)
@@ -418,26 +439,27 @@ class PlotResults:
             print_table.append([x] + tmp_list)
         print('Metric:', metric)
         print(tabulate.tabulate(print_table, headers=['SEN DEN'] + methods))
-        # arr = np.array(print_table)
-        # deepmtl_false      = arr[:, 1] * 100
-        # deepmtl_yolo_false = arr[:, 2] * 100
-        # deepmtl_peak_false = arr[:, 3] * 100
-        # X_label            = arr[:, 0]
-
-        return
+        arr = np.array(print_table)
+        deepmtl_false = arr[:, 1] * 100
+        map_false     = arr[:, 2] * 100
+        splot_false   = arr[:, 3] * 100
+        dtxf_false    = arr[:, 4] * 100
+        X_label       = arr[:, 0]
 
         # step 2: the plot
         plt.rcParams['font.size'] = 65
         ind = np.arange(len(deepmtl_error))
         fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(40, 20))
         fig.subplots_adjust(left=0.08, right=0.99, top=0.86, bottom=0.12)
-        width = 0.24
-        pos1 = ind - width - 0.005
-        pos2 = ind
-        pos3 = ind + width + 0.005
+        width = 0.18
+        pos1 = ind - 1.5 * width
+        pos2 = ind - 0.5 * width
+        pos3 = ind + 0.5 * width
+        pos4 = ind + 1.5 * width
         ax0.bar(pos1, deepmtl_error, width, edgecolor='black', label=PlotResults.LEGEND['deepmtl'], color=PlotResults.COLOR['deepmtl'])
-        ax0.bar(pos2, deepmtl_yolo_error, width, edgecolor='black', label=PlotResults.LEGEND['deepmtl-yolo'], color=PlotResults.COLOR['deepmtl-yolo'])
-        ax0.bar(pos3, deepmtl_peak_error, width, edgecolor='black', label=PlotResults.LEGEND['deepmtl-simple'], color=PlotResults.COLOR['deepmtl-simple'])
+        ax0.bar(pos2, map_error, width, edgecolor='black', label=PlotResults.LEGEND['map'], color=PlotResults.COLOR['map'])
+        ax0.bar(pos3, splot_error, width, edgecolor='black', label=PlotResults.LEGEND['splot'], color=PlotResults.COLOR['splot'])
+        ax0.bar(pos4, dtxf_error, width, edgecolor='black', label=PlotResults.LEGEND['dtxf'], color=PlotResults.COLOR['dtxf'])
         ax0.set_xticks(ind)
         ax0.set_xticklabels([str(int(int(x)/10000*100)) for x in X_label])
         ax0.tick_params(axis='x', pad=15)
@@ -445,26 +467,27 @@ class PlotResults:
         ax0.set_ylabel('Mean Localization Error (m)')
         ax0.set_xlabel('Sensor Density (%)', labelpad=20)
         handles, labels = ax0.get_legend_handles_labels()
-        fig.legend(handles, labels, loc='upper center', ncol=3, fontsize=70)
+        fig.legend(handles, labels, loc='upper center', ncol=4, fontsize=65)
 
-        ax1.bar(pos1, deepmtl_miss, width, edgecolor='black',       color=PlotResults.COLOR['deepmtl'],        hatch=PlotResults.HATCH['miss'])
-        ax1.bar(pos1, deepmtl_false, width, edgecolor='black',      color=PlotResults.COLOR['deepmtl'],        hatch=PlotResults.HATCH['false'], bottom=deepmtl_miss)
-        ax1.bar(pos2, deepmtl_yolo_miss, width, edgecolor='black',  color=PlotResults.COLOR['deepmtl-yolo'],   hatch=PlotResults.HATCH['miss'])
-        ax1.bar(pos2, deepmtl_yolo_false, width, edgecolor='black', color=PlotResults.COLOR['deepmtl-yolo'],   hatch=PlotResults.HATCH['false'], bottom=deepmtl_yolo_miss)
-        ax1.bar(pos3, deepmtl_peak_miss, width, edgecolor='black',  color=PlotResults.COLOR['deepmtl-simple'], hatch=PlotResults.HATCH['miss'])
-        ax1.bar(pos3, deepmtl_peak_false, width, edgecolor='black', color=PlotResults.COLOR['deepmtl-simple'], hatch=PlotResults.HATCH['false'], bottom=deepmtl_peak_miss)
+        ax1.bar(pos1, deepmtl_miss, width, edgecolor='black',  color=PlotResults.COLOR['deepmtl'], hatch=PlotResults.HATCH['miss'])
+        ax1.bar(pos1, deepmtl_false, width, edgecolor='black', color=PlotResults.COLOR['deepmtl'], hatch=PlotResults.HATCH['false'], bottom=deepmtl_miss)
+        ax1.bar(pos2, map_miss, width, edgecolor='black',      color=PlotResults.COLOR['map'],     hatch=PlotResults.HATCH['miss'])
+        ax1.bar(pos2, map_false, width, edgecolor='black',     color=PlotResults.COLOR['map'],     hatch=PlotResults.HATCH['false'], bottom=map_miss)
+        ax1.bar(pos3, splot_miss, width, edgecolor='black',    color=PlotResults.COLOR['splot'],   hatch=PlotResults.HATCH['miss'])
+        ax1.bar(pos3, splot_false, width, edgecolor='black',   color=PlotResults.COLOR['splot'],   hatch=PlotResults.HATCH['false'], bottom=splot_miss)
+        ax1.bar(pos4, dtxf_miss, width, edgecolor='black',     color=PlotResults.COLOR['dtxf'],    hatch=PlotResults.HATCH['miss'])
+        ax1.bar(pos4, dtxf_false, width, edgecolor='black',    color=PlotResults.COLOR['dtxf'],    hatch=PlotResults.HATCH['false'], bottom=dtxf_miss)
         miss_patch = mpatches.Patch(facecolor='0.95', hatch=PlotResults.HATCH['miss'], label='Miss Rate')
         false_patch = mpatches.Patch(facecolor='0.95', hatch=PlotResults.HATCH['false'], label='False Alarm Rate')
-        ax1.legend(handles=[miss_patch, false_patch], bbox_to_anchor=(0.2, 0.52, 0.5, 0.5))
+        ax1.legend(handles=[miss_patch, false_patch], bbox_to_anchor=(0.22, 0.45, 0.5, 0.5))
         ax1.set_xticks(ind)
         ax1.set_xticklabels([str(int(int(x)/10000*100)) for x in X_label])
         ax1.tick_params(axis='x', pad=15)
         ax1.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
-        ax1.set_ylim([0, 20])
-        ax1.set_yticks([0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20])
+        ax1.set_ylim([0, 14])
+        ax1.set_yticks([0, 2, 4, 6, 8, 10, 12, 14])
         ax1.set_xlabel('Sensor Density (%)', labelpad=20)
         ax1.set_ylabel('Percentage (%)')
-
         for figname in fignames:
             fig.savefig(figname)
 
@@ -583,16 +606,17 @@ def compare_logdistance():
 
     # error, miss and false for varying num of intruders
     data_source = 'data/205test'
-    logs    = ['result/12.11/log-map-5000', 'result/12.11/log-splot-5003', 'result/12.10/log-deepmtl-all-vary_numintru', 'result/12.11/log-deepmtl-vary_numintru']
+    logs    = ['result/12.11/log-map-5000', 'result/12.11/log-splot-5003', 'result/12.10/log-deepmtl-all-vary_numintru', 'result/12.11/log-deepmtl-vary_numintru', 'result/12.12/log-dtxf-5000']
     data    = IOUtility.read_logs(logs)
-    fignames = ['result/12.11/log_distance-error_missfalse_vary_numintru.png', '/home/caitao/Project/latex/localize/deeplearning/figures/log_distance-error_missfalse_vary_numintru.png']
+    fignames = ['result/12.12/log_distance-error_vary_numintru.png',     '/home/caitao/Project/latex/localize/deeplearning/figures/log_distance-error_vary_numintru.png',\
+                'result/12.12/log_distance-missfalse_vary_numintru.png', '/home/caitao/Project/latex/localize/deeplearning/figures/log_distance-missfalse_vary_numintru.png']
     PlotResults.error_missfalse_vary_numintru(data, data_source, sen_density=Default.sen_density, fignames=fignames)
     print()
 
     # error, miss and false for varying sensor density
-    logs    = ['result/12.11/log-map-5001', 'result/12.11/log-splot-5004', 'result/12.10/log-deepmtl-all-vary_sendensity']
+    logs    = ['result/12.11/log-map-5001', 'result/12.11/log-splot-5004', 'result/12.10/log-deepmtl-all-vary_sendensity', 'result/12.12/log-dtxf-5001']
     data    = IOUtility.read_logs(logs)
-    fignames = ['result/12.11/log_distance-error_missfalse_vary_sendensity.png', '/home/caitao/Project/latex/localize/deeplearning/figures/log_distance-error_missfalse_vary_sendensity.png']
+    fignames = ['result/12.12/log_distance-error_missfalse_vary_sendensity.png',     '/home/caitao/Project/latex/localize/deeplearning/figures/log_distance-error_missfalse_vary_sendensity.png']
     PlotResults.error_missfalse_vary_sendensity(data, data_source, num_intruder=Default.num_intruder, fignames=fignames)
     print()
 
