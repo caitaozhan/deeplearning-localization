@@ -620,23 +620,23 @@ def compare_logdistance():
     PlotResults.error_missfalse_vary_sendensity(data, data_source, num_intruder=Default.num_intruder, fignames=fignames)
     print()
 
-    # # time
-    # logs = ['result/12.11/log-map-5000', 'result/12.11/log-splot-5003', 'result/12.10/log-deepmtl-all-vary_numintru']
-    # methods = ['map', 'splot', 'deepmtl']
-    # data = IOUtility.read_logs(logs)
-    # metric = 'time'
-    # table = defaultdict(list)
-    # reduce_f = PlotResults.reduce_avg
-    # for myinput, output_by_method in data:
-    #     if myinput.sensor_density == Default.sen_density and myinput.num_intruder in [1, 3, 5, 7, 10]:
-    #         table[myinput.num_intruder].append({method: output.get_metric(metric) for method, output in output_by_method.items()})
-    # print_table = []
-    # for x, list_of_y_by_method in sorted(table.items()):
-    #     tmp_list = [reduce_f([(y_by_method[method] if method in y_by_method else None) for y_by_method in list_of_y_by_method]) for method in methods]
-    #     print_table.append([x] + tmp_list)
-    # print('Metric:', metric)
-    # print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
-    # print()
+    # time
+    logs = ['result/12.11/log-map-5000', 'result/12.11/log-splot-5003', 'result/12.10/log-deepmtl-all-vary_numintru', 'result/12.12/log-dtxf-5000']
+    methods = ['deepmtl', 'map', 'splot', 'deeptxfinder']
+    data = IOUtility.read_logs(logs)
+    metric = 'time'
+    table = defaultdict(list)
+    reduce_f = PlotResults.reduce_avg
+    for myinput, output_by_method in data:
+        if myinput.sensor_density == Default.sen_density and myinput.num_intruder in [1, 3, 5, 7, 10]:
+            table[myinput.num_intruder].append({method: output.get_metric(metric) for method, output in output_by_method.items()})
+    print_table = []
+    for x, list_of_y_by_method in sorted(table.items()):
+        tmp_list = [reduce_f([(y_by_method[method] if method in y_by_method else None) for y_by_method in list_of_y_by_method]) for method in methods]
+        print_table.append([x] + tmp_list)
+    print('Metric:', metric)
+    print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
+    print()
 
 
 def compare_splat():
@@ -648,4 +648,6 @@ if __name__ == '__main__':
 
     # compare_ours()
 
-    compare_logdistance()
+    # compare_logdistance()
+
+    compare_splat()

@@ -9,8 +9,9 @@ import numpy as np
 import imageio
 import argparse
 import os
+import time
 from visualize import Visualize
-from propagation import Propagation
+from propagation import Propagation, Splat
 from input_output import Default, IpsnInput
 from node import Sensor
 from utility import Utility
@@ -33,12 +34,12 @@ class GenerateSensors:
         Visualize.sensors(subset_sensors, grid_length, 1)
         subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
         Visualize.sensors(subset_sensors, grid_length, 2)
-        subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
-        Visualize.sensors(subset_sensors, grid_length, 3)
-        subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
-        Visualize.sensors(subset_sensors, grid_length, 4)
-        subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
-        Visualize.sensors(subset_sensors, grid_length, 5)
+        # subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
+        # Visualize.sensors(subset_sensors, grid_length, 3)
+        # subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
+        # Visualize.sensors(subset_sensors, grid_length, 4)
+        # subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
+        # Visualize.sensors(subset_sensors, grid_length, 5)
         subset_sensors.sort()
         GenerateSensors.save(subset_sensors, grid_length, filename)
 
@@ -108,7 +109,7 @@ class GenerateData:
         self.noise_floor = noise_floor
         self.propagation = Propagation(self.alpha, self.std)
 
-    def log(self, power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx, num_tx_upper, min_dist, max_dist, edge):
+    def log(self, power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx, num_tx_upper, min_dist, max_dist, edge, splat):
         '''the meta data of the data
         '''
         with open(root_dir + '.txt', 'w') as f:
@@ -129,6 +130,7 @@ class GenerateData:
             f.write(f'min distance      = {min_dist}\n')
             f.write(f'max distance      = {max_dist}\n')
             f.write(f'edge              = {edge}\n')
+            f.write(f'splat             = {splat}\n')
 
     def check_edge(self, tx, edge):
         '''if tx is at the edge, return false
@@ -140,7 +142,7 @@ class GenerateData:
         return False
 
     def generate(self, power: float, cell_percentage: float, sample_per_label: int, sensor_file: str,\
-                 root_dir: str, num_tx: int, num_tx_upper: bool, min_dist: int, max_dist: int, edge: int, vary_power: int):
+                 root_dir: str, num_tx: int, num_tx_upper: bool, min_dist: int, max_dist: int, edge: int, vary_power: int, splat: bool):
         '''
         The generated input data is not images, but instead matrix. Because saving as images will loss some accuracy
         Args:
@@ -151,7 +153,7 @@ class GenerateData:
             root_dir         -- the output directory
         '''
         Utility.remove_make(root_dir)
-        self.log(power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx, num_tx_upper, min_dist, max_dist, edge)
+        self.log(power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx, num_tx_upper, min_dist, max_dist, edge, splat)
         # random.seed(self.seed)   # need to comment this line when running simulate_data.py, or they will generate the same TX locations
         # 1 read the sensor file, do a checking
         if str(self.grid_length) not in sensor_file[:sensor_file.find('-')]:
@@ -185,8 +187,11 @@ class GenerateData:
                 grid = np.zeros((self.grid_length, self.grid_length))
                 grid.fill(Default.noise_floor)
                 for sensor in sensors:
-                    dist = Utility.distance_propagation(tx_float, (sensor.x, sensor.y)) * Default.cell_length
-                    pathloss = self.propagation.pathloss(dist)
+                    if not splat:
+                        dist = Utility.distance_propagation(tx_float, (sensor.x, sensor.y)) * Default.cell_length
+                        pathloss = self.propagation.pathloss(dist)
+                    else:
+                        pathloss = mysplat.pathloss(tx_float[0], tx_float[1], sensor.x, sensor.y) + random.uniform(-0.25, 0.25)
                     rssi = (power + power_delta) - pathloss
                     grid[sensor.x][sensor.y] = rssi if rssi > Default.noise_floor else Default.noise_floor
                 # the other TX
@@ -204,8 +209,11 @@ class GenerateData:
                     targets.append(ntx)
                     power_deltas.append(power_delta)
                     for sensor in sensors:
-                        dist = Utility.distance_propagation(ntx, (sensor.x, sensor.y)) * Default.cell_length
-                        pathloss = self.propagation.pathloss(dist)
+                        if not splat:
+                            dist = Utility.distance_propagation(ntx, (sensor.x, sensor.y)) * Default.cell_length
+                            pathloss = self.propagation.pathloss(dist)
+                        else:
+                            pathloss = mysplat.pathloss(ntx[0], ntx[1], sensor.x, sensor.y) + random.uniform(-0.25, 0.25)
                         rssi = (power + power_delta) - pathloss
                         exist_rssi = grid[sensor.x][sensor.y]
                         grid[sensor.x][sensor.y] = Utility.linear2db(Utility.db2linear(exist_rssi) + Utility.db2linear(rssi))
@@ -243,7 +251,7 @@ class GenerateData:
             f.write(ipsn_input.to_json_str())
 
 
-    def generate_ipsn(self, power: str, sensor_file: str, root_dir: str):
+    def generate_ipsn(self, power: str, sensor_file: str, root_dir: str, splat: bool):
         '''generate the training data for the IPSN20 localization algorithm
         '''
         # sensors
@@ -275,8 +283,11 @@ class GenerateData:
                 t_x = tx_1dindex // self.grid_length
                 t_y = tx_1dindex % self.grid_length
                 for sen in sensors:
-                    dist = Utility.distance_propagation((t_x, t_y), (sen.x, sen.y)) * Default.cell_length
-                    pathloss = self.propagation.pathloss(dist)
+                    if not splat:
+                        dist = Utility.distance_propagation((t_x, t_y), (sen.x, sen.y)) * Default.cell_length
+                        pathloss = self.propagation.pathloss(dist)
+                    else:
+                        pathloss = mysplat.pathloss(t_x, t_y, sen.x, sen.y) + random.uniform(-0.25, 0.25)
                     f.write('{} {} {} {} {:.3f} {}\n'.format(t_x, t_y, sen.x, sen.y, power - pathloss, 1))
 
 
@@ -322,6 +333,7 @@ if __name__ == '__main__':
     parser.add_argument('-gs', '--generate_sensor', action='store_true')
     parser.add_argument('-gd', '--generate_data', action='store_true')
     parser.add_argument('-ipsn', '--ipsn', action='store_true')
+    parser.add_argument('-spt', '--splat', action='store_true')
     parser.add_argument('-al', '--alpha', nargs=1, type=float, default=[Default.alpha], help='the slope of pathloss')
     parser.add_argument('-st', '--std', nargs=1, type=float, default=[Default.std], help='the standard deviation zero mean Guassian')
     parser.add_argument('-gl', '--grid_length', nargs=1, type=int, default=[Default.grid_length], help='the length of the grid')
@@ -338,7 +350,7 @@ if __name__ == '__main__':
     parser.add_argument('-maxd', '--max_dist', nargs=1, type=int, default=[None], help='maximum distance between intruders')
     parser.add_argument('-ntup', '--num_tx_upbound', action='store_true', help='if yes, then generate [1, ntx] number of TX')
     parser.add_argument('-ed', '--edge', nargs=1, type=int, default=[Default.edge], help='no TX at the edge')
-    parser.add_argument('-vp', '--vary_power', nargs=1, type=int, default=[0], help='varying power amount')
+    parser.add_argument('-vp', '--vary_power', nargs=1, type=float, default=[0], help='varying power amount')
 
     args = parser.parse_args()
 
@@ -366,11 +378,15 @@ if __name__ == '__main__':
         num_tx_upbound = args.num_tx_upbound
         edge        = args.edge[0]
         vary_power  = args.vary_power[0]
+        splat       = args.splat
+        if splat:
+            mysplat = Splat('data_splat/pl_map_array.json')
 
         print(f'generating {num_tx} TX data')
 
         gd = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density, noise_floor)
-        gd.generate(power, cell_percentage, sample_per_label, f'data/sensors/{grid_length}-{sensor_density}-{random_seed}', root_dir, num_tx, num_tx_upbound, min_dist, max_dist, edge, vary_power)
+        gd.generate(power, cell_percentage, sample_per_label, f'data/sensors/{grid_length}-{sensor_density}-{random_seed}', root_dir,\
+                    num_tx, num_tx_upbound, min_dist, max_dist, edge, vary_power, splat)
 
     if args.ipsn:  # only in training dataset
         # python generate.py -ipsn -rd data/100test -rs 100 -nt 5 -ntup -mind 1
@@ -380,7 +396,10 @@ if __name__ == '__main__':
         std         = args.std[0]
         cell_length = args.cell_length[0]
         noise_floor = args.noise_floor[0]
+        splat       = args.splat
+        if splat:
+            mysplat = Splat('data_splat/pl_map_array.json')
         root_dir += '-ipsn'
         gd = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density, noise_floor)
-        gd.generate_ipsn(power, f'data/sensors/{grid_length}-{sensor_density}-{random_seed}', root_dir)
+        gd.generate_ipsn(power, f'data/sensors/{grid_length}-{sensor_density}-{random_seed}', root_dir, splat)
         # the relationship between the deep learning root_dir and the ipsn root_dir is a difference of "-ipsn" suffix
