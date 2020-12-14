@@ -24,7 +24,7 @@ class PlotResults:
     LEGEND  = dict(zip(METHOD, _LEGEND))
 
     METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',       'splot',       'dtxf']
-    _COLOR  = ['r',       'tab:cyan',     'tab:orange',     'limegreen', 'deepskyblue', 'violet']
+    _COLOR  = ['r',       'tab:cyan',     'tab:orange',     'limegreen', 'deepskyblue', 'gold']
     COLOR   = dict(zip(METHOD, _COLOR))
 
     METRIC = ['miss', 'false']
@@ -135,7 +135,7 @@ class PlotResults:
         plt.rcParams['font.size'] = 65
         ind = np.arange(len(deepmtl_error))
         fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(40, 20))
-        fig.subplots_adjust(left=0.08, right=0.99, top=0.86, bottom=0.12)
+        fig.subplots_adjust(left=0.08, right=0.99, top=0.86, bottom=0.16)
         width = 0.24
         pos1 = ind - width - 0.005
         pos2 = ind
@@ -148,7 +148,7 @@ class PlotResults:
         ax0.tick_params(axis='x', pad=15)
         ax0.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
         ax0.set_ylabel('Mean Localization Error (m)')
-        ax0.set_xlabel('Number of Intruders', labelpad=20)
+        ax0.set_xlabel('Number of Transmitters', labelpad=10)
         handles, labels = ax0.get_legend_handles_labels()
         fig.legend(handles, labels, loc='upper center', ncol=3, fontsize=70)
 
@@ -160,14 +160,15 @@ class PlotResults:
         ax1.bar(pos3, deepmtl_peak_false, width, edgecolor='black', color=PlotResults.COLOR['deepmtl-simple'], hatch=PlotResults.HATCH['false'], bottom=deepmtl_peak_miss)
         miss_patch = mpatches.Patch(facecolor='0.95', hatch=PlotResults.HATCH['miss'], label='Miss Rate')
         false_patch = mpatches.Patch(facecolor='0.95', hatch=PlotResults.HATCH['false'], label='False Alarm Rate')
-        ax1.legend(handles=[miss_patch, false_patch], bbox_to_anchor=(0.32, 0.52, 0.5, 0.5))
+        ax1.legend(handles=[false_patch, miss_patch], bbox_to_anchor=(0.32, 0.52, 0.5, 0.5))
         ax1.set_xticks(ind)
         ax1.set_xticklabels([str(int(x)) for x in X_label])
         ax1.tick_params(axis='x', pad=15)
         ax1.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
-        ax1.set_xlabel('Number of Intruders', labelpad=20)
+        ax1.set_xlabel('Number of Transmitters', labelpad=10)
         ax1.set_ylabel('Percentage (%)')
-
+        plt.figtext(0.265, 0.01, '(a)',  weight='bold')
+        plt.figtext(0.757, 0.01, '(b)',  weight='bold')
         for figname in fignames:
             fig.savefig(figname)
 
@@ -231,7 +232,7 @@ class PlotResults:
         plt.rcParams['font.size'] = 65
         ind = np.arange(len(deepmtl_error))
         fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(40, 20))
-        fig.subplots_adjust(left=0.08, right=0.99, top=0.86, bottom=0.12)
+        fig.subplots_adjust(left=0.08, right=0.99, top=0.86, bottom=0.16)
         width = 0.24
         pos1 = ind - width - 0.005
         pos2 = ind
@@ -244,7 +245,7 @@ class PlotResults:
         ax0.tick_params(axis='x', pad=15)
         ax0.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
         ax0.set_ylabel('Mean Localization Error (m)')
-        ax0.set_xlabel('Sensor Density (%)', labelpad=20)
+        ax0.set_xlabel('Sensor Density (%)', labelpad=10)
         handles, labels = ax0.get_legend_handles_labels()
         fig.legend(handles, labels, loc='upper center', ncol=3, fontsize=70)
 
@@ -256,16 +257,17 @@ class PlotResults:
         ax1.bar(pos3, deepmtl_peak_false, width, edgecolor='black', color=PlotResults.COLOR['deepmtl-simple'], hatch=PlotResults.HATCH['false'], bottom=deepmtl_peak_miss)
         miss_patch = mpatches.Patch(facecolor='0.95', hatch=PlotResults.HATCH['miss'], label='Miss Rate')
         false_patch = mpatches.Patch(facecolor='0.95', hatch=PlotResults.HATCH['false'], label='False Alarm Rate')
-        ax1.legend(handles=[miss_patch, false_patch], bbox_to_anchor=(0.2, 0.52, 0.5, 0.5))
+        ax1.legend(handles=[false_patch, miss_patch], bbox_to_anchor=(0.2, 0.52, 0.5, 0.5))
         ax1.set_xticks(ind)
         ax1.set_xticklabels([str(int(int(x)/10000*100)) for x in X_label])
         ax1.tick_params(axis='x', pad=15)
         ax1.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
         ax1.set_ylim([0, 20])
         ax1.set_yticks([0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20])
-        ax1.set_xlabel('Sensor Density (%)', labelpad=20)
+        ax1.set_xlabel('Sensor Density (%)', labelpad=10)
         ax1.set_ylabel('Percentage (%)')
-
+        plt.figtext(0.265, 0.01, '(a)',  weight='bold')
+        plt.figtext(0.757, 0.01, '(b)',  weight='bold')
         for figname in fignames:
             fig.savefig(figname)
 
@@ -348,9 +350,9 @@ class PlotResults:
         ax.tick_params(axis='x', pad=15)
         ax.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
         ax.set_ylabel('Mean Localization Error (m)')
-        ax.set_xlabel('Number of Intruders', labelpad=20)
+        ax.set_xlabel('Number of Transmitters', labelpad=20)
         handles, labels = ax.get_legend_handles_labels()
-        fig.legend(handles, labels, loc='upper center', ncol=4, fontsize=70)
+        fig.legend(handles, labels, bbox_to_anchor=(0.064, 0.85), loc='lower left', ncol=4, fontsize=70)
         for figname in fignames[:2]:
             fig.savefig(figname)
 
@@ -369,21 +371,24 @@ class PlotResults:
 
         miss_patch = mpatches.Patch(facecolor='0.95', hatch=PlotResults.HATCH['miss'], label='Miss Rate')
         false_patch = mpatches.Patch(facecolor='0.95', hatch=PlotResults.HATCH['false'], label='False Alarm Rate')
-        first_legend = plt.legend(handles=[miss_patch, false_patch], bbox_to_anchor=(0.18, 0.45, 0.5, 0.5))
+        first_legend = plt.legend(handles=[false_patch, miss_patch], bbox_to_anchor=(0.02, 0.6, 0.4, 0.4))
         plt.gca().add_artist(first_legend)
 
         deepmtl_patch = mpatches.Patch(label=PlotResults.LEGEND['deepmtl'], color=PlotResults.COLOR['deepmtl'])
         map_patch = mpatches.Patch(label=PlotResults.LEGEND['map'], color=PlotResults.COLOR['map'])
         splot_patch = mpatches.Patch(label=PlotResults.LEGEND['splot'], color=PlotResults.COLOR['splot'])
         dtxf_patch = mpatches.Patch(label=PlotResults.LEGEND['dtxf'], color=PlotResults.COLOR['dtxf'])
-        plt.legend(handles=[deepmtl_patch, map_patch, splot_patch, dtxf_patch], bbox_to_anchor=(0.5, 0.68, 0.5, 0.5), ncol=4)
+        plt.legend(handles=[deepmtl_patch, map_patch, splot_patch, dtxf_patch], bbox_to_anchor=(0.52, 0.68, 0.5, 0.5), ncol=4)
 
         ax.set_xticks(ind)
         ax.set_xticklabels([str(int(x)) for x in X_label])
         ax.tick_params(axis='x', pad=15)
         ax.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
-        ax.set_xlabel('Number of Intruders', labelpad=20)
+        ax.set_xlabel('Number of Transmitters', labelpad=20)
         ax.set_ylabel('Percentage (%)')
+        if data_source == 'data/305test':
+            ax.set_ylim([0, 15])
+            ax.set_yticks([0, 2, 4, 6, 8, 10, 12, 14])
         for figname in fignames[2:]:
             fig.savefig(figname)
 
@@ -450,7 +455,7 @@ class PlotResults:
         plt.rcParams['font.size'] = 65
         ind = np.arange(len(deepmtl_error))
         fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(40, 20))
-        fig.subplots_adjust(left=0.08, right=0.99, top=0.86, bottom=0.12)
+        fig.subplots_adjust(left=0.08, right=0.99, top=0.86, bottom=0.16)
         width = 0.18
         pos1 = ind - 1.5 * width
         pos2 = ind - 0.5 * width
@@ -465,7 +470,7 @@ class PlotResults:
         ax0.tick_params(axis='x', pad=15)
         ax0.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
         ax0.set_ylabel('Mean Localization Error (m)')
-        ax0.set_xlabel('Sensor Density (%)', labelpad=20)
+        ax0.set_xlabel('Sensor Density (%)', labelpad=10)
         handles, labels = ax0.get_legend_handles_labels()
         fig.legend(handles, labels, loc='upper center', ncol=4, fontsize=65)
 
@@ -479,15 +484,19 @@ class PlotResults:
         ax1.bar(pos4, dtxf_false, width, edgecolor='black',    color=PlotResults.COLOR['dtxf'],    hatch=PlotResults.HATCH['false'], bottom=dtxf_miss)
         miss_patch = mpatches.Patch(facecolor='0.95', hatch=PlotResults.HATCH['miss'], label='Miss Rate')
         false_patch = mpatches.Patch(facecolor='0.95', hatch=PlotResults.HATCH['false'], label='False Alarm Rate')
-        ax1.legend(handles=[miss_patch, false_patch], bbox_to_anchor=(0.22, 0.45, 0.5, 0.5))
+        ax1.legend(handles=[false_patch, miss_patch], bbox_to_anchor=(0.22, 0.5, 0.5, 0.5))
         ax1.set_xticks(ind)
         ax1.set_xticklabels([str(int(int(x)/10000*100)) for x in X_label])
         ax1.tick_params(axis='x', pad=15)
         ax1.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
         # ax1.set_ylim([0, 14])
         # ax1.set_yticks([0, 2, 4, 6, 8, 10, 12, 14])
-        ax1.set_xlabel('Sensor Density (%)', labelpad=20)
+        ax1.set_xlabel('Sensor Density (%)', labelpad=10)
         ax1.set_ylabel('Percentage (%)')
+        plt.figtext(0.265, 0.01, '(a)',  weight='bold')
+        plt.figtext(0.757, 0.01, '(b)',  weight='bold')
+        if data_source == 'data/305test':
+            ax1.set_ylim([0, 31])
         for figname in fignames:
             fig.savefig(figname)
 
@@ -647,19 +656,16 @@ def compare_logdistance():
 def compare_splat():
     # error, miss and false for varying num of intruders
     data_source = 'data/305test'
-    # logs    = ['result/12.11/log-map-5000', 'result/12.11/log-splot-5003', 'result/12.10/log-deepmtl-all-vary_numintru', 'result/12.11/log-deepmtl-vary_numintru', 'result/12.12/log-dtxf-5000']
-    logs    = ['result/12.13/splat-deepmtl-5000', 'result/12.13/splat-map-5000']
+    logs    = ['result/12.13/splat-deepmtl-5000', 'result/12.13/splat-map-5000-2', 'result/12.13/splat-dtxf-5003', 'result/12.13/splat-splot-5003']
     data    = IOUtility.read_logs(logs)
     fignames = ['result/12.13/splat-error_vary_numintru.png',     '/home/caitao/Project/latex/localize/deeplearning/figures/splat-error_vary_numintru.png',\
                 'result/12.13/splat-missfalse_vary_numintru.png', '/home/caitao/Project/latex/localize/deeplearning/figures/splat-missfalse_vary_numintru.png']
     PlotResults.error_missfalse_vary_numintru(data, data_source, sen_density=Default.sen_density, fignames=fignames)
     print()
 
-    # logs    = ['result/12.11/log-map-5000', 'result/12.11/log-splot-5003', 'result/12.10/log-deepmtl-all-vary_numintru', 'result/12.11/log-deepmtl-vary_numintru', 'result/12.12/log-dtxf-5000']
-    logs    = ['result/12.13/splat-deepmtl-5001', 'result/12.13/splat-map-5001']
+    logs    = ['result/12.13/splat-deepmtl-5001', 'result/12.13/splat-map-5001-2', 'result/12.13/splat-dtxf-5004', 'result/12.13/splat-splot-5004']
     data    = IOUtility.read_logs(logs)
-    fignames = ['result/12.13/splat-error_vary_sendensity.png', '/home/caitao/Project/latex/localize/deeplearning/figures/splat-error_vary_sendensity.png',\
-                'result/12.13/splat-missfalse_vary_sendensity.png',  '/home/caitao/Project/latex/localize/deeplearning/figures/splat-missfalse_vary_sendensity.png']
+    fignames = ['result/12.13/splat-error_missfalse_vary_sendensity.png',  '/home/caitao/Project/latex/localize/deeplearning/figures/splat-error_missfalse_vary_sendensity.png']
     PlotResults.error_missfalse_vary_sendensity(data, data_source, num_intruder=Default.num_intruder, fignames=fignames)
     print()
 
@@ -667,15 +673,11 @@ def compare_splat():
 if __name__ == '__main__':
     # test()
 
-    compare_ours()
-
-    print('*'*20)
-
+    # compare_ours()
+    # print('*'*20)
     compare_logdistance()
-
-    print('*'*20)
-
-    # compare_splat()
+    # print('*'*20)
+    compare_splat()
 
 
 
@@ -745,7 +747,7 @@ if __name__ == '__main__':
 ###################### compare_logdistance()  ###########################
 
 
-#   NUM TX    deepmtl     map    splot    deeptxfinder
+#  NUM TX    deepmtl     map    splot    deeptxfinder
 # --------  ---------  ------  -------  --------------
 #        1     0.2313  0.7918   2.2435          1.0887
 #        2     0.2159  0.7818   1.8396          3.688
@@ -753,8 +755,8 @@ if __name__ == '__main__':
 #        4     0.218   0.8327   2.0261          7.5817
 #        5     0.2241  0.8857   1.9223          8.8115
 #        6     0.2258  0.8773   2.0771          9.29
-#        7     0.2358  0.8853   2.0525          9.6476
-#        8     0.2362  0.8497   1.9828          9.7892
+#        7     0.2358  0.8855   2.0525          9.6476
+#        8     0.2362  0.8521   1.9828          9.7892
 #        9     0.2476  0.9495   2.0206         10.0733
 #       10     0.2513  0.9529   2.0531         10.6988
 # Metric: miss
@@ -766,8 +768,8 @@ if __name__ == '__main__':
 #        4     0.0018  0.017    0.0088          0.0301
 #        5     0.0038  0.0114   0.0082          0.0331
 #        6     0.0048  0.0119   0.0091          0.0398
-#        7     0.0067  0.0417   0.0125          0.0431
-#        8     0.0071  0.0439   0.0234          0.05
+#        7     0.0067  0.0361   0.0125          0.0431
+#        8     0.0071  0.0413   0.0234          0.05
 #        9     0.0102  0.0389   0.0181          0.0542
 #       10     0.0102  0.0408   0.0255          0.0557
 # Metric: false_alarm
@@ -779,8 +781,8 @@ if __name__ == '__main__':
 #        4     0.0017  0.0039   0.0106          0.0433
 #        5     0.0017  0.0048   0.0153          0.0452
 #        6     0.0023  0.0187   0.014           0.056
-#        7     0.002   0.0174   0.0305          0.0594
-#        8     0.0019  0.0145   0.0195          0.0612
+#        7     0.002   0.0153   0.0305          0.0594
+#        8     0.0019  0.0141   0.0195          0.0612
 #        9     0.0022  0.0123   0.0291          0.0558
 #       10     0.0025  0.0205   0.0374          0.0258
 
@@ -815,10 +817,79 @@ if __name__ == '__main__':
 #        1     0.0179   8.7868   1.5399          0.0015
 #        3     0.0185  15.1141   1.7998          0.0016
 #        5     0.019   19.2941   2.063           0.0017
-#        7     0.0196  24.1329   2.3205          0.0019
+#        7     0.0196  24.0822   2.3205          0.0019
 #       10     0.0206  28.4841   2.7188          0.0022
 
 
 ###################################################################
 ###################### compare_splat()  ###########################
+
+
+# Metric: error
+#   NUM TX    deepmtl     map    splot    deeptxfinder
+# --------  ---------  ------  -------  --------------
+#        1     0.5074  0.3769   2.2175          1.6199
+#        2     0.5168  0.4239   2.0518          4.4177
+#        3     0.5192  0.5653   2.2135          6.3188
+#        4     0.5363  0.6823   2.3347          8.6476
+#        5     0.5442  0.6926   2.1084          9.2813
+#        6     0.559   0.8464   2.19            9.9123
+#        7     0.5794  0.8842   2.4617         10.218
+#        8     0.5882  0.903    2.471          10.0968
+#        9     0.613   1.0269   2.6109         10.6644
+#       10     0.6155  1.2364   2.7351         10.9353
+# Metric: miss
+#   NUM TX    deepmtl     map    splot    deeptxfinder
+# --------  ---------  ------  -------  --------------
+#        1     0       0        0               0
+#        2     0.0024  0        0.0104          0.0344
+#        3     0.0053  0.0208   0.0209          0.038
+#        4     0.0062  0.0067   0.0349          0.0539
+#        5     0.0101  0.008    0.0318          0.0752
+#        6     0.0131  0.0099   0.0436          0.0713
+#        7     0.0155  0.0101   0.0464          0.0689
+#        8     0.0184  0.0077   0.0415          0.0719
+#        9     0.0229  0.0134   0.0466          0.067
+#       10     0.0264  0.0104   0.0472          0.0814
+# Metric: false_alarm
+#   NUM TX    deepmtl     map    splot    deeptxfinder
+# --------  ---------  ------  -------  --------------
+#        1     0.007   0        0               0.016
+#        2     0.004   0        0.0017          0.0404
+#        3     0.0058  0        0.0086          0.0582
+#        4     0.0083  0.035    0.0034          0.0401
+#        5     0.0105  0.0326   0.0126          0.0573
+#        6     0.0105  0.0451   0.0133          0.0588
+#        7     0.0125  0.0644   0.0185          0.0632
+#        8     0.0145  0.0664   0.0277          0.0709
+#        9     0.0134  0.0804   0.0456          0.0485
+#       10     0.0155  0.0855   0.0485          0.023
+
+# Metric: error
+#   SEN DEN    deepmtl     map    splot    deeptxfinder
+# ---------  ---------  ------  -------  --------------
+#       200     1.0943  2.4247   3.0569          9.3426
+#       400     0.6327  1.1195   2.4764          9.3157
+#       600     0.5442  0.6926   2.1221          9.2813
+#       800     0.502   0.5134   2.0305          9.241
+#      1000     0.4789  0.4991   1.8141          9.3175
+# Metric: miss
+#   SEN DEN    deepmtl     map    splot    deeptxfinder
+# ---------  ---------  ------  -------  --------------
+#       200     0.0768  0.0324   0.1229          0.3033
+#       400     0.0174  0.0104   0.0495          0.1157
+#       600     0.0101  0.008    0.0325          0.0752
+#       800     0.0081  0.0022   0.0313          0.0855
+#      1000     0.0042  0.0065   0.0289          0.0889
+# Metric: false_alarm
+#   SEN DEN    deepmtl     map    splot    deeptxfinder
+# ---------  ---------  ------  -------  --------------
+#       200     0.102   0.1822   0.005           0
+#       400     0.0247  0.0715   0.0095          0.0401
+#       600     0.0105  0.0326   0.0129          0.0573
+#       800     0.0078  0.0154   0.0132          0.0466
+#      1000     0.007   0.0081   0.0113          0.0488
+
+
+
 

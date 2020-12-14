@@ -62,7 +62,7 @@ if __name__ == '__main__':
     random.seed(1)
     index = random.sample(range(total), len(myrange))
     # index = get_index_from_log('result/11.14/log')
-    print(len(myrange), len(index))
+    print('caitao', len(myrange), len(index))
     for i, idx in zip(myrange, index):
         print(i, idx)
         myinput.experiment_num = i
