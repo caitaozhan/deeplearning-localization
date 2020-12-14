@@ -484,8 +484,8 @@ class PlotResults:
         ax1.set_xticklabels([str(int(int(x)/10000*100)) for x in X_label])
         ax1.tick_params(axis='x', pad=15)
         ax1.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
-        ax1.set_ylim([0, 14])
-        ax1.set_yticks([0, 2, 4, 6, 8, 10, 12, 14])
+        # ax1.set_ylim([0, 14])
+        # ax1.set_yticks([0, 2, 4, 6, 8, 10, 12, 14])
         ax1.set_xlabel('Sensor Density (%)', labelpad=20)
         ax1.set_ylabel('Percentage (%)')
         for figname in fignames:
@@ -566,20 +566,25 @@ def compare_ours():
     data = IOUtility.read_logs(logs)
     fignames = ['result/12.10/ours_cdf.png', '/home/caitao/Project/latex/localize/deeplearning/figures/ours_cdf.png']
     PlotResults.error_cdf(data, sen_density=600, num_intruder=1, fignames=fignames)
+    print()
 
     # error, miss and false varying number of intruder
-    logs = ['result/12.10/log-deepmtl-all-vary_numintru']
+    # logs = ['result/12.10/log-deepmtl-all-vary_numintru']
+    logs = ['result/12.10/log-deepmtl-yolo_simple-vary_numintru', 'result/12.13/logdistance-deepmtl-5000']
     methods = ['deepmtl', 'deepmtl-simple', 'deepmtl-yolo']
     data = IOUtility.read_logs(logs)
     fignames = ['result/12.10/ours_error_missfalse_vary_numintru.png', '/home/caitao/Project/latex/localize/deeplearning/figures/ours_error_missfalse_vary_numintru.png']
     PlotResults.our_error_missfalse_vary_numintru(data, sen_density=Default.sen_density, fignames=fignames)
+    print()
 
     # error, miss and false varying sensor density
-    logs = ['result/12.10/log-deepmtl-all-vary_sendensity']
+    # logs = ['result/12.10/log-deepmtl-all-vary_sendensity']
+    logs = ['result/12.10/log-deepmtl-yolo_simple-vary_sendensity', 'result/12.13/logdistance-deepmtl-5001']
     methods = ['deepmtl', 'deepmtl-simple', 'deepmtl-yolo']
     data = IOUtility.read_logs(logs)
     fignames = ['result/12.10/ours_error_missfalse_vary_sendensity.png', '/home/caitao/Project/latex/localize/deeplearning/figures/ours_error_missfalse_vary_sendensity.png']
     PlotResults.our_error_missfalse_vary_sendensity(data, num_intruder=Default.num_intruder, fignames=fignames)
+    print()
 
     # time
     logs = ['result/12.10/log-deepmtl-all-time']
@@ -606,7 +611,7 @@ def compare_logdistance():
 
     # error, miss and false for varying num of intruders
     data_source = 'data/205test'
-    logs    = ['result/12.11/log-map-5000', 'result/12.11/log-splot-5003', 'result/12.10/log-deepmtl-all-vary_numintru', 'result/12.11/log-deepmtl-vary_numintru', 'result/12.12/log-dtxf-5000']
+    logs    = ['result/12.11/log-map-5000', 'result/12.11/log-splot-5003', 'result/12.10/log-deepmtl-yolo_simple-vary_numintru', 'result/12.13/logdistance-deepmtl-5000', 'result/12.12/log-dtxf-5000']
     data    = IOUtility.read_logs(logs)
     fignames = ['result/12.12/log_distance-error_vary_numintru.png',     '/home/caitao/Project/latex/localize/deeplearning/figures/log_distance-error_vary_numintru.png',\
                 'result/12.12/log_distance-missfalse_vary_numintru.png', '/home/caitao/Project/latex/localize/deeplearning/figures/log_distance-missfalse_vary_numintru.png']
@@ -614,7 +619,7 @@ def compare_logdistance():
     print()
 
     # error, miss and false for varying sensor density
-    logs    = ['result/12.11/log-map-5001', 'result/12.11/log-splot-5004', 'result/12.10/log-deepmtl-all-vary_sendensity', 'result/12.12/log-dtxf-5001']
+    logs    = ['result/12.11/log-map-5001', 'result/12.11/log-splot-5004', 'result/12.10/log-deepmtl-yolo_simple-vary_sendensity', 'result/12.13/logdistance-deepmtl-5001', 'result/12.12/log-dtxf-5001']
     data    = IOUtility.read_logs(logs)
     fignames = ['result/12.12/log_distance-error_missfalse_vary_sendensity.png',     '/home/caitao/Project/latex/localize/deeplearning/figures/log_distance-error_missfalse_vary_sendensity.png']
     PlotResults.error_missfalse_vary_sendensity(data, data_source, num_intruder=Default.num_intruder, fignames=fignames)
@@ -640,14 +645,180 @@ def compare_logdistance():
 
 
 def compare_splat():
-    pass
+    # error, miss and false for varying num of intruders
+    data_source = 'data/305test'
+    # logs    = ['result/12.11/log-map-5000', 'result/12.11/log-splot-5003', 'result/12.10/log-deepmtl-all-vary_numintru', 'result/12.11/log-deepmtl-vary_numintru', 'result/12.12/log-dtxf-5000']
+    logs    = ['result/12.13/splat-deepmtl-5000', 'result/12.13/splat-map-5000']
+    data    = IOUtility.read_logs(logs)
+    fignames = ['result/12.13/splat-error_vary_numintru.png',     '/home/caitao/Project/latex/localize/deeplearning/figures/splat-error_vary_numintru.png',\
+                'result/12.13/splat-missfalse_vary_numintru.png', '/home/caitao/Project/latex/localize/deeplearning/figures/splat-missfalse_vary_numintru.png']
+    PlotResults.error_missfalse_vary_numintru(data, data_source, sen_density=Default.sen_density, fignames=fignames)
+    print()
+
+    # logs    = ['result/12.11/log-map-5000', 'result/12.11/log-splot-5003', 'result/12.10/log-deepmtl-all-vary_numintru', 'result/12.11/log-deepmtl-vary_numintru', 'result/12.12/log-dtxf-5000']
+    logs    = ['result/12.13/splat-deepmtl-5001', 'result/12.13/splat-map-5001']
+    data    = IOUtility.read_logs(logs)
+    fignames = ['result/12.13/splat-error_vary_sendensity.png', '/home/caitao/Project/latex/localize/deeplearning/figures/splat-error_vary_sendensity.png',\
+                'result/12.13/splat-missfalse_vary_sendensity.png',  '/home/caitao/Project/latex/localize/deeplearning/figures/splat-missfalse_vary_sendensity.png']
+    PlotResults.error_missfalse_vary_sendensity(data, data_source, num_intruder=Default.num_intruder, fignames=fignames)
+    print()
 
 
 if __name__ == '__main__':
     # test()
 
-    # compare_ours()
+    compare_ours()
 
-    # compare_logdistance()
+    print('*'*20)
 
-    compare_splat()
+    compare_logdistance()
+
+    print('*'*20)
+
+    # compare_splat()
+
+
+
+
+###################### compare_ours()  ###########################
+# Metric: error
+#   NUM TX    deepmtl    deepmtl-yolo    deepmtl-simple
+# --------  ---------  --------------  ----------------
+#        1     0.2313          0.2758            0.3284
+#        3     0.2202          0.2631            0.3256
+#        5     0.2241          0.2684            0.3329
+#        7     0.2358          0.2807            0.3376
+#       10     0.2513          0.2976            0.3655
+# Metric: miss
+#   NUM TX    deepmtl    deepmtl-yolo    deepmtl-simple
+# --------  ---------  --------------  ----------------
+#        1     0               0                 0
+#        3     0.0023          0.009             0.0067
+#        5     0.0038          0.0097            0.0095
+#        7     0.0067          0.014             0.0124
+#       10     0.0102          0.0175            0.0196
+# Metric: false_alarm
+#   NUM TX    deepmtl    deepmtl-yolo    deepmtl-simple
+# --------  ---------  --------------  ----------------
+#        1     0               0.0096            0
+#        3     0.0017          0.0104            0.0015
+#        5     0.0017          0.008             0.0048
+#        7     0.002           0.0087            0.0084
+#       10     0.0025          0.0062            0.0111
+
+# Metric: error
+#   SEN DEN    deepmtl    deepmtl-yolo    deepmtl-simple
+# ---------  ---------  --------------  ----------------
+#       200     0.5436          0.703             0.6781
+#       400     0.2937          0.362             0.3978
+#       600     0.2241          0.2684            0.3329
+#       800     0.1997          0.2454            0.3123
+#      1000     0.2052          0.2615            0.3113
+# Metric: miss
+#   SEN DEN    deepmtl    deepmtl-yolo    deepmtl-simple
+# ---------  ---------  --------------  ----------------
+#       200     0.0175          0.0909            0.0367
+#       400     0.0041          0.0245            0.0123
+#       600     0.0038          0.0097            0.0095
+#       800     0.0044          0.007             0.0111
+#      1000     0.0055          0.0087            0.012
+# Metric: false_alarm
+#   SEN DEN    deepmtl    deepmtl-yolo    deepmtl-simple
+# ---------  ---------  --------------  ----------------
+#       200     0.0342          0.0869            0.1513
+#       400     0.006           0.0288            0.0286
+#       600     0.0017          0.008             0.0048
+#       800     0.0016          0.01              0.0018
+#      1000     0.001           0.0104            0.0013
+
+# Metric: time
+#   NUM TX    deepmtl    deepmtl-simple    deepmtl-yolo
+# --------  ---------  ----------------  --------------
+#        1     0.018             0.0013          0.018
+#        3     0.0186            0.0014          0.0183
+#        5     0.0189            0.0016          0.0192
+#        7     0.0194            0.0018          0.0196
+#       10     0.0206            0.0023          0.0205
+
+
+#########################################################################
+###################### compare_logdistance()  ###########################
+
+
+#   NUM TX    deepmtl     map    splot    deeptxfinder
+# --------  ---------  ------  -------  --------------
+#        1     0.2313  0.7918   2.2435          1.0887
+#        2     0.2159  0.7818   1.8396          3.688
+#        3     0.2202  0.7855   1.9316          6.5036
+#        4     0.218   0.8327   2.0261          7.5817
+#        5     0.2241  0.8857   1.9223          8.8115
+#        6     0.2258  0.8773   2.0771          9.29
+#        7     0.2358  0.8853   2.0525          9.6476
+#        8     0.2362  0.8497   1.9828          9.7892
+#        9     0.2476  0.9495   2.0206         10.0733
+#       10     0.2513  0.9529   2.0531         10.6988
+# Metric: miss
+#   NUM TX    deepmtl     map    splot    deeptxfinder
+# --------  ---------  ------  -------  --------------
+#        1     0       0.0116   0               0
+#        2     0.0013  0.019    0               0.0099
+#        3     0.0023  0.0057   0.009           0.0224
+#        4     0.0018  0.017    0.0088          0.0301
+#        5     0.0038  0.0114   0.0082          0.0331
+#        6     0.0048  0.0119   0.0091          0.0398
+#        7     0.0067  0.0417   0.0125          0.0431
+#        8     0.0071  0.0439   0.0234          0.05
+#        9     0.0102  0.0389   0.0181          0.0542
+#       10     0.0102  0.0408   0.0255          0.0557
+# Metric: false_alarm
+#   NUM TX    deepmtl     map    splot    deeptxfinder
+# --------  ---------  ------  -------  --------------
+#        1     0       0        0               0.0027
+#        2     0.0013  0.0032   0.0128          0.0099
+#        3     0.0017  0.015    0.009           0.0294
+#        4     0.0017  0.0039   0.0106          0.0433
+#        5     0.0017  0.0048   0.0153          0.0452
+#        6     0.0023  0.0187   0.014           0.056
+#        7     0.002   0.0174   0.0305          0.0594
+#        8     0.0019  0.0145   0.0195          0.0612
+#        9     0.0022  0.0123   0.0291          0.0558
+#       10     0.0025  0.0205   0.0374          0.0258
+
+# Metric: error
+#   SEN DEN    deepmtl     map    splot    deeptxfinder
+# ---------  ---------  ------  -------  --------------
+#       200     0.5436  1.1763   3.0707          9.1225
+#       400     0.2937  0.936    2.3142          8.8304
+#       600     0.2241  0.8553   1.9223          8.8115
+#       800     0.1997  0.8394   1.8036          8.6713
+#      1000     0.2052  0.8342   1.6338          8.6398
+# Metric: miss
+#   SEN DEN    deepmtl     map    splot    deeptxfinder
+# ---------  ---------  ------  -------  --------------
+#       200     0.0175  0.0396   0.0337          0.0641
+#       400     0.0041  0.0255   0.0213          0.0449
+#       600     0.0038  0.0162   0.0082          0.0331
+#       800     0.0044  0.023    0.0125          0.0461
+#      1000     0.0055  0.0297   0.0079          0.0462
+# Metric: false_alarm
+#   SEN DEN    deepmtl     map    splot    deeptxfinder
+# ---------  ---------  ------  -------  --------------
+#       200     0.0342  0.0069   0.0406          0.0635
+#       400     0.006   0.0206   0.042           0.051
+#       600     0.0017  0.0067   0.0153          0.0452
+#       800     0.0016  0.0074   0.0149          0.0334
+#      1000     0.001   0.0017   0.0243          0.0327
+
+# Metric: time
+#   NUM TX    deepmtl      map    splot    deeptxfinder
+# --------  ---------  -------  -------  --------------
+#        1     0.0179   8.7868   1.5399          0.0015
+#        3     0.0185  15.1141   1.7998          0.0016
+#        5     0.019   19.2941   2.063           0.0017
+#        7     0.0196  24.1329   2.3205          0.0019
+#       10     0.0206  28.4841   2.7188          0.0022
+
+
+###################################################################
+###################### compare_splat()  ###########################
+

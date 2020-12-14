@@ -96,7 +96,7 @@ def localize():
         img = torch.stack((pred_matrix, pred_matrix, pred_matrix), axis=0) # stack 3 together
         img = resize(img, server.DETECT_IMG_SIZE).unsqueeze(0)
         detections = darknet_cust(img)
-        detections = non_max_suppression(detections, conf_thres=0.9, nms_thres=0.5)
+        detections = non_max_suppression(detections, conf_thres=0.8, nms_thres=0.5)
         pred_xy = [server.box2xy(detections[0].numpy())]  # add a batch dimension
         preds, errors, misses, falses = mydnn_util.Metrics.localization_error_image_continuous_detection(pred_xy, y_f, indx, debug=True)
         end = time.time()
@@ -321,24 +321,24 @@ if __name__ == '__main__':
 
     data = DataInfo.naive_factory(data_source=data_source)
     # 1: init server utilities
-    date = '12.12'                                                 # 1
+    date = '12.13'                                                 # 1
     output_dir = f'result/{date}'
-    # output_file = f'log-map-{port}'                                        # 2
-    output_file = f'log-dtxf-{port}'                                        # 2
-    # output_file = f'log-splot-{port}'                                        # 2
+    # output_file = f'splat-map-{port}'                                        # 2
+    # output_file = f'splat-splot-{port}'                                        # 2
+    output_file = f'logdistance-deepmtl-{port}'                                        # 2
     server = Server(output_dir, output_file)
 
     # # 2: init image to image translation model
-    # device = torch.device('cuda')
-    # translate_net = NetTranslation5()
-    # translate_net.load_state_dict(torch.load(data.translate_net))
-    # translate_net = translate_net.to(device)
-    # translate_net.eval()
+    device = torch.device('cuda')
+    translate_net = NetTranslation5()
+    translate_net.load_state_dict(torch.load(data.translate_net))
+    translate_net = translate_net.to(device)
+    translate_net.eval()
 
-    # # 3: init the darknet_cust
-    # darknet_cust = Darknet(data.yolocust_def, img_size=server.DETECT_IMG_SIZE).to(device)
-    # darknet_cust.load_state_dict(torch.load(data.yolocust_weights))
-    # darknet_cust.eval()
+    # 3: init the darknet_cust
+    darknet_cust = Darknet(data.yolocust_def, img_size=server.DETECT_IMG_SIZE).to(device)
+    darknet_cust.load_state_dict(torch.load(data.yolocust_weights))
+    darknet_cust.eval()
 
     # 3.1: init the darknet
     # darknet = Darknet(data.yolo_def, img_size=server.DETECT_IMG_SIZE).to(device)
@@ -349,7 +349,8 @@ if __name__ == '__main__':
     # 4: init MAP* (and SPLOT)
     # grid_len = 100
     # debug = False                                                   # 3
-    # case = 'lognormal2'
+    # # case = 'lognormal2'                                             # 4
+    # case = 'splat2'                                             # 4
     # lls = []
     # ll_index = {200:0, 400:1, 600:2, 800:3, 1000:4}
     # for i in range(len(data.ipsn_cov_list)):
@@ -364,21 +365,21 @@ if __name__ == '__main__':
 
 
     # 5 init deeptxfinder
-    device = torch.device('cuda')
-    max_ntx = 10
-    cnn1  = CNN_NoTx(max_ntx)
-    cnn1.load_state_dict(torch.load(data.dtxf_cnn1))
-    cnn1 = cnn1.to(device)
-    cnn1.eval()
-    cnn2s = []
-    cnn2_template = data.dtxf_cnn2_template
-    for i in range(max_ntx):
-        num_ntx = i + 1
-        cnn2 = CNN_i(num_ntx)
-        cnn2.load_state_dict(torch.load(cnn2_template.format(num_ntx)))
-        cnn2 = cnn2.to(device)
-        cnn2.eval()
-        cnn2s.append(cnn2)
+    # device = torch.device('cuda')
+    # max_ntx = 10
+    # cnn1  = CNN_NoTx(max_ntx)
+    # cnn1.load_state_dict(torch.load(data.dtxf_cnn1))
+    # cnn1 = cnn1.to(device)
+    # cnn1.eval()
+    # cnn2s = []
+    # cnn2_template = data.dtxf_cnn2_template
+    # for i in range(max_ntx):
+    #     num_ntx = i + 1
+    #     cnn2 = CNN_i(num_ntx)
+    #     cnn2.load_state_dict(torch.load(cnn2_template.format(num_ntx)))
+    #     cnn2 = cnn2.to(device)
+    #     cnn2.eval()
+    #     cnn2s.append(cnn2)
 
 
 
