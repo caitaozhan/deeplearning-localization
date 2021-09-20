@@ -67,8 +67,10 @@ class Utility:
         Return:
             float -- power in decibel
         '''
+        if linear == 0:
+            return -80
         db = 10 * np.log10(linear)
-        if db < -80 or db is np.nan:
+        if db < -80:
             db = -80
         return db
 

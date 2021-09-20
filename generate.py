@@ -184,6 +184,7 @@ class GenerateData:
                 power_delta  = random.uniform(-vary_power, vary_power)
                 targets      = [tx_float]          # ground truth location
                 power_deltas = [power_delta]       # ground truth power
+                powers       = [power + power_delta]
                 grid = np.zeros((self.grid_length, self.grid_length))
                 grid.fill(Default.noise_floor)
                 for sensor in sensors:
@@ -208,6 +209,7 @@ class GenerateData:
                     power_delta = random.uniform(-vary_power, vary_power)
                     targets.append(ntx)
                     power_deltas.append(power_delta)
+                    powers.append(power + power_delta)
                     for sensor in sensors:
                         if not splat:
                             dist = Utility.distance_propagation(ntx, (sensor.x, sensor.y)) * Default.cell_length
@@ -221,7 +223,7 @@ class GenerateData:
                     intru = ntx
                 np.save(f'{folder}/{i}.npy', grid.astype(np.float32))
                 np.save(f'{folder}/{i}.target', np.array(targets).astype(np.float32))
-                np.savetxt(f'{folder}/{i}.txt', np.array(power_deltas).astype(np.float32))  # Dec. 12, 2020: save in txt format (currently not used in the CNN)
+                np.save(f'{folder}/{i}.power', np.array(powers).astype(np.float32))  # Dec. 12, 2020: save in txt format (currently not used in the CNN)
                 self.save_ipsn_input(grid, targets, power_deltas, sensors, f'{folder}/{i}.json')
                 # if i == 0:
                 #     imageio.imwrite(f'{folder}/{tx}.png', grid)
@@ -340,7 +342,7 @@ if __name__ == '__main__':
     parser.add_argument('-cl', '--cell_length', nargs=1, type=float, default=[Default.cell_length], help='the length of a cell')
     parser.add_argument('-rs', '--random_seed', nargs=1, type=int, default=[Default.random_seed], help='random seed')
     parser.add_argument('-sd', '--sensor_density', nargs=1, type=int, default=[Default.sen_density], help='number of sensors')
-    parser.add_argument('-po', '--power', nargs=1, type=int, default=[Default.power], help='the power of the transmitter')
+    parser.add_argument('-po', '--power', nargs=1, type=float, default=[Default.power], help='the power of the transmitter')
     parser.add_argument('-cp', '--cell_percentage', nargs=1, type=float, default=[Default.cell_percentage], help='percentage of cells being labels')
     parser.add_argument('-sl', '--sample_per_label', nargs=1, type=int, default=[Default.sample_per_label], help='# of samples per label')
     parser.add_argument('-rd', '--root_dir', nargs=1, type=str, default=[Default.root_dir], help='the root directory for the images')
