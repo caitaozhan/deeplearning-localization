@@ -19,12 +19,12 @@ class PlotResults:
     plt.rcParams['font.weight'] = 'bold'
     plt.rcParams['axes.labelweight'] = 'bold'
 
-    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',     'splot', 'dtxf']
-    _LEGEND = ['DeepMTL', 'DeepMTL-yolo', 'DeepMTL-peak',   'MAP$^*$', 'SPLOT', 'DeepTxFinder']
+    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',     'splot', 'dtxf',         'deepmtl_noretrain']
+    _LEGEND = ['DeepMTL', 'DeepMTL-yolo', 'DeepMTL-peak',   'MAP$^*$', 'SPLOT', 'DeepTxFinder', 'DeepMTL(No Part 2 Retrain)']
     LEGEND  = dict(zip(METHOD, _LEGEND))
 
-    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',       'splot',       'dtxf']
-    _COLOR  = ['r',       'tab:cyan',     'tab:orange',     'limegreen', 'deepskyblue', 'gold']
+    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',       'splot',       'dtxf', 'deepmtl_noretrain']
+    _COLOR  = ['r',       'tab:cyan',     'tab:orange',     'limegreen', 'deepskyblue', 'gold', 'tab:purple']
     COLOR   = dict(zip(METHOD, _COLOR))
 
     METRIC = ['miss', 'false']
@@ -392,6 +392,102 @@ class PlotResults:
         for figname in fignames[2:]:
             fig.savefig(figname)
 
+    @staticmethod
+    def noretrain_error_missfalse_vary_numintru(data, data_source, fignames):
+        # step 1: prepare the data
+        metric = 'error'
+        methods = ['deepmtl', 'deepmtl_replacepart2']
+        table = defaultdict(list)
+        reduce_f = PlotResults.reduce_avg
+        for myinput, output_by_method in data:
+            if myinput.data_source == data_source:
+                table[myinput.num_intruder].append({method: output.get_metric(metric) for method, output in output_by_method.items()})
+        print_table = []
+        for x, list_of_y_by_method in sorted(table.items()):
+            tmp_list = [reduce_f([(y_by_method[method] if method in y_by_method else None) for y_by_method in list_of_y_by_method]) for method in methods]
+            print_table.append([x] + tmp_list)
+        print('Metric:', metric)
+        print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
+        arr = np.array(print_table)
+        deepmtl_error = arr[:, 1] * Default.cell_length
+        deepmtl_noretrain_error = arr[:, 2] * Default.cell_length
+
+        metric = 'miss'
+        table = defaultdict(list)
+        for myinput, output_by_method in data:
+            if myinput.data_source == data_source:
+                num_tx = myinput.num_intruder
+                table[num_tx].append({method: output.get_metric(metric)/num_tx for method, output in output_by_method.items()})
+        print_table = []
+        for x, list_of_y_by_method in sorted(table.items()):
+            tmp_list = [reduce_f([(y_by_method[method] if method in y_by_method else None) for y_by_method in list_of_y_by_method]) for method in methods]
+            print_table.append([x] + tmp_list)
+        print('Metric:', metric)
+        print(tabulate.tabulate(print_table,headers=['NUM TX'] + methods))
+        arr = np.array(print_table)
+        deepmtl_miss = arr[:, 1] * 100
+        deepmtl_noretrain_miss = arr[:, 2] * 100
+
+        metric = 'false_alarm'
+        table = defaultdict(list)
+        for myinput, output_by_method in data:
+            if myinput.data_source == data_source:
+                num_tx = myinput.num_intruder
+                table[num_tx].append({method: output.get_metric(metric)/output.get_pred_len() for method, output in output_by_method.items()})
+        print_table = []
+        for x, list_of_y_by_method in sorted(table.items()):
+            tmp_list = [reduce_f([(y_by_method[method] if method in y_by_method else None) for y_by_method in list_of_y_by_method]) for method in methods]
+            print_table.append([x] + tmp_list)
+        print('Metric:', metric)
+        print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
+        arr = np.array(print_table)
+        deepmtl_false = arr[:, 1] * 100
+        deepmtl_noretrain_false = arr[:, 2] * 100
+        X_label = arr[:, 0]
+
+        # step 2: the plot
+        plt.rcParams['font.size'] = 65
+        ind = np.arange(len(deepmtl_error))
+        fig, ax = plt.subplots(1, 1, figsize=(40, 20))
+        fig.subplots_adjust(left=0.08, right=0.99, top=0.86, bottom=0.12)
+        width = 0.2
+        pos1 = ind - 0.5 * width
+        pos2 = ind + 0.5 * width
+        ax.bar(pos1, deepmtl_error, width, edgecolor='black', label=PlotResults.LEGEND['deepmtl'], color=PlotResults.COLOR['deepmtl'])
+        ax.bar(pos2, deepmtl_noretrain_error, width, edgecolor='black', label=PlotResults.LEGEND['deepmtl_noretrain'], color=PlotResults.COLOR['deepmtl_noretrain'])
+        ax.set_xticks(ind)
+        ax.set_xticklabels([str(int(x)) for x in X_label])
+        ax.tick_params(axis='x', pad=15)
+        ax.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
+        ax.set_ylabel('Mean Localization Error (m)')
+        ax.set_xlabel('Number of Transmitters', labelpad=20)
+        handles, labels = ax.get_legend_handles_labels()
+        fig.legend(handles, labels, loc='upper center', ncol=2, fontsize=70)
+        fig.savefig(fignames[0])
+
+        plt.rcParams['font.size'] = 70
+        ind = np.arange(len(deepmtl_error))
+        fig, ax = plt.subplots(1, 1, figsize=(40, 20))
+        fig.subplots_adjust(left=0.08, right=0.99, top=0.86, bottom=0.12)
+        ax.bar(pos1, deepmtl_miss, width, edgecolor='black', color=PlotResults.COLOR['deepmtl'], hatch=PlotResults.HATCH['miss'])
+        ax.bar(pos1, deepmtl_false, width, edgecolor='black', color=PlotResults.COLOR['deepmtl'], hatch=PlotResults.HATCH['false'], bottom=deepmtl_miss)
+        ax.bar(pos2, deepmtl_noretrain_miss, width, edgecolor='black',      color=PlotResults.COLOR['deepmtl_noretrain'],     hatch=PlotResults.HATCH['miss'])
+        ax.bar(pos2, deepmtl_noretrain_false, width, edgecolor='black',     color=PlotResults.COLOR['deepmtl_noretrain'],     hatch=PlotResults.HATCH['false'], bottom=deepmtl_noretrain_miss)
+        miss_patch = mpatches.Patch(facecolor='0.9', hatch=PlotResults.HATCH['miss'], label='Miss Rate')
+        false_patch = mpatches.Patch(facecolor='0.9', hatch=PlotResults.HATCH['false'], label='False Alarm Rate')
+        first_legend = plt.legend(handles=[false_patch, miss_patch], bbox_to_anchor=(0.02, 0.6, 0.4, 0.4))
+        plt.gca().add_artist(first_legend)
+        deepmtl_patch = mpatches.Patch(label=PlotResults.LEGEND['deepmtl'], color=PlotResults.COLOR['deepmtl'])
+        deepmtl_noretrain_patch = mpatches.Patch(label=PlotResults.LEGEND['deepmtl_noretrain'], color=PlotResults.COLOR['deepmtl_noretrain'])
+        plt.legend(handles=[deepmtl_patch, deepmtl_noretrain_patch], bbox_to_anchor=(0.4, 0.68, 0.5, 0.5), ncol=4)
+        ax.set_xticks(ind)
+        ax.set_xticklabels([str(int(x)) for x in X_label])
+        ax.tick_params(axis='x', pad=15)
+        ax.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
+        ax.set_xlabel('Number of Transmitters', labelpad=20)
+        ax.set_ylabel('Percentage (%)')
+        fig.savefig(fignames[1])
+
 
     @staticmethod
     def error_missfalse_vary_sendensity(data, data_source, num_intruder, fignames: List):
@@ -670,14 +766,30 @@ def compare_splat():
     print()
 
 
+def noretrain():
+    # testing data is logdistance, part 1 CNN is trained on log distance pipeline, 
+    data_source = 'data/205test'
+    logs = ['result/9.20/logdistance-deepmtl-5000', 'result/9.20/logdistance-deepmtl-5000_plus']
+    data = IOUtility.read_logs(logs)
+    fignames = ['result/9.20/noretrain-logdistance-error-vary_numintru.png', 'result/9.20/noretrain-logdistance-missfalse-vary_numintru.png']
+    PlotResults.noretrain_error_missfalse_vary_numintru(data, data_source, fignames)
+    data_source = 'data/305test'
+    logs = ['result/9.20/splat-deepmtl-5000', 'result/9.20/splat-deepmtl-5000_plus']
+    data = IOUtility.read_logs(logs)
+    fignames = ['result/9.20/noretrain-splat-error-vary_numintru.png', 'result/9.20/noretrain-splat-missfalse-vary_numintru.png']
+    PlotResults.noretrain_error_missfalse_vary_numintru(data, data_source, fignames)
+
+
 if __name__ == '__main__':
     # test()
 
     # compare_ours()
     # print('*'*20)
-    compare_logdistance()
+    # compare_logdistance()
     # print('*'*20)
-    compare_splat()
+    # compare_splat()
+
+    noretrain()
 
 
 

@@ -254,6 +254,43 @@ class DataInfo:
             return cls(max_ntx, test_data, train_data, ipsn_cov_list, ipsn_sen_list, ipsn_hypo_list, \
                        translate_net, yolocust_def, yolocust_weights, yolo_def, yolo_weights, dtxf_cnn1, dtxf_cnn2_template)
 
+        # don't need to retrain the second part (YOLO): first part log-distance, second part splat
+        if data_source == 'data/205test_plus':  # the log-distancec based model
+            max_ntx = 10
+            translate_net    = 'model/model1-12.8-net5-norm-32.pt'
+            yolocust_def     = '../PyTorch-YOLOv3/config/yolov3-custom.cfg'
+            yolocust_weights = '../PyTorch-YOLOv3/checkpoints/yolov3_ckpt_5.pth'
+            # below are useless
+            test_data  = 'data/205test'
+            train_data = 'data/205train'
+            ipsn_cov_list  = ['data/200test-ipsn/cov',        'data/201test-ipsn/cov',        'data/202test-ipsn/cov',        'data/203test-ipsn/cov',        'data/204test-ipsn/cov']
+            ipsn_sen_list  = ['data/200test-ipsn/sensors',    'data/201test-ipsn/sensors',    'data/202test-ipsn/sensors',    'data/203test-ipsn/sensors',    'data/204test-ipsn/sensors']
+            ipsn_hypo_list = ['data/200test-ipsn/hypothesis', 'data/201test-ipsn/hypothesis', 'data/202test-ipsn/hypothesis', 'data/203test-ipsn/hypothesis', 'data/204test-ipsn/hypothesis']
+            yolo_def         = '../PyTorch-YOLOv3/config/yolov3-custom-class.cfg'
+            yolo_weights     = '../PyTorch-YOLOv3/checkpoints_logdistance_class/yolov3_ckpt_5.pth'
+            dtxf_cnn1        =   'model_dtxf/12.12-cnn1-logdist.pt'
+            dtxf_cnn2_template = 'model_dtxf/12.12-cnn2-logdist_{}.pt'
+            return cls(max_ntx, test_data, train_data, ipsn_cov_list, ipsn_sen_list, ipsn_hypo_list, \
+                       translate_net, yolocust_def, yolocust_weights, yolo_def, yolo_weights, dtxf_cnn1, dtxf_cnn2_template)
+
+        # don't need to retrain the second part (YOLO): first part splat, second part log-distance
+        if data_source == 'data/305test_plus':  # the splat model
+            translate_net    = 'model/model1-12.13-net5-norm-32-splat.pt'
+            yolocust_def     = '../PyTorch-YOLOv3/config/yolov3-custom.cfg'
+            yolocust_weights = '../PyTorch-YOLOv3/checkpoints_logdistance/yolov3_ckpt_5.pth'
+            # below are useless
+            max_ntx = 10
+            test_data  = 'data/305test'
+            train_data = 'data/305train'
+            ipsn_cov_list  = ['data/300test-ipsn/cov',        'data/301test-ipsn/cov',        'data/302test-ipsn/cov',        'data/303test-ipsn/cov',        'data/304test-ipsn/cov']
+            ipsn_sen_list  = ['data/300test-ipsn/sensors',    'data/301test-ipsn/sensors',    'data/302test-ipsn/sensors',    'data/303test-ipsn/sensors',    'data/304test-ipsn/sensors']
+            ipsn_hypo_list = ['data/300test-ipsn/hypothesis', 'data/301test-ipsn/hypothesis', 'data/302test-ipsn/hypothesis', 'data/303test-ipsn/hypothesis', 'data/304test-ipsn/hypothesis']
+            yolo_def         = '../PyTorch-YOLOv3/config/yolov3-custom-class.cfg'
+            yolo_weights     = '../PyTorch-YOLOv3/checkpoints_logdistance_class/yolov3_ckpt_5.pth'
+            dtxf_cnn1        =   'model_dtxf/12.13-cnn1-splat.pt'
+            dtxf_cnn2_template = 'model_dtxf/12.13-cnn2-splat_{}.pt'
+            return cls(max_ntx, test_data, train_data, ipsn_cov_list, ipsn_sen_list, ipsn_hypo_list, \
+                       translate_net, yolocust_def, yolocust_weights, yolo_def, yolo_weights, dtxf_cnn1, dtxf_cnn2_template)
 
 class IOUtility:
     '''input/output utility'''

@@ -314,56 +314,60 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Server side. ' + hint)
     parser.add_argument('-src', '--data_source', type=str, nargs=1, default=[None], help='the testing data source')
     parser.add_argument('-p', '--port', type=int, nargs=1, default=[5000], help='the port number')
+    parser.add_argument('-pl', '--plus', action='store_true', default=False, help='if given, do the no retrain for second step experiment')
     args = parser.parse_args()
 
     data_source = args.data_source[0]
     port = args.port[0]
+    if args.plus:
+        data_source += '_plus'
 
     data = DataInfo.naive_factory(data_source=data_source)
     # 1: init server utilities
-    date = '12.13'                                                 # 1
+    date = '9.20'                                                 # 1
     output_dir = f'result/{date}'
     # output_file = f'splat-dtxf-{port}'                                        # 2
     # output_file = f'splat-map-{port}-2'                                        # 2
-    output_file = f'splat-splot-{port}'                                        # 2
+    # output_file = f'splat-splot-{port}'                                        # 2
     # output_file = f'logdistance-deepmtl-{port}'                                        # 2
+    output_file = f'splat-deepmtl-{port}'                                        # 2
+    if args.plus:
+        output_file += '_plus'
     server = Server(output_dir, output_file)
 
-    # # 2: init image to image translation model
-    # device = torch.device('cuda')
-    # translate_net = NetTranslation5()
-    # translate_net.load_state_dict(torch.load(data.translate_net))
-    # translate_net = translate_net.to(device)
-    # translate_net.eval()
+    # 2: init image to image translation model
+    device = torch.device('cuda')
+    translate_net = NetTranslation5()
+    translate_net.load_state_dict(torch.load(data.translate_net))
+    translate_net = translate_net.to(device)
+    translate_net.eval()
 
-    # # 3: init the darknet_cust
-    # darknet_cust = Darknet(data.yolocust_def, img_size=server.DETECT_IMG_SIZE).to(device)
-    # darknet_cust.load_state_dict(torch.load(data.yolocust_weights))
-    # darknet_cust.eval()
+    # 3: init the darknet_cust
+    darknet_cust = Darknet(data.yolocust_def, img_size=server.DETECT_IMG_SIZE).to(device)
+    darknet_cust.load_state_dict(torch.load(data.yolocust_weights))
+    darknet_cust.eval()
 
     # 3.1: init the darknet
     # darknet = Darknet(data.yolo_def, img_size=server.DETECT_IMG_SIZE).to(device)
     # darknet.load_state_dict(torch.load(data.yolo_weights))
     # darknet.eval()
 
-
     # 4: init MAP* (and SPLOT)
-    grid_len = 100
-    debug = False                                                   # 3
+    # grid_len = 100
+    # debug = False                                                   # 3
     # # case = 'lognormal2'                                             # 4
-    case = 'splat2'                                             # 4
-    lls = []
-    ll_index = {200:0, 400:1, 600:2, 800:3, 1000:4}
-    for i in range(len(data.ipsn_cov_list)):
-        ll = Localization(grid_len=grid_len, case=case, debug=debug)
-        ll.init_data(data.ipsn_cov_list[i], data.ipsn_sensors_list[i], data.ipsn_hypothesis_list[i], None)
-        lls.append(ll)
+    # case = 'splat2'                                             # 4
+    # lls = []
+    # ll_index = {200:0, 400:1, 600:2, 800:3, 1000:4}
+    # for i in range(len(data.ipsn_cov_list)):
+    #     ll = Localization(grid_len=grid_len, case=case, debug=debug)
+    #     ll.init_data(data.ipsn_cov_list[i], data.ipsn_sensors_list[i], data.ipsn_hypothesis_list[i], None)
+    #     lls.append(ll)
 
     # ll = Localization(grid_len=grid_len, case=case, debug=debug)
     # ll.init_data(data.ipsn_cov_list[2], data.ipsn_sensors_list[2], data.ipsn_hypothesis_list[2], None)
     # for i in range(len(data.ipsn_cov_list)):
     #     lls.append(ll)
-
 
     # 5 init deeptxfinder
     # device = torch.device('cuda')
@@ -381,8 +385,6 @@ if __name__ == '__main__':
     #     cnn2 = cnn2.to(device)
     #     cnn2.eval()
     #     cnn2s.append(cnn2)
-
-
 
     # 6: start the web server
     print('process time:', time.process_time())
