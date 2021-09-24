@@ -61,6 +61,7 @@ class GenerateSensors:
             neighbor = [(i, j) for i in range(-2, 2) for j in range(-2, 2)]
         else:
             pass
+        neighbor = [(i, j) for i in range(-2, 3) for j in range(-2, 3)]
         new_random_sensors = []
         need_to_relocate = []
         ocupy_grid = np.zeros((grid_len, grid_len), dtype=int)
@@ -142,7 +143,7 @@ class GenerateData:
         return False
 
     def generate(self, power: float, cell_percentage: float, sample_per_label: int, sensor_file: str,\
-                 root_dir: str, num_tx: int, num_tx_upper: bool, min_dist: int, max_dist: int, edge: int, vary_power: int, splat: bool):
+                 root_dir: str, num_tx: int, num_tx_upper: bool, min_dist: int, max_dist: int, edge: int, vary_power: int, splat: bool, center: bool):
         '''
         The generated input data is not images, but instead matrix. Because saving as images will loss some accuracy
         Args:
@@ -175,6 +176,9 @@ class GenerateData:
         counter = 0
         for label in sorted(labels):
             tx = label           # each label create a directory
+            if center:
+                if not (tx[0] == int(self.grid_length/2) and tx[1] == int(self.grid_length/2)):
+                    continue
             tx_float = (tx[0] + random.uniform(0, 1), tx[1] + random.uniform(0, 1))
             if counter % 100 == 0:
                 print(f'{counter/len(labels)*100}%')
@@ -353,6 +357,7 @@ if __name__ == '__main__':
     parser.add_argument('-ntup', '--num_tx_upbound', action='store_true', help='if yes, then generate [1, ntx] number of TX')
     parser.add_argument('-ed', '--edge', nargs=1, type=int, default=[Default.edge], help='no TX at the edge')
     parser.add_argument('-vp', '--vary_power', nargs=1, type=float, default=[0], help='varying power amount')
+    parser.add_argument('-ct', '--center', action='store_true', help='if given, only generate data in the center of the grid (for fixed TX)')
 
     args = parser.parse_args()
 
@@ -381,6 +386,7 @@ if __name__ == '__main__':
         edge        = args.edge[0]
         vary_power  = args.vary_power[0]
         splat       = args.splat
+        center      = args.center
         if splat:
             mysplat = Splat('data_splat/pl_map_array.json')
 
@@ -388,7 +394,7 @@ if __name__ == '__main__':
 
         gd = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density, noise_floor)
         gd.generate(power, cell_percentage, sample_per_label, f'data/sensors/{grid_length}-{sensor_density}-{random_seed}', root_dir,\
-                    num_tx, num_tx_upbound, min_dist, max_dist, edge, vary_power, splat)
+                    num_tx, num_tx_upbound, min_dist, max_dist, edge, vary_power, splat, center)
 
     if args.ipsn:  # only in training dataset
         # python generate.py -ipsn -rd data/100test -rs 100 -nt 5 -ntup -mind 1
