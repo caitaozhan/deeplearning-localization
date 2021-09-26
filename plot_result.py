@@ -19,12 +19,12 @@ class PlotResults:
     plt.rcParams['font.weight'] = 'bold'
     plt.rcParams['axes.labelweight'] = 'bold'
 
-    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',     'splot', 'dtxf',         'deepmtl_noretrain']
-    _LEGEND = ['DeepMTL', 'DeepMTL-yolo', 'DeepMTL-peak',   'MAP$^*$', 'SPLOT', 'DeepTxFinder', 'DeepMTL(No Part 2 Retrain)']
+    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',     'splot', 'dtxf',         'deepmtl_noretrain',          'predpower']
+    _LEGEND = ['DeepMTL', 'DeepMTL-yolo', 'DeepMTL-peak',   'MAP$^*$', 'SPLOT', 'DeepTxFinder', 'DeepMTL(No Part 2 Retrain)', 'PredPower']
     LEGEND  = dict(zip(METHOD, _LEGEND))
 
-    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',       'splot',       'dtxf', 'deepmtl_noretrain']
-    _COLOR  = ['r',       'tab:cyan',     'tab:orange',     'limegreen', 'deepskyblue', 'gold', 'tab:purple']
+    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',       'splot',       'dtxf', 'deepmtl_noretrain', 'predpower']
+    _COLOR  = ['r',       'tab:cyan',     'tab:orange',     'limegreen', 'deepskyblue', 'gold', 'tab:purple',        'tab:gray']
     COLOR   = dict(zip(METHOD, _COLOR))
 
     METRIC = ['miss', 'false']
@@ -597,6 +597,81 @@ class PlotResults:
             fig.savefig(figname)
 
 
+    @staticmethod
+    def powererror_varysensor(data, data_ipsn, data_splat, figname):
+        '''evaluate power prediction error, single TX, varying sensor density
+        '''
+        X = [200, 400, 600, 800, 1000]
+        predpower_abserror_logdist = [0.3386, 0.2387, 0.2092, 0.1923, 0.1993]
+        # predpower_error_logdist = [-0.0068, -0.0229, -0.0017, 0.0201, -0.0077]
+        predpower_abserror_splat = [0.2154, 0.1551, 0.1402, 0.1289, 0.1384]
+        # predpower_error_splat = [0.0105, 0.015, 0.0281, 0.0107, -0.0079]
+        
+        reduce_f = PlotResults.reduce_avg
+        metric = 'power_error'
+        methods = ['map']
+        table_splat = defaultdict(list)
+        table_logdist = defaultdict(list)
+        for myinput, output_by_method in data:
+            if myinput.data_source == data_splat and myinput.num_intruder == 1:
+                sen_density = myinput.sensor_density
+                table_splat[sen_density].append({method: output.get_metric(metric) for method, output in output_by_method.items()})
+            if myinput.data_source == data_ipsn and myinput.num_intruder == 1:
+                sen_density = myinput.sensor_density
+                table_logdist[sen_density].append({method: output.get_metric(metric) for method, output in output_by_method.items()})
+        
+        print_table_splat = []
+        for x, list_of_y_by_method in sorted(table_splat.items()):
+            tmp_list = [reduce_f([y_by_method[method] for y_by_method in list_of_y_by_method]) for method in methods]
+            print_table_splat.append([x] + tmp_list)
+        print_table_logdist = []
+        for x, list_of_y_by_method in sorted(table_logdist.items()):
+            tmp_list = [reduce_f([y_by_method[method] for y_by_method in list_of_y_by_method]) for method in methods]
+            print_table_logdist.append([x] + tmp_list)
+
+        print('Metric', metric)
+        print(tabulate.tabulate(print_table_splat, headers=['NUM TX'] + methods))
+        print(tabulate.tabulate(print_table_logdist, headers=['NUM TX'] + methods))
+
+        arr = np.array(print_table_logdist)
+        ipsn_abserror_logdist = arr[:, 1]
+        arr = np.array(print_table_splat)
+        ipsn_abserror_splat = arr[:, 1]
+        X_label = arr[:, 0]
+
+        fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(40, 20))
+        fig.subplots_adjust(left=0.08, right=0.99, top=0.86, bottom=0.16, wspace=0.25)
+        ind = np.arange(len(X))
+        width = 0.25
+        pos1 = ind - 0.5*width - 0.005
+        pos2 = ind + 0.5*width + 0.005
+        ax0.bar(pos1, predpower_abserror_logdist, width, edgecolor='black', color=PlotResults.COLOR['predpower'], label=PlotResults.LEGEND['predpower'])
+        ax0.bar(pos2, ipsn_abserror_logdist,      width, edgecolor='black', color=PlotResults.COLOR['map'],       label=PlotResults.LEGEND['map']      )
+        ax0.legend(fontsize=40)
+        ax0.set_ylim([0, 0.5])
+        ax0.set_xticks(ind)
+        ax0.set_xticklabels([str(int(int(x)/10000*100)) for x in X_label])
+        ax0.tick_params(axis='x', pad=15)
+        ax0.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
+        ax0.set_ylabel('Power Estimation Error (dBm)', fontsize=55)
+        ax0.set_xlabel('Sensor Density (%)', labelpad=10)
+        ax0.set_title('Log Distance Model', fontsize=60, pad=25, weight='bold')
+
+        ax1.bar(pos1, predpower_abserror_splat,   width, edgecolor='black', color=PlotResults.COLOR['predpower'], label=PlotResults.LEGEND['predpower'])
+        ax1.bar(pos2, ipsn_abserror_splat,        width, edgecolor='black', color=PlotResults.COLOR['map'],       label=PlotResults.LEGEND['map']      )
+        ax1.legend(fontsize=40)
+        ax1.set_ylim([0, 0.5])
+        ax1.set_xticks(ind)
+        ax1.set_xticklabels([str(int(int(x)/10000*100)) for x in X_label])
+        ax1.tick_params(axis='x', pad=15)
+        ax1.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
+        ax1.set_ylabel('Power Estimation Error (dBm)', fontsize=55)
+        ax1.set_xlabel('Sensor Density (%)', labelpad=10)
+        ax1.set_title(' Longley-Rice Irregular Terrain \nWith Obstruction Model (SPLAT!)', fontsize=60, pad=25, weight='bold')
+        plt.figtext(0.265, 0.01, '(a)',  weight='bold')
+        plt.figtext(0.757, 0.01, '(b)',  weight='bold')
+
+        fig.savefig(figname)
 
 
 def test():
@@ -780,6 +855,16 @@ def noretrain():
     PlotResults.noretrain_error_missfalse_vary_numintru(data, data_source, fignames)
 
 
+def power_varysensor():
+    data_ipsn = 'data/605test'
+    data_splat = 'data/705test'
+    logs = ['result/9.25/splat-map-5005', 'result/9.26/logdistance-map-5005', 'result/9.26/logdistance-map-5006', 
+      'result/9.26/logdistance-map-5007', 'result/9.26/logdistance-map-5008', 'result/9.26/logdistance-map-5009']
+    data = IOUtility.read_logs(logs)
+    figname = 'result/9.25/powererror_varysensor.png'
+    PlotResults.powererror_varysensor(data, data_ipsn, data_splat, figname)
+
+
 if __name__ == '__main__':
     # test()
 
@@ -789,7 +874,9 @@ if __name__ == '__main__':
     # print('*'*20)
     # compare_splat()
 
-    noretrain()
+    # noretrain()
+
+    power_varysensor()
 
 
 

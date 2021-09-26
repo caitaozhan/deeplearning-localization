@@ -1,0 +1,1809 @@
+{"experiment_num": 0, "num_intruder": 1, "image_index": 7907, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.3929], "false_alarm": 0, "miss": 0, "preds": [[29.5, 71.5]], "time": 5.64373, "power_error": [0.1514]}
+
+{"experiment_num": 1, "num_intruder": 1, "image_index": 31210, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.5943], "false_alarm": 0, "miss": 0, "preds": [[89.5, 13.5]], "time": 2.10272, "power_error": [-0.0942]}
+
+{"experiment_num": 2, "num_intruder": 1, "image_index": 5021, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.774], "false_alarm": 0, "miss": 0, "preds": [[22.5, 55.5]], "time": 4.34452, "power_error": [0.1932]}
+
+{"experiment_num": 0, "num_intruder": 1, "image_index": 16317, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.2374], "false_alarm": 0, "miss": 0, "preds": [[51.5, 74.5]], "time": 7.39208, "power_error": [-0.0551]}
+
+{"experiment_num": 1, "num_intruder": 1, "image_index": 10193, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.2923], "false_alarm": 0, "miss": 0, "preds": [[35.5, 48.5]], "time": 8.53234, "power_error": [0.3237]}
+
+{"experiment_num": 2, "num_intruder": 1, "image_index": 6120, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.0063], "false_alarm": 0, "miss": 0, "preds": [[26.5, 35.5]], "time": 3.3001, "power_error": [0.159]}
+
+{"experiment_num": 3, "num_intruder": 1, "image_index": 29569, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.88], "false_alarm": 0, "miss": 0, "preds": [[84.5, 83.5]], "time": 8.61062, "power_error": [-0.0479]}
+
+{"experiment_num": 4, "num_intruder": 1, "image_index": 10631, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.196], "false_alarm": 0, "miss": 0, "preds": [[37.5, 57.5]], "time": 5.92211, "power_error": [0.0682]}
+
+{"experiment_num": 5, "num_intruder": 1, "image_index": 24664, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.604], "false_alarm": 0, "miss": 0, "preds": [[72.5, 62.5]], "time": 11.82162, "power_error": [-0.1454]}
+
+{"experiment_num": 6, "num_intruder": 1, "image_index": 13585, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.7742], "false_alarm": 0, "miss": 0, "preds": [[44.5, 87.5]], "time": 2.36211, "power_error": [0.1755]}
+
+{"experiment_num": 7, "num_intruder": 1, "image_index": 1002, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.3053], "false_alarm": 0, "miss": 0, "preds": [[12.5, 51.5]], "time": 6.39151, "power_error": [-0.4036]}
+
+{"experiment_num": 8, "num_intruder": 1, "image_index": 19136, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.0269], "false_alarm": 0, "miss": 0, "preds": [[57.5, 78.5]], "time": 5.51218, "power_error": [0.0259]}
+
+{"experiment_num": 9, "num_intruder": 1, "image_index": 1205, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.9336], "false_alarm": 0, "miss": 0, "preds": [[13.5, 12.5]], "time": 2.27251, "power_error": [0.1758]}
+
+{"experiment_num": 10, "num_intruder": 1, "image_index": 27277, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.4617], "false_alarm": 0, "miss": 0, "preds": [[78.5, 25.5]], "time": 6.77224, "power_error": [-0.1011]}
+
+{"experiment_num": 11, "num_intruder": 1, "image_index": 30729, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.9168], "false_alarm": 0, "miss": 0, "preds": [[87.5, 75.5]], "time": 9.18221, "power_error": [0.3214]}
+
+{"experiment_num": 12, "num_intruder": 1, "image_index": 9133, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.26], "false_alarm": 0, "miss": 0, "preds": [[32.5, 76.5]], "time": 8.7104, "power_error": [0.0984]}
+
+{"experiment_num": 13, "num_intruder": 1, "image_index": 29605, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.01], "false_alarm": 0, "miss": 0, "preds": [[85.5, 11.5]], "time": 2.16381, "power_error": [1.0146]}
+
+{"experiment_num": 14, "num_intruder": 1, "image_index": 27221, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.3013], "false_alarm": 0, "miss": 0, "preds": [[78.5, 14.5]], "time": 4.59154, "power_error": [0.0205]}
+
+{"experiment_num": 15, "num_intruder": 1, "image_index": 13597, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.6091], "false_alarm": 0, "miss": 0, "preds": [[44.5, 89.5]], "time": 5.96939, "power_error": [-0.4214]}
+
+{"experiment_num": 16, "num_intruder": 1, "image_index": 21039, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.1822], "false_alarm": 0, "miss": 0, "preds": [[62.5, 57.5]], "time": 12.44864, "power_error": [-0.3588]}
+
+{"experiment_num": 17, "num_intruder": 1, "image_index": 23625, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.614], "false_alarm": 0, "miss": 0, "preds": [[69.5, 16.5]], "time": 2.58045, "power_error": [-0.5411]}
+
+{"experiment_num": 18, "num_intruder": 1, "image_index": 16996, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.2433], "false_alarm": 0, "miss": 0, "preds": [[52.5, 49.5]], "time": 4.57841, "power_error": [0.4393]}
+
+{"experiment_num": 19, "num_intruder": 1, "image_index": 14424, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.3088], "false_alarm": 0, "miss": 0, "preds": [[46.5, 14.5]], "time": 9.9603, "power_error": [0.2424]}
+
+{"experiment_num": 20, "num_intruder": 1, "image_index": 8501, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.6888], "false_alarm": 0, "miss": 0, "preds": [[32.5, 30.5]], "time": 4.71185, "power_error": [0.5978]}
+
+{"experiment_num": 21, "num_intruder": 1, "image_index": 19806, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.1192], "false_alarm": 0, "miss": 0, "preds": [[60.5, 52.5]], "time": 5.2798, "power_error": [0.1583]}
+
+{"experiment_num": 22, "num_intruder": 1, "image_index": 8316, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.0188], "false_alarm": 0, "miss": 0, "preds": [[30.5, 74.5]], "time": 4.20891, "power_error": [0.1051]}
+
+{"experiment_num": 23, "num_intruder": 1, "image_index": 26380, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.852], "false_alarm": 0, "miss": 0, "preds": [[75.5, 87.5]], "time": 2.32811, "power_error": [0.3415]}
+
+{"experiment_num": 24, "num_intruder": 1, "image_index": 18250, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.9964], "false_alarm": 0, "miss": 0, "preds": [[56.5, 61.5]], "time": 3.06342, "power_error": [0.0578]}
+
+{"experiment_num": 25, "num_intruder": 1, "image_index": 4719, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.3433], "false_alarm": 0, "miss": 0, "preds": [[21.5, 73.5]], "time": 9.77078, "power_error": [0.1185]}
+
+{"experiment_num": 26, "num_intruder": 1, "image_index": 30031, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.8896], "false_alarm": 0, "miss": 0, "preds": [[86.5, 17.5]], "time": 3.8672, "power_error": [0.1336]}
+
+{"experiment_num": 27, "num_intruder": 1, "image_index": 9837, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.1319], "false_alarm": 0, "miss": 0, "preds": [[35.5, 57.5]], "time": 7.47859, "power_error": [-0.0081]}
+
+{"experiment_num": 28, "num_intruder": 1, "image_index": 6594, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.4825], "false_alarm": 0, "miss": 0, "preds": [[26.5, 48.5]], "time": 10.85389, "power_error": [-0.0637]}
+
+{"experiment_num": 29, "num_intruder": 1, "image_index": 31398, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.1171], "false_alarm": 0, "miss": 0, "preds": [[89.5, 49.5]], "time": 8.17844, "power_error": [0.2148]}
+
+{"experiment_num": 30, "num_intruder": 1, "image_index": 13741, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [2.1514], "false_alarm": 0, "miss": 0, "preds": [[46.5, 39.5]], "time": 6.3549, "power_error": [-0.0849]}
+
+{"experiment_num": 31, "num_intruder": 1, "image_index": 21600, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.3439], "false_alarm": 0, "miss": 0, "preds": [[65.5, 10.5]], "time": 2.38492, "power_error": [-0.2451]}
+
+{"experiment_num": 32, "num_intruder": 1, "image_index": 30395, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.4832], "false_alarm": 0, "miss": 0, "preds": [[85.5, 89.5]], "time": 1.96429, "power_error": [0.6555]}
+
+{"experiment_num": 33, "num_intruder": 1, "image_index": 31751, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.4135], "false_alarm": 0, "miss": 0, "preds": [[89.5, 40.5]], "time": 3.87491, "power_error": [-0.7505]}
+
+{"experiment_num": 34, "num_intruder": 1, "image_index": 17160, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.3379], "false_alarm": 0, "miss": 0, "preds": [[53.5, 83.5]], "time": 2.74311, "power_error": [0.1515]}
+
+{"experiment_num": 35, "num_intruder": 1, "image_index": 11977, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.5392], "false_alarm": 0, "miss": 0, "preds": [[40.5, 85.5]], "time": 7.11033, "power_error": [-0.1106]}
+
+{"experiment_num": 36, "num_intruder": 1, "image_index": 25609, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.3979], "false_alarm": 0, "miss": 0, "preds": [[74.5, 11.5]], "time": 9.17696, "power_error": [0.1181]}
+
+{"experiment_num": 37, "num_intruder": 1, "image_index": 14048, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.0592], "false_alarm": 0, "miss": 0, "preds": [[46.5, 20.5]], "time": 8.52321, "power_error": [0.3534]}
+
+{"experiment_num": 38, "num_intruder": 1, "image_index": 17634, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.3221], "false_alarm": 0, "miss": 0, "preds": [[54.5, 16.5]], "time": 10.30163, "power_error": [-0.0239]}
+
+{"experiment_num": 39, "num_intruder": 1, "image_index": 1988, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.0202], "false_alarm": 0, "miss": 0, "preds": [[15.5, 88.5]], "time": 7.64996, "power_error": [0.1295]}
+
+{"experiment_num": 40, "num_intruder": 1, "image_index": 5415, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.2018], "false_alarm": 0, "miss": 0, "preds": [[23.5, 53.5]], "time": 3.29533, "power_error": [0.338]}
+
+{"experiment_num": 41, "num_intruder": 1, "image_index": 23877, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.5308], "false_alarm": 0, "miss": 0, "preds": [[69.5, 65.5]], "time": 7.35414, "power_error": [-0.1391]}
+
+{"experiment_num": 42, "num_intruder": 1, "image_index": 20600, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.6629], "false_alarm": 0, "miss": 0, "preds": [[62.5, 50.5]], "time": 4.15265, "power_error": [-0.2751]}
+
+{"experiment_num": 43, "num_intruder": 1, "image_index": 30023, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.7288], "false_alarm": 0, "miss": 0, "preds": [[86.5, 14.5]], "time": 8.67396, "power_error": [0.1422]}
+
+{"experiment_num": 44, "num_intruder": 1, "image_index": 1719, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.7683], "false_alarm": 0, "miss": 0, "preds": [[14.5, 34.5]], "time": 12.18174, "power_error": [0.2857]}
+
+{"experiment_num": 45, "num_intruder": 1, "image_index": 23432, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.3425], "false_alarm": 0, "miss": 0, "preds": [[69.5, 57.5]], "time": 7.5693, "power_error": [0.2724]}
+
+{"experiment_num": 46, "num_intruder": 1, "image_index": 10931, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.9627], "false_alarm": 0, "miss": 0, "preds": [[38.5, 37.5]], "time": 4.92742, "power_error": [0.0579]}
+
+{"experiment_num": 47, "num_intruder": 1, "image_index": 15721, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.3236], "false_alarm": 0, "miss": 0, "preds": [[49.5, 34.5]], "time": 4.97603, "power_error": [-0.0085]}
+
+{"experiment_num": 48, "num_intruder": 1, "image_index": 3004, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.0724], "false_alarm": 0, "miss": 0, "preds": [[17.5, 51.5]], "time": 10.75853, "power_error": [0.1653]}
+
+{"experiment_num": 49, "num_intruder": 1, "image_index": 15153, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.5206], "false_alarm": 0, "miss": 0, "preds": [[47.5, 80.5]], "time": 8.36738, "power_error": [0.2268]}
+
+{"experiment_num": 50, "num_intruder": 1, "image_index": 30461, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [2.0412], "false_alarm": 0, "miss": 0, "preds": [[88.5, 23.5]], "time": 4.18545, "power_error": [0.0495]}
+
+{"experiment_num": 51, "num_intruder": 1, "image_index": 12665, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.8386], "false_alarm": 0, "miss": 0, "preds": [[42.5, 63.5]], "time": 2.97003, "power_error": [0.6928]}
+
+{"experiment_num": 52, "num_intruder": 1, "image_index": 28428, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.7016], "false_alarm": 0, "miss": 0, "preds": [[82.5, 15.5]], "time": 8.13529, "power_error": [-0.1451]}
+
+{"experiment_num": 53, "num_intruder": 1, "image_index": 26782, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.7046], "false_alarm": 0, "miss": 0, "preds": [[76.5, 87.5]], "time": 5.90824, "power_error": [0.2404]}
+
+{"experiment_num": 54, "num_intruder": 1, "image_index": 12470, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.5585], "false_alarm": 0, "miss": 0, "preds": [[41.5, 25.5]], "time": 3.13031, "power_error": [-0.4909]}
+
+{"experiment_num": 55, "num_intruder": 1, "image_index": 4489, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.8924], "false_alarm": 0, "miss": 0, "preds": [[22.5, 28.5]], "time": 10.23533, "power_error": [0.0436]}
+
+{"experiment_num": 56, "num_intruder": 1, "image_index": 6675, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.7105], "false_alarm": 0, "miss": 0, "preds": [[27.5, 65.5]], "time": 3.30013, "power_error": [0.3832]}
+
+{"experiment_num": 57, "num_intruder": 1, "image_index": 13061, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.3126], "false_alarm": 0, "miss": 0, "preds": [[42.5, 62.5]], "time": 5.66325, "power_error": [-0.1557]}
+
+{"experiment_num": 58, "num_intruder": 1, "image_index": 20093, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.8192], "false_alarm": 0, "miss": 0, "preds": [[61.5, 28.5]], "time": 9.48108, "power_error": [-0.1087]}
+
+{"experiment_num": 59, "num_intruder": 1, "image_index": 24690, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.4399], "false_alarm": 0, "miss": 0, "preds": [[71.5, 68.5]], "time": 2.77708, "power_error": [0.2193]}
+
+{"experiment_num": 60, "num_intruder": 1, "image_index": 9533, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.22], "false_alarm": 0, "miss": 0, "preds": [[33.5, 76.5]], "time": 9.6147, "power_error": [-0.0676]}
+
+{"experiment_num": 61, "num_intruder": 1, "image_index": 16651, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.7473], "false_alarm": 0, "miss": 0, "preds": [[51.5, 61.5]], "time": 5.245, "power_error": [0.4257]}
+
+{"experiment_num": 62, "num_intruder": 1, "image_index": 16444, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.8193], "false_alarm": 0, "miss": 0, "preds": [[51.5, 19.5]], "time": 11.00542, "power_error": [0.0745]}
+
+{"experiment_num": 63, "num_intruder": 1, "image_index": 28938, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.5948], "false_alarm": 0, "miss": 0, "preds": [[82.5, 38.5]], "time": 8.07833, "power_error": [0.357]}
+
+{"experiment_num": 64, "num_intruder": 1, "image_index": 6004, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.1051], "false_alarm": 0, "miss": 0, "preds": [[25.5, 10.5]], "time": 9.8987, "power_error": [0.1223]}
+
+{"experiment_num": 65, "num_intruder": 1, "image_index": 14001, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.9156], "false_alarm": 0, "miss": 0, "preds": [[46.5, 11.5]], "time": 4.35768, "power_error": [0.0633]}
+
+{"experiment_num": 66, "num_intruder": 1, "image_index": 1285, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.1403], "false_alarm": 0, "miss": 0, "preds": [[13.5, 28.5]], "time": 2.75771, "power_error": [-0.1111]}
+
+{"experiment_num": 67, "num_intruder": 1, "image_index": 30256, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.535], "false_alarm": 0, "miss": 0, "preds": [[85.5, 62.5]], "time": 4.93816, "power_error": [0.07]}
+
+{"experiment_num": 68, "num_intruder": 1, "image_index": 15847, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.1141], "false_alarm": 0, "miss": 0, "preds": [[49.5, 59.5]], "time": 8.208, "power_error": [0.1061]}
+
+{"experiment_num": 69, "num_intruder": 1, "image_index": 26564, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.3204], "false_alarm": 0, "miss": 0, "preds": [[76.5, 42.5]], "time": 11.92697, "power_error": [0.0738]}
+
+{"experiment_num": 70, "num_intruder": 1, "image_index": 24480, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.4428], "false_alarm": 0, "miss": 0, "preds": [[72.5, 26.5]], "time": 3.04825, "power_error": [0.4441]}
+
+{"experiment_num": 71, "num_intruder": 1, "image_index": 8084, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.9819], "false_alarm": 0, "miss": 0, "preds": [[30.5, 27.5]], "time": 11.51951, "power_error": [-0.2507]}
+
+{"experiment_num": 72, "num_intruder": 1, "image_index": 29269, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.9673], "false_alarm": 0, "miss": 0, "preds": [[84.5, 24.5]], "time": 10.01678, "power_error": [-0.1306]}
+
+{"experiment_num": 73, "num_intruder": 1, "image_index": 31584, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.1232], "false_alarm": 0, "miss": 0, "preds": [[89.5, 86.5]], "time": 9.42626, "power_error": [0.3028]}
+
+{"experiment_num": 74, "num_intruder": 1, "image_index": 29473, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.4161], "false_alarm": 0, "miss": 0, "preds": [[83.5, 64.5]], "time": 8.08473, "power_error": [0.0955]}
+
+{"experiment_num": 75, "num_intruder": 1, "image_index": 14638, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.7116], "false_alarm": 0, "miss": 0, "preds": [[46.5, 58.5]], "time": 9.30645, "power_error": [-0.009]}
+
+{"experiment_num": 76, "num_intruder": 1, "image_index": 13804, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.9066], "false_alarm": 0, "miss": 0, "preds": [[44.5, 51.5]], "time": 11.0518, "power_error": [0.0971]}
+
+{"experiment_num": 77, "num_intruder": 1, "image_index": 17312, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.8357], "false_alarm": 0, "miss": 0, "preds": [[54.5, 32.5]], "time": 7.33038, "power_error": [0.1683]}
+
+{"experiment_num": 78, "num_intruder": 1, "image_index": 29007, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.6443], "false_alarm": 0, "miss": 0, "preds": [[83.5, 51.5]], "time": 6.15363, "power_error": [-0.0742]}
+
+{"experiment_num": 79, "num_intruder": 1, "image_index": 26072, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.853], "false_alarm": 0, "miss": 0, "preds": [[75.5, 25.5]], "time": 6.83005, "power_error": [-0.0676]}
+
+{"experiment_num": 80, "num_intruder": 1, "image_index": 7201, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.5718], "false_alarm": 0, "miss": 0, "preds": [[28.5, 11.5]], "time": 4.23033, "power_error": [0.0545]}
+
+{"experiment_num": 81, "num_intruder": 1, "image_index": 9546, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.7443], "false_alarm": 0, "miss": 0, "preds": [[34.5, 80.5]], "time": 5.30464, "power_error": [0.4346]}
+
+{"experiment_num": 82, "num_intruder": 1, "image_index": 23659, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.0207], "false_alarm": 0, "miss": 0, "preds": [[69.5, 22.5]], "time": 10.36864, "power_error": [0.2843]}
+
+{"experiment_num": 83, "num_intruder": 1, "image_index": 9087, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.13], "false_alarm": 0, "miss": 0, "preds": [[33.5, 68.5]], "time": 6.58731, "power_error": [0.0498]}
+
+{"experiment_num": 84, "num_intruder": 1, "image_index": 26290, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.2217], "false_alarm": 0, "miss": 0, "preds": [[75.5, 68.5]], "time": 2.62429, "power_error": [-0.7514]}
+
+{"experiment_num": 85, "num_intruder": 1, "image_index": 25610, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.7346], "false_alarm": 0, "miss": 0, "preds": [[74.5, 13.5]], "time": 2.43992, "power_error": [0.5645]}
+
+{"experiment_num": 86, "num_intruder": 1, "image_index": 16665, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.1422], "false_alarm": 0, "miss": 0, "preds": [[51.5, 63.5]], "time": 3.68799, "power_error": [0.1347]}
+
+{"experiment_num": 87, "num_intruder": 1, "image_index": 9115, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.5984], "false_alarm": 0, "miss": 0, "preds": [[32.5, 73.5]], "time": 3.52091, "power_error": [0.0901]}
+
+{"experiment_num": 88, "num_intruder": 1, "image_index": 7054, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.9502], "false_alarm": 0, "miss": 0, "preds": [[28.5, 61.5]], "time": 10.40261, "power_error": [0.2507]}
+
+{"experiment_num": 89, "num_intruder": 1, "image_index": 26065, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.5953], "false_alarm": 0, "miss": 0, "preds": [[76.5, 23.5]], "time": 2.8075, "power_error": [0.0927]}
+
+{"experiment_num": 90, "num_intruder": 1, "image_index": 9664, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.6818], "false_alarm": 0, "miss": 0, "preds": [[35.5, 22.5]], "time": 10.80425, "power_error": [0.0191]}
+
+{"experiment_num": 91, "num_intruder": 1, "image_index": 6633, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.1741], "false_alarm": 0, "miss": 0, "preds": [[27.5, 57.5]], "time": 9.73457, "power_error": [0.1722]}
+
+{"experiment_num": 92, "num_intruder": 1, "image_index": 23661, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.9434], "false_alarm": 0, "miss": 0, "preds": [[70.5, 23.5]], "time": 4.46037, "power_error": [0.1663]}
+
+{"experiment_num": 93, "num_intruder": 1, "image_index": 21236, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.4946], "false_alarm": 0, "miss": 0, "preds": [[63.5, 17.5]], "time": 4.94428, "power_error": [-0.2034]}
+
+{"experiment_num": 94, "num_intruder": 1, "image_index": 8668, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.5408], "false_alarm": 0, "miss": 0, "preds": [[31.5, 63.5]], "time": 8.33375, "power_error": [0.1848]}
+
+{"experiment_num": 95, "num_intruder": 1, "image_index": 16632, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.4178], "false_alarm": 0, "miss": 0, "preds": [[51.5, 56.5]], "time": 8.19257, "power_error": [-0.2052]}
+
+{"experiment_num": 96, "num_intruder": 1, "image_index": 885, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.3288], "false_alarm": 0, "miss": 0, "preds": [[12.5, 27.5]], "time": 3.08562, "power_error": [0.3042]}
+
+{"experiment_num": 97, "num_intruder": 1, "image_index": 15730, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.0068], "false_alarm": 0, "miss": 0, "preds": [[48.5, 37.5]], "time": 3.77689, "power_error": [0.1246]}
+
+{"experiment_num": 98, "num_intruder": 1, "image_index": 17011, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.8152], "false_alarm": 0, "miss": 0, "preds": [[53.5, 52.5]], "time": 5.64057, "power_error": [0.095]}
+
+{"experiment_num": 99, "num_intruder": 1, "image_index": 26624, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.2384], "false_alarm": 0, "miss": 0, "preds": [[77.5, 55.5]], "time": 11.36427, "power_error": [-0.2046]}
+
+{"experiment_num": 100, "num_intruder": 1, "image_index": 23715, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.9777], "false_alarm": 0, "miss": 0, "preds": [[69.5, 34.5]], "time": 2.80678, "power_error": [0.5567]}
+
+{"experiment_num": 101, "num_intruder": 1, "image_index": 31611, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.5189], "false_alarm": 0, "miss": 0, "preds": [[89.5, 13.5]], "time": 3.58179, "power_error": [-0.137]}
+
+{"experiment_num": 102, "num_intruder": 1, "image_index": 6268, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.7393], "false_alarm": 0, "miss": 0, "preds": [[26.5, 63.5]], "time": 8.28012, "power_error": [-0.0184]}
+
+{"experiment_num": 103, "num_intruder": 1, "image_index": 17559, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.7702], "false_alarm": 0, "miss": 0, "preds": [[53.5, 82.5]], "time": 11.64723, "power_error": [0.1182]}
+
+{"experiment_num": 104, "num_intruder": 1, "image_index": 25796, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.8854], "false_alarm": 0, "miss": 0, "preds": [[74.5, 50.5]], "time": 4.89127, "power_error": [0.5543]}
+
+{"experiment_num": 105, "num_intruder": 1, "image_index": 19397, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.589], "false_alarm": 0, "miss": 0, "preds": [[59.5, 49.5]], "time": 8.31606, "power_error": [0.0148]}
+
+{"experiment_num": 106, "num_intruder": 1, "image_index": 14875, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.9229], "false_alarm": 0, "miss": 0, "preds": [[48.5, 26.5]], "time": 2.92105, "power_error": [-0.2671]}
+
+{"experiment_num": 107, "num_intruder": 1, "image_index": 29679, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.9829], "false_alarm": 0, "miss": 0, "preds": [[85.5, 25.5]], "time": 11.06795, "power_error": [0.1242]}
+
+{"experiment_num": 108, "num_intruder": 1, "image_index": 10294, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.4664], "false_alarm": 0, "miss": 0, "preds": [[35.5, 68.5]], "time": 10.64435, "power_error": [0.1421]}
+
+{"experiment_num": 109, "num_intruder": 1, "image_index": 31360, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [], "false_alarm": 0, "miss": 1, "preds": [], "time": 2.45915, "power_error": []}
+
+{"experiment_num": 110, "num_intruder": 1, "image_index": 5770, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.5512], "false_alarm": 0, "miss": 0, "preds": [[25.5, 45.5]], "time": 3.28221, "power_error": [0.1076]}
+
+{"experiment_num": 111, "num_intruder": 1, "image_index": 22966, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.6916], "false_alarm": 0, "miss": 0, "preds": [[67.5, 44.5]], "time": 4.69362, "power_error": [0.2273]}
+
+{"experiment_num": 112, "num_intruder": 1, "image_index": 31348, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.9894], "false_alarm": 0, "miss": 0, "preds": [[89.5, 40.5]], "time": 8.09207, "power_error": [0.2724]}
+
+{"experiment_num": 113, "num_intruder": 1, "image_index": 1180, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.262], "false_alarm": 0, "miss": 0, "preds": [[13.5, 87.5]], "time": 2.67472, "power_error": [0.3422]}
+
+{"experiment_num": 114, "num_intruder": 1, "image_index": 24957, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.4966], "false_alarm": 0, "miss": 0, "preds": [[72.5, 41.5]], "time": 7.50441, "power_error": [0.2497]}
+
+{"experiment_num": 115, "num_intruder": 1, "image_index": 19874, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.3623], "false_alarm": 0, "miss": 0, "preds": [[60.5, 65.5]], "time": 11.92223, "power_error": [0.0681]}
+
+{"experiment_num": 116, "num_intruder": 1, "image_index": 12126, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.7135], "false_alarm": 0, "miss": 0, "preds": [[41.5, 35.5]], "time": 5.29311, "power_error": [0.1057]}
+
+{"experiment_num": 117, "num_intruder": 1, "image_index": 28381, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.8181], "false_alarm": 0, "miss": 0, "preds": [[81.5, 86.5]], "time": 4.16755, "power_error": [0.1892]}
+
+{"experiment_num": 118, "num_intruder": 1, "image_index": 18265, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.8372], "false_alarm": 0, "miss": 0, "preds": [[55.5, 64.5]], "time": 3.11597, "power_error": [-0.231]}
+
+{"experiment_num": 119, "num_intruder": 1, "image_index": 716, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.9455], "false_alarm": 0, "miss": 0, "preds": [[11.5, 74.5]], "time": 4.50927, "power_error": [0.3254]}
+
+{"experiment_num": 120, "num_intruder": 1, "image_index": 17233, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.5991], "false_alarm": 0, "miss": 0, "preds": [[53.5, 17.5]], "time": 7.8896, "power_error": [0.1211]}
+
+{"experiment_num": 121, "num_intruder": 1, "image_index": 1953, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.7553], "false_alarm": 0, "miss": 0, "preds": [[15.5, 80.5]], "time": 8.40345, "power_error": [-0.3658]}
+
+{"experiment_num": 122, "num_intruder": 1, "image_index": 11051, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.2952], "false_alarm": 2, "miss": 0, "preds": [[37.5, 60.5], [40.5, 65.5], [40.5, 65.5]], "time": 5.33762, "power_error": [0.3379]}
+
+{"experiment_num": 123, "num_intruder": 1, "image_index": 27284, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.2786], "false_alarm": 0, "miss": 0, "preds": [[79.5, 27.5]], "time": 10.74022, "power_error": [-0.1947]}
+
+{"experiment_num": 124, "num_intruder": 1, "image_index": 29860, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.7549], "false_alarm": 0, "miss": 0, "preds": [[85.5, 62.5]], "time": 2.66883, "power_error": [0.392]}
+
+{"experiment_num": 125, "num_intruder": 1, "image_index": 25930, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.296], "false_alarm": 0, "miss": 0, "preds": [[75.5, 77.5]], "time": 2.89415, "power_error": [-0.4945]}
+
+{"experiment_num": 126, "num_intruder": 1, "image_index": 10723, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.6002], "false_alarm": 0, "miss": 0, "preds": [[37.5, 74.5]], "time": 9.87774, "power_error": [0.1147]}
+
+{"experiment_num": 127, "num_intruder": 1, "image_index": 9153, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.1496], "false_alarm": 0, "miss": 0, "preds": [[32.5, 80.5]], "time": 8.39366, "power_error": [0.1541]}
+
+{"experiment_num": 128, "num_intruder": 1, "image_index": 802, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.2762], "false_alarm": 0, "miss": 0, "preds": [[12.5, 10.5]], "time": 5.54427, "power_error": [-0.0167]}
+
+{"experiment_num": 129, "num_intruder": 1, "image_index": 26165, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.6292], "false_alarm": 0, "miss": 0, "preds": [[76.5, 43.5]], "time": 3.07652, "power_error": [0.4144]}
+
+{"experiment_num": 130, "num_intruder": 1, "image_index": 23304, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.6746], "false_alarm": 0, "miss": 0, "preds": [[68.5, 31.5]], "time": 11.15591, "power_error": [0.0834]}
+
+{"experiment_num": 131, "num_intruder": 1, "image_index": 4002, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.4478], "false_alarm": 0, "miss": 0, "preds": [[21.5, 11.5]], "time": 5.84522, "power_error": [0.0112]}
+
+{"experiment_num": 132, "num_intruder": 1, "image_index": 9489, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.2298], "false_alarm": 0, "miss": 0, "preds": [[34.5, 67.5]], "time": 11.65877, "power_error": [-0.0281]}
+
+{"experiment_num": 133, "num_intruder": 1, "image_index": 4121, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.1677], "false_alarm": 0, "miss": 0, "preds": [[21.5, 35.5]], "time": 5.15193, "power_error": [-0.0186]}
+
+{"experiment_num": 134, "num_intruder": 1, "image_index": 13806, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.2814], "false_alarm": 0, "miss": 0, "preds": [[45.5, 52.5]], "time": 5.34711, "power_error": [-0.1168]}
+
+{"experiment_num": 135, "num_intruder": 1, "image_index": 20081, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.226], "false_alarm": 0, "miss": 0, "preds": [[61.5, 27.5]], "time": 5.07328, "power_error": [0.0827]}
+
+{"experiment_num": 136, "num_intruder": 1, "image_index": 26223, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.8898], "false_alarm": 0, "miss": 0, "preds": [[76.5, 54.5]], "time": 9.99819, "power_error": [-0.0966]}
+
+{"experiment_num": 137, "num_intruder": 1, "image_index": 7801, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.2392], "false_alarm": 0, "miss": 0, "preds": [[30.5, 50.5]], "time": 5.28874, "power_error": [0.0814]}
+
+{"experiment_num": 138, "num_intruder": 1, "image_index": 6667, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.1181], "false_alarm": 0, "miss": 0, "preds": [[26.5, 64.5]], "time": 7.57461, "power_error": [0.1259]}
+
+{"experiment_num": 139, "num_intruder": 1, "image_index": 22285, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.6767], "false_alarm": 0, "miss": 0, "preds": [[66.5, 67.5]], "time": 2.72492, "power_error": [0.6095]}
+
+{"experiment_num": 140, "num_intruder": 1, "image_index": 9219, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.6361], "false_alarm": 0, "miss": 0, "preds": [[33.5, 14.5]], "time": 10.38414, "power_error": [0.0069]}
+
+{"experiment_num": 141, "num_intruder": 1, "image_index": 21607, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.0413], "false_alarm": 0, "miss": 0, "preds": [[65.5, 12.5]], "time": 6.14727, "power_error": [0.1739]}
+
+{"experiment_num": 142, "num_intruder": 1, "image_index": 18952, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.7004], "false_alarm": 0, "miss": 0, "preds": [[58.5, 40.5]], "time": 7.79552, "power_error": [-0.3271]}
+
+{"experiment_num": 143, "num_intruder": 1, "image_index": 18949, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.2497], "false_alarm": 0, "miss": 0, "preds": [[58.5, 40.5]], "time": 12.56553, "power_error": [-0.0512]}
+
+{"experiment_num": 144, "num_intruder": 1, "image_index": 8878, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.0338], "false_alarm": 0, "miss": 0, "preds": [[33.5, 25.5]], "time": 8.54143, "power_error": [0.3163]}
+
+{"experiment_num": 145, "num_intruder": 1, "image_index": 8241, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.3476], "false_alarm": 0, "miss": 0, "preds": [[31.5, 59.5]], "time": 4.90736, "power_error": [0.1352]}
+
+{"experiment_num": 146, "num_intruder": 1, "image_index": 16829, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.6654], "false_alarm": 0, "miss": 0, "preds": [[52.5, 16.5]], "time": 11.2784, "power_error": [-0.1871]}
+
+{"experiment_num": 147, "num_intruder": 1, "image_index": 18291, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.2527], "false_alarm": 0, "miss": 0, "preds": [[55.5, 69.5]], "time": 5.31113, "power_error": [0.1356]}
+
+{"experiment_num": 148, "num_intruder": 1, "image_index": 29619, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.6114], "false_alarm": 0, "miss": 0, "preds": [[84.5, 14.5]], "time": 9.59532, "power_error": [-0.0389]}
+
+{"experiment_num": 149, "num_intruder": 1, "image_index": 400, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.4881], "false_alarm": 0, "miss": 0, "preds": [[11.5, 10.5]], "time": 2.21034, "power_error": [0.1638]}
+
+{"experiment_num": 150, "num_intruder": 1, "image_index": 31768, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.7765], "false_alarm": 0, "miss": 0, "preds": [[89.5, 44.5]], "time": 7.62402, "power_error": [-0.1996]}
+
+{"experiment_num": 151, "num_intruder": 1, "image_index": 21215, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.9041], "false_alarm": 0, "miss": 0, "preds": [[64.5, 13.5]], "time": 2.54587, "power_error": [0.2264]}
+
+{"experiment_num": 152, "num_intruder": 1, "image_index": 18035, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.0834], "false_alarm": 0, "miss": 0, "preds": [[55.5, 18.5]], "time": 2.9827, "power_error": [-0.4]}
+
+{"experiment_num": 153, "num_intruder": 1, "image_index": 27758, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.3444], "false_alarm": 0, "miss": 0, "preds": [[79.5, 41.5]], "time": 9.6353, "power_error": [-0.0585]}
+
+{"experiment_num": 154, "num_intruder": 1, "image_index": 26199, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.7365], "false_alarm": 0, "miss": 0, "preds": [[75.5, 50.5]], "time": 12.58879, "power_error": [0.1737]}
+
+{"experiment_num": 155, "num_intruder": 1, "image_index": 280, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.9316], "false_alarm": 0, "miss": 0, "preds": [[10.5, 67.5]], "time": 3.52975, "power_error": [0.0713]}
+
+{"experiment_num": 156, "num_intruder": 1, "image_index": 3644, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.8058], "false_alarm": 0, "miss": 0, "preds": [[20.5, 18.5]], "time": 12.24434, "power_error": [0.3158]}
+
+{"experiment_num": 157, "num_intruder": 1, "image_index": 31341, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.966], "false_alarm": 0, "miss": 0, "preds": [[89.5, 39.5]], "time": 3.84248, "power_error": [0.177]}
+
+{"experiment_num": 158, "num_intruder": 1, "image_index": 461, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.9785], "false_alarm": 0, "miss": 0, "preds": [[12.5, 23.5]], "time": 4.1555, "power_error": [0.5322]}
+
+{"experiment_num": 159, "num_intruder": 1, "image_index": 11707, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.5654], "false_alarm": 0, "miss": 0, "preds": [[40.5, 31.5]], "time": 6.73236, "power_error": [0.3376]}
+
+{"experiment_num": 160, "num_intruder": 1, "image_index": 11060, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.4509], "false_alarm": 0, "miss": 0, "preds": [[37.5, 62.5]], "time": 3.09992, "power_error": [0.4037]}
+
+{"experiment_num": 161, "num_intruder": 1, "image_index": 22457, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.5744], "false_alarm": 0, "miss": 0, "preds": [[66.5, 21.5]], "time": 7.48622, "power_error": [-0.2609]}
+
+{"experiment_num": 162, "num_intruder": 1, "image_index": 21076, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.9991], "false_alarm": 0, "miss": 0, "preds": [[63.5, 66.5]], "time": 4.76316, "power_error": [0.0991]}
+
+{"experiment_num": 163, "num_intruder": 1, "image_index": 10229, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.1495], "false_alarm": 0, "miss": 0, "preds": [[36.5, 56.5]], "time": 11.88112, "power_error": [-0.0528]}
+
+{"experiment_num": 164, "num_intruder": 1, "image_index": 13992, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.5271], "false_alarm": 0, "miss": 0, "preds": [[44.5, 88.5]], "time": 6.74805, "power_error": [0.0055]}
+
+{"experiment_num": 165, "num_intruder": 1, "image_index": 19338, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.5012], "false_alarm": 0, "miss": 0, "preds": [[58.5, 37.5]], "time": 10.90298, "power_error": [0.049]}
+
+{"experiment_num": 166, "num_intruder": 1, "image_index": 22577, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.2277], "false_alarm": 0, "miss": 0, "preds": [[67.5, 45.5]], "time": 6.81231, "power_error": [0.0905]}
+
+{"experiment_num": 167, "num_intruder": 1, "image_index": 14601, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.9146], "false_alarm": 0, "miss": 0, "preds": [[47.5, 50.5]], "time": 4.94046, "power_error": [0.331]}
+
+{"experiment_num": 168, "num_intruder": 1, "image_index": 16266, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.1103], "false_alarm": 0, "miss": 0, "preds": [[50.5, 64.5]], "time": 6.30064, "power_error": [0.281]}
+
+{"experiment_num": 169, "num_intruder": 1, "image_index": 15608, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.6625], "false_alarm": 0, "miss": 0, "preds": [[50.5, 11.5]], "time": 8.46573, "power_error": [-0.0355]}
+
+{"experiment_num": 170, "num_intruder": 1, "image_index": 31935, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.1904], "false_alarm": 0, "miss": 0, "preds": [[89.5, 78.5]], "time": 2.39396, "power_error": [-0.1857]}
+
+{"experiment_num": 171, "num_intruder": 1, "image_index": 1248, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.1777], "false_alarm": 0, "miss": 0, "preds": [[14.5, 20.5]], "time": 7.45436, "power_error": [-0.0625]}
+
+{"experiment_num": 172, "num_intruder": 1, "image_index": 10031, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.7604], "false_alarm": 0, "miss": 0, "preds": [[36.5, 16.5]], "time": 4.93435, "power_error": [-0.0429]}
+
+{"experiment_num": 173, "num_intruder": 1, "image_index": 28044, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.0554], "false_alarm": 0, "miss": 0, "preds": [[81.5, 19.5]], "time": 9.8899, "power_error": [0.0106]}
+
+{"experiment_num": 174, "num_intruder": 1, "image_index": 18977, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.9122], "false_alarm": 0, "miss": 0, "preds": [[57.5, 46.5]], "time": 7.91883, "power_error": [0.0865]}
+
+{"experiment_num": 175, "num_intruder": 1, "image_index": 1418, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.4454], "false_alarm": 0, "miss": 0, "preds": [[13.5, 53.5]], "time": 8.81424, "power_error": [0.1698]}
+
+{"experiment_num": 176, "num_intruder": 1, "image_index": 5856, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.6732], "false_alarm": 0, "miss": 0, "preds": [[25.5, 61.5]], "time": 5.01813, "power_error": [-0.1732]}
+
+{"experiment_num": 177, "num_intruder": 1, "image_index": 6624, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.637], "false_alarm": 0, "miss": 0, "preds": [[27.5, 54.5]], "time": 10.18067, "power_error": [0.0646]}
+
+{"experiment_num": 178, "num_intruder": 1, "image_index": 29839, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.6463], "false_alarm": 0, "miss": 0, "preds": [[85.5, 57.5]], "time": 10.94663, "power_error": [0.1265]}
+
+{"experiment_num": 179, "num_intruder": 1, "image_index": 11286, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.1094], "false_alarm": 0, "miss": 0, "preds": [[39.5, 28.5]], "time": 4.99558, "power_error": [0.1409]}
+
+{"experiment_num": 180, "num_intruder": 1, "image_index": 22701, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.3992], "false_alarm": 0, "miss": 0, "preds": [[66.5, 70.5]], "time": 4.608, "power_error": [0.2022]}
+
+{"experiment_num": 181, "num_intruder": 1, "image_index": 22058, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.0635], "false_alarm": 0, "miss": 0, "preds": [[66.5, 22.5]], "time": 9.1932, "power_error": [-0.1126]}
+
+{"experiment_num": 182, "num_intruder": 1, "image_index": 27654, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.8969], "false_alarm": 0, "miss": 0, "preds": [[80.5, 21.5]], "time": 9.73935, "power_error": [0.1393]}
+
+{"experiment_num": 183, "num_intruder": 1, "image_index": 18020, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.6782], "false_alarm": 0, "miss": 0, "preds": [[56.5, 15.5]], "time": 3.34673, "power_error": [0.185]}
+
+{"experiment_num": 184, "num_intruder": 1, "image_index": 1588, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.3702], "false_alarm": 0, "miss": 0, "preds": [[14.5, 88.5]], "time": 8.27603, "power_error": [-0.0446]}
+
+{"experiment_num": 185, "num_intruder": 1, "image_index": 27158, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.8884], "false_alarm": 0, "miss": 0, "preds": [[77.5, 82.5]], "time": 8.93675, "power_error": [-0.0152]}
+
+{"experiment_num": 186, "num_intruder": 1, "image_index": 7696, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.7108], "false_alarm": 0, "miss": 0, "preds": [[30.5, 29.5]], "time": 4.91489, "power_error": [0.09]}
+
+{"experiment_num": 187, "num_intruder": 1, "image_index": 13965, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.7004], "false_alarm": 0, "miss": 0, "preds": [[45.5, 83.5]], "time": 2.91117, "power_error": [0.084]}
+
+{"experiment_num": 188, "num_intruder": 1, "image_index": 30602, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.4755], "false_alarm": 0, "miss": 0, "preds": [[86.5, 50.5]], "time": 5.92786, "power_error": [0.0135]}
+
+{"experiment_num": 189, "num_intruder": 1, "image_index": 21493, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.4524], "false_alarm": 0, "miss": 0, "preds": [[63.5, 68.5]], "time": 8.68472, "power_error": [-0.1432]}
+
+{"experiment_num": 190, "num_intruder": 1, "image_index": 4301, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.205], "false_alarm": 0, "miss": 0, "preds": [[20.5, 70.5]], "time": 4.75902, "power_error": [-0.2623]}
+
+{"experiment_num": 191, "num_intruder": 1, "image_index": 991, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.6329], "false_alarm": 0, "miss": 0, "preds": [[12.5, 49.5]], "time": 5.50286, "power_error": [0.227]}
+
+{"experiment_num": 192, "num_intruder": 1, "image_index": 5417, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.0153], "false_alarm": 0, "miss": 0, "preds": [[24.5, 54.5]], "time": 8.12896, "power_error": [-0.2356]}
+
+{"experiment_num": 193, "num_intruder": 1, "image_index": 7670, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.2004], "false_alarm": 0, "miss": 0, "preds": [[30.5, 24.5]], "time": 3.9523, "power_error": [0.5162]}
+
+{"experiment_num": 194, "num_intruder": 1, "image_index": 19661, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.1516], "false_alarm": 0, "miss": 0, "preds": [[60.5, 23.5]], "time": 5.95441, "power_error": [0.0798]}
+
+{"experiment_num": 195, "num_intruder": 1, "image_index": 7253, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.7901], "false_alarm": 0, "miss": 0, "preds": [[28.5, 21.5]], "time": 9.2176, "power_error": [-0.096]}
+
+{"experiment_num": 196, "num_intruder": 1, "image_index": 7360, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.2608], "false_alarm": 0, "miss": 0, "preds": [[28.5, 42.5]], "time": 3.38788, "power_error": [-0.4909]}
+
+{"experiment_num": 197, "num_intruder": 1, "image_index": 27032, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.9539], "false_alarm": 0, "miss": 0, "preds": [[78.5, 56.5]], "time": 7.94931, "power_error": [0.2511]}
+
+{"experiment_num": 198, "num_intruder": 1, "image_index": 19592, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.6432], "false_alarm": 0, "miss": 0, "preds": [[58.5, 89.5]], "time": 5.95382, "power_error": [0.1292]}
+
+{"experiment_num": 199, "num_intruder": 1, "image_index": 20835, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.6441], "false_alarm": 0, "miss": 0, "preds": [[64.5, 18.5]], "time": 2.91637, "power_error": [0.5769]}
+
+{"experiment_num": 200, "num_intruder": 1, "image_index": 17281, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.5199], "false_alarm": 0, "miss": 0, "preds": [[53.5, 26.5]], "time": 6.18078, "power_error": [0.0445]}
+
+{"experiment_num": 201, "num_intruder": 1, "image_index": 30281, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.6347], "false_alarm": 0, "miss": 0, "preds": [[85.5, 67.5]], "time": 3.98868, "power_error": [-0.2016]}
+
+{"experiment_num": 202, "num_intruder": 1, "image_index": 30275, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.8449], "false_alarm": 0, "miss": 0, "preds": [[86.5, 65.5]], "time": 2.6697, "power_error": [0.073]}
+
+{"experiment_num": 203, "num_intruder": 1, "image_index": 17424, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.28], "false_alarm": 0, "miss": 0, "preds": [[54.5, 55.5]], "time": 11.43894, "power_error": [0.3506]}
+
+{"experiment_num": 204, "num_intruder": 1, "image_index": 25526, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.7344], "false_alarm": 0, "miss": 0, "preds": [[73.5, 76.5]], "time": 5.05661, "power_error": [-0.2325]}
+
+{"experiment_num": 205, "num_intruder": 1, "image_index": 25441, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.9638], "false_alarm": 0, "miss": 0, "preds": [[74.5, 59.5]], "time": 5.6235, "power_error": [0.0071]}
+
+{"experiment_num": 206, "num_intruder": 1, "image_index": 6359, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.5083], "false_alarm": 0, "miss": 0, "preds": [[25.5, 81.5]], "time": 9.35035, "power_error": [0.1758]}
+
+{"experiment_num": 207, "num_intruder": 1, "image_index": 10182, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.9385], "false_alarm": 0, "miss": 0, "preds": [[36.5, 47.5]], "time": 7.26924, "power_error": [0.0759]}
+
+{"experiment_num": 208, "num_intruder": 1, "image_index": 4115, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.5729], "false_alarm": 0, "miss": 0, "preds": [[20.5, 33.5]], "time": 2.83913, "power_error": [0.5962]}
+
+{"experiment_num": 209, "num_intruder": 1, "image_index": 24167, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.7992], "false_alarm": 0, "miss": 0, "preds": [[71.5, 43.5]], "time": 8.4869, "power_error": [-0.0021]}
+
+{"experiment_num": 210, "num_intruder": 1, "image_index": 29503, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.6046], "false_alarm": 0, "miss": 0, "preds": [[83.5, 71.5]], "time": 9.56952, "power_error": [-0.0276]}
+
+{"experiment_num": 211, "num_intruder": 1, "image_index": 734, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.9433], "false_alarm": 0, "miss": 0, "preds": [[11.5, 77.5]], "time": 10.41979, "power_error": [0.1867]}
+
+{"experiment_num": 212, "num_intruder": 1, "image_index": 17899, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.0281], "false_alarm": 0, "miss": 0, "preds": [[55.5, 69.5]], "time": 10.88787, "power_error": [0.2091]}
+
+{"experiment_num": 213, "num_intruder": 1, "image_index": 22612, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.453], "false_alarm": 0, "miss": 0, "preds": [[66.5, 52.5]], "time": 7.74479, "power_error": [0.0148]}
+
+{"experiment_num": 214, "num_intruder": 1, "image_index": 13138, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.6175], "false_alarm": 0, "miss": 0, "preds": [[42.5, 77.5]], "time": 8.36198, "power_error": [0.1081]}
+
+{"experiment_num": 215, "num_intruder": 1, "image_index": 12773, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.7939], "false_alarm": 0, "miss": 0, "preds": [[42.5, 84.5]], "time": 8.84566, "power_error": [0.0444]}
+
+{"experiment_num": 216, "num_intruder": 1, "image_index": 7883, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.8585], "false_alarm": 0, "miss": 0, "preds": [[30.5, 66.5]], "time": 9.90568, "power_error": [-0.0571]}
+
+{"experiment_num": 217, "num_intruder": 1, "image_index": 30845, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.487], "false_alarm": 0, "miss": 0, "preds": [[87.5, 19.5]], "time": 2.826, "power_error": [0.1003]}
+
+{"experiment_num": 218, "num_intruder": 1, "image_index": 6345, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.744], "false_alarm": 0, "miss": 0, "preds": [[26.5, 80.5]], "time": 3.23302, "power_error": [-0.5129]}
+
+{"experiment_num": 219, "num_intruder": 1, "image_index": 15943, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.9269], "false_alarm": 0, "miss": 0, "preds": [[50.5, 79.5]], "time": 9.3391, "power_error": [0.1151]}
+
+{"experiment_num": 220, "num_intruder": 1, "image_index": 24219, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.0815], "false_alarm": 0, "miss": 0, "preds": [[70.5, 54.5]], "time": 10.8486, "power_error": [0.3162]}
+
+{"experiment_num": 221, "num_intruder": 1, "image_index": 4581, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.0926], "false_alarm": 0, "miss": 0, "preds": [[21.5, 46.5]], "time": 5.88657, "power_error": [-0.0618]}
+
+{"experiment_num": 222, "num_intruder": 1, "image_index": 12643, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.5756], "false_alarm": 0, "miss": 0, "preds": [[42.5, 58.5]], "time": 11.28159, "power_error": [0.3209]}
+
+{"experiment_num": 223, "num_intruder": 1, "image_index": 15559, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.7408], "false_alarm": 0, "miss": 0, "preds": [[49.5, 81.5]], "time": 10.67493, "power_error": [-0.0522]}
+
+{"experiment_num": 224, "num_intruder": 1, "image_index": 21127, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.875], "false_alarm": 0, "miss": 0, "preds": [[63.5, 75.5]], "time": 7.38187, "power_error": [0.3112]}
+
+{"experiment_num": 225, "num_intruder": 1, "image_index": 31021, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.3197], "false_alarm": 0, "miss": 0, "preds": [[88.5, 55.5]], "time": 4.65969, "power_error": [0.0641]}
+
+{"experiment_num": 226, "num_intruder": 1, "image_index": 1757, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.4136], "false_alarm": 0, "miss": 0, "preds": [[14.5, 41.5]], "time": 6.92484, "power_error": [-0.1191]}
+
+{"experiment_num": 227, "num_intruder": 1, "image_index": 21136, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.005], "false_alarm": 0, "miss": 0, "preds": [[63.5, 77.5]], "time": 4.64259, "power_error": [0.0814]}
+
+{"experiment_num": 228, "num_intruder": 1, "image_index": 12233, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.0747], "false_alarm": 0, "miss": 0, "preds": [[41.5, 57.5]], "time": 10.14294, "power_error": [-0.1504]}
+
+{"experiment_num": 229, "num_intruder": 1, "image_index": 11903, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.9383], "false_alarm": 0, "miss": 0, "preds": [[40.5, 71.5]], "time": 10.54607, "power_error": [0.0274]}
+
+{"experiment_num": 230, "num_intruder": 1, "image_index": 27423, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.1078], "false_alarm": 0, "miss": 0, "preds": [[79.5, 55.5]], "time": 9.00877, "power_error": [0.2533]}
+
+{"experiment_num": 231, "num_intruder": 1, "image_index": 1344, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.2587], "false_alarm": 0, "miss": 0, "preds": [[13.5, 38.5]], "time": 10.90905, "power_error": [-0.0981]}
+
+{"experiment_num": 232, "num_intruder": 1, "image_index": 9311, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.8271], "false_alarm": 0, "miss": 0, "preds": [[33.5, 33.5]], "time": 5.66876, "power_error": [0.0846]}
+
+{"experiment_num": 233, "num_intruder": 1, "image_index": 5952, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.3832], "false_alarm": 0, "miss": 0, "preds": [[24.5, 80.5]], "time": 6.1727, "power_error": [-0.1847]}
+
+{"experiment_num": 234, "num_intruder": 1, "image_index": 1760, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.149], "false_alarm": 0, "miss": 0, "preds": [[14.5, 42.5]], "time": 3.29751, "power_error": [-0.0642]}
+
+{"experiment_num": 235, "num_intruder": 1, "image_index": 22011, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.9727], "false_alarm": 0, "miss": 0, "preds": [[66.5, 13.5]], "time": 5.24827, "power_error": [-0.0059]}
+
+{"experiment_num": 236, "num_intruder": 1, "image_index": 9128, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.2402], "false_alarm": 0, "miss": 0, "preds": [[32.5, 75.5]], "time": 8.4497, "power_error": [0.1809]}
+
+{"experiment_num": 237, "num_intruder": 1, "image_index": 6510, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.9831], "false_alarm": 0, "miss": 0, "preds": [[27.5, 32.5]], "time": 3.55999, "power_error": [-0.2342]}
+
+{"experiment_num": 238, "num_intruder": 1, "image_index": 2358, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [], "false_alarm": 0, "miss": 1, "preds": [], "time": 9.95462, "power_error": []}
+
+{"experiment_num": 239, "num_intruder": 1, "image_index": 29282, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.161], "false_alarm": 0, "miss": 0, "preds": [[84.5, 27.5]], "time": 6.51702, "power_error": [0.0174]}
+
+{"experiment_num": 240, "num_intruder": 1, "image_index": 10127, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.4793], "false_alarm": 0, "miss": 0, "preds": [[35.5, 35.5]], "time": 7.50843, "power_error": [0.1307]}
+
+{"experiment_num": 241, "num_intruder": 1, "image_index": 29316, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.8746], "false_alarm": 0, "miss": 0, "preds": [[84.5, 33.5]], "time": 5.24405, "power_error": [0.0786]}
+
+{"experiment_num": 242, "num_intruder": 1, "image_index": 29389, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.1117], "false_alarm": 0, "miss": 0, "preds": [[84.5, 48.5]], "time": 10.44662, "power_error": [0.2997]}
+
+{"experiment_num": 243, "num_intruder": 1, "image_index": 11591, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.9915], "false_alarm": 0, "miss": 0, "preds": [[39.5, 88.5]], "time": 4.45508, "power_error": [-0.0607]}
+
+{"experiment_num": 244, "num_intruder": 1, "image_index": 3224, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.5991], "false_alarm": 0, "miss": 0, "preds": [[18.5, 14.5]], "time": 10.50529, "power_error": [-0.06]}
+
+{"experiment_num": 245, "num_intruder": 1, "image_index": 16495, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.1228], "false_alarm": 0, "miss": 0, "preds": [[51.5, 29.5]], "time": 2.89679, "power_error": [0.1951]}
+
+{"experiment_num": 246, "num_intruder": 1, "image_index": 25916, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.3167], "false_alarm": 0, "miss": 0, "preds": [[74.5, 73.5]], "time": 4.93833, "power_error": [0.2942]}
+
+{"experiment_num": 247, "num_intruder": 1, "image_index": 30482, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.4759], "false_alarm": 0, "miss": 0, "preds": [[86.5, 26.5]], "time": 6.50932, "power_error": [-0.1372]}
+
+{"experiment_num": 248, "num_intruder": 1, "image_index": 17338, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.8689], "false_alarm": 0, "miss": 0, "preds": [[54.5, 38.5]], "time": 9.05781, "power_error": [0.407]}
+
+{"experiment_num": 249, "num_intruder": 1, "image_index": 24356, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.8292], "false_alarm": 0, "miss": 0, "preds": [[71.5, 81.5]], "time": 4.50215, "power_error": [0.1887]}
+
+{"experiment_num": 250, "num_intruder": 1, "image_index": 16305, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.1616], "false_alarm": 0, "miss": 0, "preds": [[50.5, 71.5]], "time": 3.22235, "power_error": [0.2054]}
+
+{"experiment_num": 251, "num_intruder": 1, "image_index": 18294, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.0986], "false_alarm": 0, "miss": 0, "preds": [[56.5, 68.5]], "time": 10.53691, "power_error": [0.2622]}
+
+{"experiment_num": 252, "num_intruder": 1, "image_index": 30500, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.5853], "false_alarm": 0, "miss": 0, "preds": [[87.5, 30.5]], "time": 2.57113, "power_error": [-0.0879]}
+
+{"experiment_num": 253, "num_intruder": 1, "image_index": 11372, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.193], "false_alarm": 0, "miss": 0, "preds": [[38.5, 44.5]], "time": 8.43917, "power_error": [-0.0877]}
+
+{"experiment_num": 254, "num_intruder": 1, "image_index": 20349, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.8934], "false_alarm": 0, "miss": 0, "preds": [[61.5, 80.5]], "time": 10.70717, "power_error": [-0.0659]}
+
+{"experiment_num": 255, "num_intruder": 1, "image_index": 14767, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.6797], "false_alarm": 0, "miss": 0, "preds": [[47.5, 83.5]], "time": 6.05966, "power_error": [0.2058]}
+
+{"experiment_num": 256, "num_intruder": 1, "image_index": 21686, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.5271], "false_alarm": 0, "miss": 0, "preds": [[64.5, 27.5]], "time": 5.60811, "power_error": [0.3165]}
+
+{"experiment_num": 257, "num_intruder": 1, "image_index": 17779, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.808], "false_alarm": 0, "miss": 0, "preds": [[54.5, 46.5]], "time": 13.06797, "power_error": [0.1132]}
+
+{"experiment_num": 258, "num_intruder": 1, "image_index": 16955, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.9781], "false_alarm": 0, "miss": 0, "preds": [[53.5, 42.5]], "time": 2.80861, "power_error": [0.2597]}
+
+{"experiment_num": 259, "num_intruder": 1, "image_index": 28300, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.1477], "false_alarm": 0, "miss": 0, "preds": [[80.5, 71.5]], "time": 2.955, "power_error": [-0.2965]}
+
+{"experiment_num": 260, "num_intruder": 1, "image_index": 9012, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.2989], "false_alarm": 0, "miss": 0, "preds": [[33.5, 53.5]], "time": 7.68571, "power_error": [0.0089]}
+
+{"experiment_num": 261, "num_intruder": 1, "image_index": 29397, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.0281], "false_alarm": 0, "miss": 0, "preds": [[83.5, 50.5]], "time": 7.55418, "power_error": [0.487]}
+
+{"experiment_num": 262, "num_intruder": 1, "image_index": 7553, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.9282], "false_alarm": 0, "miss": 0, "preds": [[29.5, 81.5]], "time": 9.25246, "power_error": [0.0518]}
+
+{"experiment_num": 263, "num_intruder": 1, "image_index": 18735, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.5842], "false_alarm": 0, "miss": 0, "preds": [[56.5, 77.5]], "time": 2.45621, "power_error": [0.2557]}
+
+{"experiment_num": 264, "num_intruder": 1, "image_index": 29951, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.7581], "false_alarm": 0, "miss": 0, "preds": [[85.5, 80.5]], "time": 4.24697, "power_error": [0.183]}
+
+{"experiment_num": 265, "num_intruder": 1, "image_index": 11704, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.0406], "false_alarm": 0, "miss": 0, "preds": [[39.5, 31.5]], "time": 12.86522, "power_error": [-0.2387]}
+
+{"experiment_num": 266, "num_intruder": 1, "image_index": 22561, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.456], "false_alarm": 0, "miss": 0, "preds": [[67.5, 43.5]], "time": 4.50066, "power_error": [0.3691]}
+
+{"experiment_num": 267, "num_intruder": 1, "image_index": 12332, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.8372], "false_alarm": 0, "miss": 0, "preds": [[41.5, 77.5]], "time": 6.50107, "power_error": [0.0757]}
+
+{"experiment_num": 268, "num_intruder": 1, "image_index": 11138, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.6731], "false_alarm": 0, "miss": 0, "preds": [[38.5, 77.5]], "time": 9.70613, "power_error": [-0.0465]}
+
+{"experiment_num": 269, "num_intruder": 1, "image_index": 21172, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.2151], "false_alarm": 0, "miss": 0, "preds": [[62.5, 84.5]], "time": 6.72982, "power_error": [-0.3204]}
+
+{"experiment_num": 270, "num_intruder": 1, "image_index": 15267, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.3104], "false_alarm": 0, "miss": 0, "preds": [[49.5, 24.5]], "time": 7.01885, "power_error": [0.5968]}
+
+{"experiment_num": 271, "num_intruder": 1, "image_index": 22424, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.0291], "false_alarm": 0, "miss": 0, "preds": [[67.5, 15.5]], "time": 11.55494, "power_error": [-0.2438]}
+
+{"experiment_num": 272, "num_intruder": 1, "image_index": 8918, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.7465], "false_alarm": 0, "miss": 0, "preds": [[32.5, 34.5]], "time": 9.00823, "power_error": [0.5448]}
+
+{"experiment_num": 273, "num_intruder": 1, "image_index": 1837, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.4965], "false_alarm": 0, "miss": 0, "preds": [[14.5, 57.5]], "time": 6.74799, "power_error": [0.3288]}
+
+{"experiment_num": 274, "num_intruder": 1, "image_index": 26105, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.8191], "false_alarm": 0, "miss": 0, "preds": [[76.5, 31.5]], "time": 3.29992, "power_error": [-0.0617]}
+
+{"experiment_num": 275, "num_intruder": 1, "image_index": 25576, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.0961], "false_alarm": 0, "miss": 0, "preds": [[74.5, 86.5]], "time": 4.48167, "power_error": [0.2054]}
+
+{"experiment_num": 276, "num_intruder": 1, "image_index": 1516, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.9942], "false_alarm": 0, "miss": 0, "preds": [[14.5, 73.5]], "time": 4.641, "power_error": [0.1867]}
+
+{"experiment_num": 277, "num_intruder": 1, "image_index": 13946, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.5352], "false_alarm": 2, "miss": 0, "preds": [[45.5, 80.5], [37.5, 77.5], [41.5, 76.5]], "time": 5.70374, "power_error": [0.0363]}
+
+{"experiment_num": 278, "num_intruder": 1, "image_index": 12853, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.8235], "false_alarm": 0, "miss": 0, "preds": [[43.5, 20.5]], "time": 9.75075, "power_error": [0.3693]}
+
+{"experiment_num": 279, "num_intruder": 1, "image_index": 28663, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.1638], "false_alarm": 0, "miss": 0, "preds": [[82.5, 63.5]], "time": 10.1288, "power_error": [0.091]}
+
+{"experiment_num": 280, "num_intruder": 1, "image_index": 23199, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.1954], "false_alarm": 0, "miss": 0, "preds": [[67.5, 89.5]], "time": 9.52641, "power_error": [0.2015]}
+
+{"experiment_num": 281, "num_intruder": 1, "image_index": 14688, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.7816], "false_alarm": 0, "miss": 0, "preds": [[46.5, 68.5]], "time": 9.88679, "power_error": [0.1084]}
+
+{"experiment_num": 282, "num_intruder": 1, "image_index": 19190, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.6975], "false_alarm": 0, "miss": 0, "preds": [[57.5, 89.5]], "time": 2.78371, "power_error": [0.061]}
+
+{"experiment_num": 283, "num_intruder": 1, "image_index": 1882, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.3051], "false_alarm": 0, "miss": 0, "preds": [[14.5, 66.5]], "time": 6.34712, "power_error": [-0.0185]}
+
+{"experiment_num": 284, "num_intruder": 1, "image_index": 6338, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.6798], "false_alarm": 0, "miss": 0, "preds": [[26.5, 77.5]], "time": 9.06456, "power_error": [0.1001]}
+
+{"experiment_num": 285, "num_intruder": 1, "image_index": 25094, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.7028], "false_alarm": 0, "miss": 0, "preds": [[72.5, 69.5]], "time": 10.77812, "power_error": [0.0387]}
+
+{"experiment_num": 286, "num_intruder": 1, "image_index": 17794, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.5199], "false_alarm": 0, "miss": 0, "preds": [[54.5, 48.5]], "time": 12.64294, "power_error": [-0.0603]}
+
+{"experiment_num": 287, "num_intruder": 1, "image_index": 27236, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.6507], "false_alarm": 0, "miss": 0, "preds": [[78.5, 18.5]], "time": 4.2979, "power_error": [-0.4121]}
+
+{"experiment_num": 288, "num_intruder": 1, "image_index": 26513, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.3285], "false_alarm": 0, "miss": 0, "preds": [[76.5, 32.5]], "time": 9.17865, "power_error": [0.039]}
+
+{"experiment_num": 289, "num_intruder": 1, "image_index": 15240, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.5816], "false_alarm": 0, "miss": 0, "preds": [[48.5, 18.5]], "time": 3.37468, "power_error": [0.0858]}
+
+{"experiment_num": 290, "num_intruder": 1, "image_index": 14307, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.8579], "false_alarm": 0, "miss": 0, "preds": [[46.5, 71.5]], "time": 7.72136, "power_error": [-0.1226]}
+
+{"experiment_num": 291, "num_intruder": 1, "image_index": 28196, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.1404], "false_alarm": 0, "miss": 0, "preds": [[80.5, 49.5]], "time": 4.35835, "power_error": [0.4527]}
+
+{"experiment_num": 292, "num_intruder": 1, "image_index": 18885, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.6571], "false_alarm": 0, "miss": 0, "preds": [[58.5, 27.5]], "time": 3.29521, "power_error": [0.1021]}
+
+{"experiment_num": 293, "num_intruder": 1, "image_index": 5574, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.3133], "false_alarm": 0, "miss": 0, "preds": [[24.5, 85.5]], "time": 10.48039, "power_error": [0.1128]}
+
+{"experiment_num": 294, "num_intruder": 1, "image_index": 16090, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.123], "false_alarm": 0, "miss": 0, "preds": [[51.5, 29.5]], "time": 3.01666, "power_error": [0.8256]}
+
+{"experiment_num": 295, "num_intruder": 1, "image_index": 6000, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.5443], "false_alarm": 0, "miss": 0, "preds": [[25.5, 10.5]], "time": 2.60216, "power_error": [-0.0564]}
+
+{"experiment_num": 296, "num_intruder": 1, "image_index": 4047, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.1982], "false_alarm": 0, "miss": 0, "preds": [[20.5, 20.5]], "time": 6.30242, "power_error": [-0.0198]}
+
+{"experiment_num": 297, "num_intruder": 1, "image_index": 6691, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.1494], "false_alarm": 0, "miss": 0, "preds": [[26.5, 68.5]], "time": 4.8188, "power_error": [-0.2702]}
+
+{"experiment_num": 298, "num_intruder": 1, "image_index": 14475, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.6856], "false_alarm": 0, "miss": 0, "preds": [[46.5, 27.5]], "time": 2.888, "power_error": [-0.0183]}
+
+{"experiment_num": 299, "num_intruder": 1, "image_index": 30247, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.979], "false_alarm": 0, "miss": 0, "preds": [[85.5, 60.5]], "time": 6.50546, "power_error": [-0.083]}
+
+{"experiment_num": 300, "num_intruder": 1, "image_index": 11099, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.7639], "false_alarm": 0, "miss": 0, "preds": [[37.5, 70.5]], "time": 11.84198, "power_error": [0.0744]}
+
+{"experiment_num": 301, "num_intruder": 1, "image_index": 140, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.1671], "false_alarm": 0, "miss": 0, "preds": [[10.5, 39.5]], "time": 2.8004, "power_error": [-0.005]}
+
+{"experiment_num": 302, "num_intruder": 1, "image_index": 168, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.1686], "false_alarm": 0, "miss": 0, "preds": [[11.5, 44.5]], "time": 8.02729, "power_error": [0.0453]}
+
+{"experiment_num": 303, "num_intruder": 1, "image_index": 5093, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.4698], "false_alarm": 0, "miss": 0, "preds": [[22.5, 68.5]], "time": 8.39399, "power_error": [0.1089]}
+
+{"experiment_num": 304, "num_intruder": 1, "image_index": 15704, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.558], "false_alarm": 0, "miss": 0, "preds": [[49.5, 30.5]], "time": 12.3695, "power_error": [0.1497]}
+
+{"experiment_num": 305, "num_intruder": 1, "image_index": 25866, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.0813], "false_alarm": 0, "miss": 0, "preds": [[75.5, 63.5]], "time": 4.6101, "power_error": [-0.2274]}
+
+{"experiment_num": 306, "num_intruder": 1, "image_index": 31662, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.8639], "false_alarm": 0, "miss": 0, "preds": [[89.5, 23.5]], "time": 5.42951, "power_error": [0.4108]}
+
+{"experiment_num": 307, "num_intruder": 1, "image_index": 27631, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.7178], "false_alarm": 0, "miss": 0, "preds": [[79.5, 17.5]], "time": 4.40491, "power_error": [0.258]}
+
+{"experiment_num": 308, "num_intruder": 1, "image_index": 28847, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.9289], "false_alarm": 0, "miss": 0, "preds": [[82.5, 20.5]], "time": 6.15551, "power_error": [0.1518]}
+
+{"experiment_num": 309, "num_intruder": 1, "image_index": 18355, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.9938], "false_alarm": 0, "miss": 0, "preds": [[56.5, 81.5]], "time": 3.12653, "power_error": [-0.3844]}
+
+{"experiment_num": 310, "num_intruder": 1, "image_index": 27792, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.2224], "false_alarm": 0, "miss": 0, "preds": [[80.5, 49.5]], "time": 7.02971, "power_error": [0.0106]}
+
+{"experiment_num": 311, "num_intruder": 1, "image_index": 3318, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.7401], "false_alarm": 0, "miss": 0, "preds": [[18.5, 34.5]], "time": 9.35423, "power_error": [0.2011]}
+
+{"experiment_num": 312, "num_intruder": 1, "image_index": 28777, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.0886], "false_alarm": 0, "miss": 0, "preds": [[81.5, 86.5]], "time": 6.6455, "power_error": [-0.1892]}
+
+{"experiment_num": 313, "num_intruder": 1, "image_index": 17019, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.0029], "false_alarm": 0, "miss": 0, "preds": [[53.5, 53.5]], "time": 12.49713, "power_error": [-0.0421]}
+
+{"experiment_num": 314, "num_intruder": 1, "image_index": 27826, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.448], "false_alarm": 0, "miss": 0, "preds": [[79.5, 55.5]], "time": 4.68182, "power_error": [0.0498]}
+
+{"experiment_num": 315, "num_intruder": 1, "image_index": 10386, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.1303], "false_alarm": 0, "miss": 0, "preds": [[36.5, 88.5]], "time": 4.99883, "power_error": [0.0606]}
+
+{"experiment_num": 316, "num_intruder": 1, "image_index": 605, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.1579], "false_alarm": 0, "miss": 0, "preds": [[11.5, 51.5]], "time": 2.73047, "power_error": [-0.0426]}
+
+{"experiment_num": 317, "num_intruder": 1, "image_index": 12754, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.3887], "false_alarm": 0, "miss": 0, "preds": [[41.5, 80.5]], "time": 11.10626, "power_error": [0.2536]}
+
+{"experiment_num": 318, "num_intruder": 1, "image_index": 30038, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.0466], "false_alarm": 0, "miss": 0, "preds": [[86.5, 18.5]], "time": 8.422, "power_error": [-0.1002]}
+
+{"experiment_num": 319, "num_intruder": 1, "image_index": 4757, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.6633], "false_alarm": 0, "miss": 0, "preds": [[21.5, 81.5]], "time": 6.32961, "power_error": [0.1269]}
+
+{"experiment_num": 320, "num_intruder": 1, "image_index": 5225, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.3414], "false_alarm": 0, "miss": 0, "preds": [[24.5, 15.5]], "time": 2.70299, "power_error": [0.0434]}
+
+{"experiment_num": 321, "num_intruder": 1, "image_index": 22211, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.9091], "false_alarm": 0, "miss": 0, "preds": [[66.5, 53.5]], "time": 4.86246, "power_error": [0.1377]}
+
+{"experiment_num": 322, "num_intruder": 1, "image_index": 385, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.7821], "false_alarm": 0, "miss": 0, "preds": [[11.5, 87.5]], "time": 2.42417, "power_error": [-0.5576]}
+
+{"experiment_num": 323, "num_intruder": 1, "image_index": 24272, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.695], "false_alarm": 0, "miss": 0, "preds": [[70.5, 65.5]], "time": 7.90838, "power_error": [0.0731]}
+
+{"experiment_num": 324, "num_intruder": 1, "image_index": 5079, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.4681], "false_alarm": 0, "miss": 0, "preds": [[22.5, 65.5]], "time": 11.01876, "power_error": [0.2467]}
+
+{"experiment_num": 325, "num_intruder": 1, "image_index": 3200, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.0881], "false_alarm": 0, "miss": 0, "preds": [[19.5, 10.5]], "time": 2.67174, "power_error": [0.4548]}
+
+{"experiment_num": 326, "num_intruder": 1, "image_index": 29896, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.4095], "false_alarm": 0, "miss": 0, "preds": [[84.5, 69.5]], "time": 4.49553, "power_error": [0.001]}
+
+{"experiment_num": 327, "num_intruder": 1, "image_index": 16697, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.7657], "false_alarm": 0, "miss": 0, "preds": [[52.5, 69.5]], "time": 7.41417, "power_error": [0.5176]}
+
+{"experiment_num": 328, "num_intruder": 1, "image_index": 303, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.6027], "false_alarm": 0, "miss": 0, "preds": [[11.5, 70.5]], "time": 8.27537, "power_error": [-0.0199]}
+
+{"experiment_num": 329, "num_intruder": 1, "image_index": 25961, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.0444], "false_alarm": 0, "miss": 0, "preds": [[75.5, 83.5]], "time": 4.39152, "power_error": [-0.1268]}
+
+{"experiment_num": 330, "num_intruder": 1, "image_index": 1481, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.5902], "false_alarm": 0, "miss": 0, "preds": [[13.5, 67.5]], "time": 4.70681, "power_error": [0.0352]}
+
+{"experiment_num": 331, "num_intruder": 1, "image_index": 30598, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.8947], "false_alarm": 0, "miss": 0, "preds": [[87.5, 49.5]], "time": 7.69431, "power_error": [0.113]}
+
+{"experiment_num": 332, "num_intruder": 1, "image_index": 29418, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.1432], "false_alarm": 0, "miss": 0, "preds": [[84.5, 54.5]], "time": 8.85371, "power_error": [-0.0018]}
+
+{"experiment_num": 333, "num_intruder": 1, "image_index": 22831, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.9756], "false_alarm": 0, "miss": 0, "preds": [[67.5, 17.5]], "time": 4.19449, "power_error": [-0.2454]}
+
+{"experiment_num": 334, "num_intruder": 1, "image_index": 7947, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.4752], "false_alarm": 0, "miss": 0, "preds": [[30.5, 79.5]], "time": 7.64665, "power_error": [0.0039]}
+
+{"experiment_num": 335, "num_intruder": 1, "image_index": 26364, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.6619], "false_alarm": 0, "miss": 0, "preds": [[76.5, 82.5]], "time": 9.60415, "power_error": [0.2649]}
+
+{"experiment_num": 336, "num_intruder": 1, "image_index": 13246, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.928], "false_alarm": 0, "miss": 0, "preds": [[44.5, 20.5]], "time": 4.60803, "power_error": [-0.0506]}
+
+{"experiment_num": 337, "num_intruder": 1, "image_index": 6050, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.4795], "false_alarm": 0, "miss": 0, "preds": [[25.5, 20.5]], "time": 2.96202, "power_error": [-0.2618]}
+
+{"experiment_num": 338, "num_intruder": 1, "image_index": 6778, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.474], "false_alarm": 0, "miss": 0, "preds": [[26.5, 85.5]], "time": 7.92204, "power_error": [0.3452]}
+
+{"experiment_num": 339, "num_intruder": 1, "image_index": 3337, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.1046], "false_alarm": 0, "miss": 0, "preds": [[19.5, 38.5]], "time": 7.50285, "power_error": [0.0805]}
+
+{"experiment_num": 340, "num_intruder": 1, "image_index": 3181, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.6902], "false_alarm": 0, "miss": 0, "preds": [[18.5, 86.5]], "time": 4.66288, "power_error": [0.325]}
+
+{"experiment_num": 341, "num_intruder": 1, "image_index": 27704, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.1961], "false_alarm": 0, "miss": 0, "preds": [[80.5, 31.5]], "time": 10.53257, "power_error": [0.2675]}
+
+{"experiment_num": 342, "num_intruder": 1, "image_index": 16652, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.777], "false_alarm": 0, "miss": 0, "preds": [[51.5, 61.5]], "time": 8.86503, "power_error": [-0.1031]}
+
+{"experiment_num": 343, "num_intruder": 1, "image_index": 21371, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.8698], "false_alarm": 0, "miss": 0, "preds": [[64.5, 45.5]], "time": 5.20296, "power_error": [0.1986]}
+
+{"experiment_num": 344, "num_intruder": 1, "image_index": 19007, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.5342], "false_alarm": 0, "miss": 0, "preds": [[58.5, 51.5]], "time": 7.78028, "power_error": [0.2247]}
+
+{"experiment_num": 345, "num_intruder": 1, "image_index": 16243, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.0376], "false_alarm": 0, "miss": 0, "preds": [[51.5, 59.5]], "time": 9.81258, "power_error": [0.0261]}
+
+{"experiment_num": 346, "num_intruder": 1, "image_index": 30346, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.002], "false_alarm": 0, "miss": 0, "preds": [[86.5, 80.5]], "time": 3.95434, "power_error": [0.0481]}
+
+{"experiment_num": 347, "num_intruder": 1, "image_index": 24174, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.2112], "false_alarm": 0, "miss": 0, "preds": [[70.5, 44.5]], "time": 11.49482, "power_error": [0.0023]}
+
+{"experiment_num": 348, "num_intruder": 1, "image_index": 14111, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.6964], "false_alarm": 0, "miss": 0, "preds": [[46.5, 33.5]], "time": 5.16298, "power_error": [0.5472]}
+
+{"experiment_num": 349, "num_intruder": 1, "image_index": 10019, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.9605], "false_alarm": 0, "miss": 0, "preds": [[35.5, 14.5]], "time": 9.66508, "power_error": [0.0633]}
+
+{"experiment_num": 350, "num_intruder": 1, "image_index": 13281, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.8575], "false_alarm": 0, "miss": 0, "preds": [[44.5, 27.5]], "time": 4.699, "power_error": [0.4107]}
+
+{"experiment_num": 351, "num_intruder": 1, "image_index": 7816, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.3353], "false_alarm": 0, "miss": 0, "preds": [[30.5, 54.5]], "time": 4.7322, "power_error": [0.003]}
+
+{"experiment_num": 352, "num_intruder": 1, "image_index": 31824, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.862], "false_alarm": 0, "miss": 0, "preds": [[89.5, 55.5]], "time": 9.85148, "power_error": [-0.0119]}
+
+{"experiment_num": 353, "num_intruder": 1, "image_index": 3971, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.7129], "false_alarm": 0, "miss": 0, "preds": [[20.5, 84.5]], "time": 4.13758, "power_error": [0.3139]}
+
+{"experiment_num": 354, "num_intruder": 1, "image_index": 28927, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.0562], "false_alarm": 0, "miss": 0, "preds": [[82.5, 36.5]], "time": 7.46468, "power_error": [0.0152]}
+
+{"experiment_num": 355, "num_intruder": 1, "image_index": 30067, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.6046], "false_alarm": 0, "miss": 0, "preds": [[85.5, 23.5]], "time": 5.82987, "power_error": [0.1011]}
+
+{"experiment_num": 356, "num_intruder": 1, "image_index": 25876, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.2256], "false_alarm": 0, "miss": 0, "preds": [[75.5, 66.5]], "time": 4.57309, "power_error": [0.2777]}
+
+{"experiment_num": 357, "num_intruder": 1, "image_index": 3464, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.7671], "false_alarm": 0, "miss": 0, "preds": [[18.5, 63.5]], "time": 10.95428, "power_error": [-0.0636]}
+
+{"experiment_num": 358, "num_intruder": 1, "image_index": 22901, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.1498], "false_alarm": 0, "miss": 0, "preds": [[68.5, 31.5]], "time": 5.18997, "power_error": [0.0693]}
+
+{"experiment_num": 359, "num_intruder": 1, "image_index": 22757, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.469], "false_alarm": 0, "miss": 0, "preds": [[66.5, 81.5]], "time": 6.33014, "power_error": [-0.0365]}
+
+{"experiment_num": 360, "num_intruder": 1, "image_index": 26921, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.7262], "false_alarm": 0, "miss": 0, "preds": [[77.5, 35.5]], "time": 4.40879, "power_error": [-0.18]}
+
+{"experiment_num": 361, "num_intruder": 1, "image_index": 8827, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.7932], "false_alarm": 0, "miss": 0, "preds": [[33.5, 15.5]], "time": 6.2843, "power_error": [-0.1664]}
+
+{"experiment_num": 362, "num_intruder": 1, "image_index": 2198, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.055], "false_alarm": 0, "miss": 0, "preds": [[16.5, 50.5]], "time": 7.9402, "power_error": [0.08]}
+
+{"experiment_num": 363, "num_intruder": 1, "image_index": 28733, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.6669], "false_alarm": 0, "miss": 0, "preds": [[82.5, 76.5]], "time": 8.26333, "power_error": [0.1365]}
+
+{"experiment_num": 364, "num_intruder": 1, "image_index": 22684, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.2442], "false_alarm": 0, "miss": 0, "preds": [[66.5, 66.5]], "time": 14.04358, "power_error": [-0.0779]}
+
+{"experiment_num": 365, "num_intruder": 1, "image_index": 18881, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.1758], "false_alarm": 0, "miss": 0, "preds": [[58.5, 27.5]], "time": 4.90223, "power_error": [0.0892]}
+
+{"experiment_num": 366, "num_intruder": 1, "image_index": 8193, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.9403], "false_alarm": 0, "miss": 0, "preds": [[31.5, 49.5]], "time": 9.32115, "power_error": [-0.2453]}
+
+{"experiment_num": 367, "num_intruder": 1, "image_index": 24535, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.1568], "false_alarm": 0, "miss": 0, "preds": [[72.5, 37.5]], "time": 3.13811, "power_error": [-0.2435]}
+
+{"experiment_num": 368, "num_intruder": 1, "image_index": 26460, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.0324], "false_alarm": 0, "miss": 0, "preds": [[77.5, 23.5]], "time": 2.83182, "power_error": [-0.118]}
+
+{"experiment_num": 369, "num_intruder": 1, "image_index": 8785, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.0545], "false_alarm": 0, "miss": 0, "preds": [[32.5, 88.5]], "time": 2.5647, "power_error": [0.0564]}
+
+{"experiment_num": 370, "num_intruder": 1, "image_index": 30596, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.5892], "false_alarm": 0, "miss": 0, "preds": [[86.5, 49.5]], "time": 4.73804, "power_error": [0.541]}
+
+{"experiment_num": 371, "num_intruder": 1, "image_index": 16479, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.7726], "false_alarm": 0, "miss": 0, "preds": [[52.5, 25.5]], "time": 12.3195, "power_error": [0.019]}
+
+{"experiment_num": 372, "num_intruder": 1, "image_index": 11750, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.7408], "false_alarm": 0, "miss": 0, "preds": [[40.5, 41.5]], "time": 3.12262, "power_error": [-0.2019]}
+
+{"experiment_num": 373, "num_intruder": 1, "image_index": 9522, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.4759], "false_alarm": 0, "miss": 0, "preds": [[33.5, 74.5]], "time": 6.96595, "power_error": [-0.047]}
+
+{"experiment_num": 374, "num_intruder": 1, "image_index": 11266, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.2308], "false_alarm": 0, "miss": 0, "preds": [[39.5, 23.5]], "time": 4.44609, "power_error": [-0.1033]}
+
+{"experiment_num": 375, "num_intruder": 1, "image_index": 30931, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.3588], "false_alarm": 0, "miss": 0, "preds": [[88.5, 37.5]], "time": 4.16665, "power_error": [0.4856]}
+
+{"experiment_num": 376, "num_intruder": 1, "image_index": 7815, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.3839], "false_alarm": 0, "miss": 0, "preds": [[29.5, 53.5]], "time": 3.95255, "power_error": [0.0563]}
+
+{"experiment_num": 377, "num_intruder": 1, "image_index": 8088, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.8705], "false_alarm": 0, "miss": 0, "preds": [[30.5, 28.5]], "time": 9.31832, "power_error": [0.254]}
+
+{"experiment_num": 378, "num_intruder": 1, "image_index": 28598, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.5585], "false_alarm": 0, "miss": 0, "preds": [[82.5, 49.5]], "time": 7.82102, "power_error": [0.4093]}
+
+{"experiment_num": 379, "num_intruder": 1, "image_index": 17973, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.1661], "false_alarm": 0, "miss": 0, "preds": [[54.5, 84.5]], "time": 9.47068, "power_error": [0.5013]}
+
+{"experiment_num": 380, "num_intruder": 1, "image_index": 21394, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.7121], "false_alarm": 0, "miss": 0, "preds": [[63.5, 49.5]], "time": 12.40941, "power_error": [0.1032]}
+
+{"experiment_num": 381, "num_intruder": 1, "image_index": 1384, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.0359], "false_alarm": 0, "miss": 0, "preds": [[14.5, 47.5]], "time": 11.39608, "power_error": [-0.1237]}
+
+{"experiment_num": 382, "num_intruder": 1, "image_index": 18074, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.7459], "false_alarm": 0, "miss": 0, "preds": [[56.5, 24.5]], "time": 10.98632, "power_error": [0.0855]}
+
+{"experiment_num": 383, "num_intruder": 1, "image_index": 8345, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.6942], "false_alarm": 0, "miss": 0, "preds": [[31.5, 79.5]], "time": 2.93229, "power_error": [0.1396]}
+
+{"experiment_num": 384, "num_intruder": 1, "image_index": 8233, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.4066], "false_alarm": 0, "miss": 0, "preds": [[31.5, 57.5]], "time": 9.93353, "power_error": [0.0802]}
+
+{"experiment_num": 385, "num_intruder": 1, "image_index": 15456, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.4377], "false_alarm": 0, "miss": 0, "preds": [[48.5, 61.5]], "time": 6.34141, "power_error": [0.1408]}
+
+{"experiment_num": 386, "num_intruder": 1, "image_index": 398, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.8177], "false_alarm": 0, "miss": 0, "preds": [[11.5, 89.5]], "time": 7.1105, "power_error": [-0.3127]}
+
+{"experiment_num": 387, "num_intruder": 1, "image_index": 26475, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.4474], "false_alarm": 0, "miss": 0, "preds": [[76.5, 25.5]], "time": 3.10542, "power_error": [-0.0284]}
+
+{"experiment_num": 388, "num_intruder": 1, "image_index": 27922, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.1728], "false_alarm": 0, "miss": 0, "preds": [[80.5, 75.5]], "time": 6.15996, "power_error": [-0.0216]}
+
+{"experiment_num": 389, "num_intruder": 1, "image_index": 28356, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.3019], "false_alarm": 0, "miss": 0, "preds": [[80.5, 81.5]], "time": 4.28198, "power_error": [0.1673]}
+
+{"experiment_num": 390, "num_intruder": 1, "image_index": 24994, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.9228], "false_alarm": 0, "miss": 0, "preds": [[72.5, 49.5]], "time": 11.13664, "power_error": [0.0438]}
+
+{"experiment_num": 391, "num_intruder": 1, "image_index": 4390, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.1574], "false_alarm": 0, "miss": 0, "preds": [[21.5, 88.5]], "time": 2.51944, "power_error": [-0.0896]}
+
+{"experiment_num": 392, "num_intruder": 1, "image_index": 5042, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.5053], "false_alarm": 0, "miss": 0, "preds": [[22.5, 58.5]], "time": 7.02806, "power_error": [-0.0905]}
+
+{"experiment_num": 393, "num_intruder": 1, "image_index": 11046, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.8501], "false_alarm": 0, "miss": 0, "preds": [[38.5, 60.5]], "time": 5.07548, "power_error": [0.0347]}
+
+{"experiment_num": 394, "num_intruder": 1, "image_index": 27827, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.6508], "false_alarm": 0, "miss": 0, "preds": [[80.5, 55.5]], "time": 7.02812, "power_error": [0.3907]}
+
+{"experiment_num": 395, "num_intruder": 1, "image_index": 14201, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.4494], "false_alarm": 0, "miss": 0, "preds": [[45.5, 50.5]], "time": 5.88405, "power_error": [0.1488]}
+
+{"experiment_num": 396, "num_intruder": 1, "image_index": 8628, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.2472], "false_alarm": 0, "miss": 0, "preds": [[32.5, 55.5]], "time": 9.10947, "power_error": [-0.1259]}
+
+{"experiment_num": 397, "num_intruder": 1, "image_index": 19756, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.2773], "false_alarm": 0, "miss": 0, "preds": [[60.5, 42.5]], "time": 6.00987, "power_error": [0.105]}
+
+{"experiment_num": 398, "num_intruder": 1, "image_index": 12505, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.8499], "false_alarm": 0, "miss": 0, "preds": [[42.5, 31.5]], "time": 3.90678, "power_error": [0.121]}
+
+{"experiment_num": 399, "num_intruder": 1, "image_index": 11875, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.8628], "false_alarm": 0, "miss": 0, "preds": [[40.5, 65.5]], "time": 2.87018, "power_error": [-0.298]}
+
+{"experiment_num": 400, "num_intruder": 1, "image_index": 22309, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.902], "false_alarm": 0, "miss": 0, "preds": [[65.5, 72.5]], "time": 10.96023, "power_error": [0.2345]}
+
+{"experiment_num": 401, "num_intruder": 1, "image_index": 19175, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.3341], "false_alarm": 0, "miss": 0, "preds": [[57.5, 85.5]], "time": 2.8462, "power_error": [-0.1589]}
+
+{"experiment_num": 402, "num_intruder": 1, "image_index": 17356, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.7432], "false_alarm": 0, "miss": 0, "preds": [[53.5, 42.5]], "time": 5.05081, "power_error": [0.6007]}
+
+{"experiment_num": 403, "num_intruder": 1, "image_index": 1420, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.1524], "false_alarm": 0, "miss": 0, "preds": [[14.5, 55.5]], "time": 2.74493, "power_error": [-0.1884]}
+
+{"experiment_num": 404, "num_intruder": 1, "image_index": 10823, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.7055], "false_alarm": 0, "miss": 0, "preds": [[37.5, 15.5]], "time": 7.96924, "power_error": [0.1744]}
+
+{"experiment_num": 405, "num_intruder": 1, "image_index": 3666, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.5855], "false_alarm": 0, "miss": 0, "preds": [[20.5, 24.5]], "time": 4.73475, "power_error": [-0.0203]}
+
+{"experiment_num": 406, "num_intruder": 1, "image_index": 13983, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.605], "false_alarm": 0, "miss": 0, "preds": [[44.5, 86.5]], "time": 7.54826, "power_error": [0.2531]}
+
+{"experiment_num": 407, "num_intruder": 1, "image_index": 13461, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.7284], "false_alarm": 0, "miss": 0, "preds": [[43.5, 63.5]], "time": 6.55733, "power_error": [0.2396]}
+
+{"experiment_num": 408, "num_intruder": 1, "image_index": 30313, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.0884], "false_alarm": 0, "miss": 0, "preds": [[86.5, 72.5]], "time": 9.47577, "power_error": [-0.1064]}
+
+{"experiment_num": 409, "num_intruder": 1, "image_index": 22585, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.6337], "false_alarm": 0, "miss": 0, "preds": [[67.5, 47.5]], "time": 2.988, "power_error": [-0.1285]}
+
+{"experiment_num": 410, "num_intruder": 1, "image_index": 12370, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.2616], "false_alarm": 0, "miss": 0, "preds": [[40.5, 84.5]], "time": 3.08899, "power_error": [0.029]}
+
+{"experiment_num": 411, "num_intruder": 1, "image_index": 28343, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.9907], "false_alarm": 0, "miss": 0, "preds": [[81.5, 78.5]], "time": 8.44729, "power_error": [0.1636]}
+
+{"experiment_num": 412, "num_intruder": 1, "image_index": 18097, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.8231], "false_alarm": 0, "miss": 0, "preds": [[56.5, 30.5]], "time": 7.43502, "power_error": [-0.063]}
+
+{"experiment_num": 413, "num_intruder": 1, "image_index": 18638, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.8475], "false_alarm": 0, "miss": 0, "preds": [[56.5, 58.5]], "time": 8.65365, "power_error": [0.275]}
+
+{"experiment_num": 414, "num_intruder": 1, "image_index": 30483, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.9119], "false_alarm": 0, "miss": 0, "preds": [[87.5, 26.5]], "time": 8.2516, "power_error": [0.2007]}
+
+{"experiment_num": 415, "num_intruder": 1, "image_index": 23744, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.9533], "false_alarm": 0, "miss": 0, "preds": [[70.5, 39.5]], "time": 11.20911, "power_error": [0.1229]}
+
+{"experiment_num": 416, "num_intruder": 1, "image_index": 24291, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.2973], "false_alarm": 0, "miss": 0, "preds": [[70.5, 69.5]], "time": 5.29049, "power_error": [0.2911]}
+
+{"experiment_num": 417, "num_intruder": 1, "image_index": 19749, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.5151], "false_alarm": 0, "miss": 0, "preds": [[59.5, 39.5]], "time": 12.31206, "power_error": [-0.1108]}
+
+{"experiment_num": 418, "num_intruder": 1, "image_index": 2786, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.9301], "false_alarm": 0, "miss": 0, "preds": [[17.5, 88.5]], "time": 4.57898, "power_error": [-0.1456]}
+
+{"experiment_num": 419, "num_intruder": 1, "image_index": 13539, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.0737], "false_alarm": 0, "miss": 0, "preds": [[44.5, 78.5]], "time": 12.63143, "power_error": [-0.1227]}
+
+{"experiment_num": 420, "num_intruder": 1, "image_index": 10810, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.2669], "false_alarm": 0, "miss": 0, "preds": [[38.5, 13.5]], "time": 2.76732, "power_error": [0.2299]}
+
+{"experiment_num": 421, "num_intruder": 1, "image_index": 11541, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.4793], "false_alarm": 0, "miss": 0, "preds": [[38.5, 78.5]], "time": 4.72283, "power_error": [0.3943]}
+
+{"experiment_num": 422, "num_intruder": 1, "image_index": 10655, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.1933], "false_alarm": 0, "miss": 0, "preds": [[36.5, 62.5]], "time": 3.53323, "power_error": [0.1168]}
+
+{"experiment_num": 423, "num_intruder": 1, "image_index": 22778, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.2484], "false_alarm": 0, "miss": 0, "preds": [[66.5, 85.5]], "time": 8.70223, "power_error": [0.0081]}
+
+{"experiment_num": 424, "num_intruder": 1, "image_index": 24299, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.8646], "false_alarm": 0, "miss": 0, "preds": [[71.5, 69.5]], "time": 10.93274, "power_error": [0.1898]}
+
+{"experiment_num": 425, "num_intruder": 1, "image_index": 28421, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.7106], "false_alarm": 0, "miss": 0, "preds": [[82.5, 14.5]], "time": 4.34854, "power_error": [0.0158]}
+
+{"experiment_num": 426, "num_intruder": 1, "image_index": 4114, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.0762], "false_alarm": 0, "miss": 0, "preds": [[20.5, 32.5]], "time": 11.57935, "power_error": [-0.0882]}
+
+{"experiment_num": 427, "num_intruder": 1, "image_index": 6385, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.8477], "false_alarm": 0, "miss": 0, "preds": [[25.5, 88.5]], "time": 2.41075, "power_error": [-0.0865]}
+
+{"experiment_num": 428, "num_intruder": 1, "image_index": 7957, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.7223], "false_alarm": 0, "miss": 0, "preds": [[30.5, 81.5]], "time": 6.2468, "power_error": [0.1804]}
+
+{"experiment_num": 429, "num_intruder": 1, "image_index": 20977, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.2217], "false_alarm": 0, "miss": 0, "preds": [[62.5, 45.5]], "time": 6.72156, "power_error": [0.5303]}
+
+{"experiment_num": 430, "num_intruder": 1, "image_index": 21721, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.3033], "false_alarm": 0, "miss": 0, "preds": [[64.5, 34.5]], "time": 4.91968, "power_error": [0.1726]}
+
+{"experiment_num": 431, "num_intruder": 1, "image_index": 17406, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.0294], "false_alarm": 0, "miss": 0, "preds": [[54.5, 51.5]], "time": 5.79354, "power_error": [0.073]}
+
+{"experiment_num": 432, "num_intruder": 1, "image_index": 11515, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.6696], "false_alarm": 0, "miss": 0, "preds": [[39.5, 74.5]], "time": 2.95436, "power_error": [0.0059]}
+
+{"experiment_num": 433, "num_intruder": 1, "image_index": 12715, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.6621], "false_alarm": 0, "miss": 0, "preds": [[41.5, 74.5]], "time": 2.94946, "power_error": [0.1623]}
+
+{"experiment_num": 434, "num_intruder": 1, "image_index": 22568, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.3495], "false_alarm": 0, "miss": 0, "preds": [[66.5, 43.5]], "time": 9.90428, "power_error": [0.0875]}
+
+{"experiment_num": 435, "num_intruder": 1, "image_index": 622, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.7043], "false_alarm": 0, "miss": 0, "preds": [[12.5, 54.5]], "time": 6.29968, "power_error": [0.0805]}
+
+{"experiment_num": 436, "num_intruder": 1, "image_index": 2439, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.8269], "false_alarm": 0, "miss": 0, "preds": [[17.5, 17.5]], "time": 10.03724, "power_error": [0.2316]}
+
+{"experiment_num": 437, "num_intruder": 1, "image_index": 13729, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.8367], "false_alarm": 0, "miss": 0, "preds": [[45.5, 35.5]], "time": 11.7745, "power_error": [0.1096]}
+
+{"experiment_num": 438, "num_intruder": 1, "image_index": 20167, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.0378], "false_alarm": 0, "miss": 0, "preds": [[61.5, 44.5]], "time": 7.3288, "power_error": [0.2898]}
+
+{"experiment_num": 439, "num_intruder": 1, "image_index": 18434, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.1741], "false_alarm": 0, "miss": 0, "preds": [[56.5, 16.5]], "time": 10.78607, "power_error": [-0.0897]}
+
+{"experiment_num": 440, "num_intruder": 1, "image_index": 2572, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.8401], "false_alarm": 0, "miss": 0, "preds": [[16.5, 45.5]], "time": 6.53512, "power_error": [0.3046]}
+
+{"experiment_num": 441, "num_intruder": 1, "image_index": 20063, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.3365], "false_alarm": 0, "miss": 0, "preds": [[61.5, 22.5]], "time": 9.6557, "power_error": [0.1162]}
+
+{"experiment_num": 442, "num_intruder": 1, "image_index": 12515, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.9124], "false_alarm": 0, "miss": 0, "preds": [[42.5, 33.5]], "time": 2.71367, "power_error": [-0.1211]}
+
+{"experiment_num": 443, "num_intruder": 1, "image_index": 12170, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.3258], "false_alarm": 0, "miss": 0, "preds": [[40.5, 44.5]], "time": 3.41732, "power_error": [-0.4264]}
+
+{"experiment_num": 444, "num_intruder": 1, "image_index": 29163, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.7518], "false_alarm": 0, "miss": 0, "preds": [[82.5, 83.5]], "time": 7.79442, "power_error": [-0.0102]}
+
+{"experiment_num": 445, "num_intruder": 1, "image_index": 17759, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.1815], "false_alarm": 0, "miss": 0, "preds": [[55.5, 41.5]], "time": 11.87418, "power_error": [0.1551]}
+
+{"experiment_num": 446, "num_intruder": 1, "image_index": 12255, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.4236], "false_alarm": 0, "miss": 0, "preds": [[40.5, 61.5]], "time": 3.06875, "power_error": [0.3462]}
+
+{"experiment_num": 447, "num_intruder": 1, "image_index": 25043, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.927], "false_alarm": 0, "miss": 0, "preds": [[73.5, 58.5]], "time": 8.81386, "power_error": [0.3658]}
+
+{"experiment_num": 448, "num_intruder": 1, "image_index": 17765, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.9962], "false_alarm": 0, "miss": 0, "preds": [[55.5, 44.5]], "time": 3.238, "power_error": [-0.1724]}
+
+{"experiment_num": 449, "num_intruder": 1, "image_index": 9186, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.7144], "false_alarm": 0, "miss": 0, "preds": [[32.5, 88.5]], "time": 4.45531, "power_error": [0.0764]}
+
+{"experiment_num": 450, "num_intruder": 1, "image_index": 15960, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.9369], "false_alarm": 0, "miss": 0, "preds": [[49.5, 83.5]], "time": 2.66053, "power_error": [0.1728]}
+
+{"experiment_num": 451, "num_intruder": 1, "image_index": 20660, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.9428], "false_alarm": 0, "miss": 0, "preds": [[62.5, 62.5]], "time": 3.16677, "power_error": [-0.1648]}
+
+{"experiment_num": 452, "num_intruder": 1, "image_index": 20250, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.6548], "false_alarm": 0, "miss": 0, "preds": [[61.5, 60.5]], "time": 3.57061, "power_error": [-0.312]}
+
+{"experiment_num": 453, "num_intruder": 1, "image_index": 26677, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.841], "false_alarm": 0, "miss": 0, "preds": [[77.5, 65.5]], "time": 6.4848, "power_error": [0.4296]}
+
+{"experiment_num": 454, "num_intruder": 1, "image_index": 30938, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.7324], "false_alarm": 0, "miss": 0, "preds": [[87.5, 38.5]], "time": 8.94276, "power_error": [0.163]}
+
+{"experiment_num": 455, "num_intruder": 1, "image_index": 10105, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.6656], "false_alarm": 0, "miss": 0, "preds": [[35.5, 31.5]], "time": 3.71406, "power_error": [-0.0111]}
+
+{"experiment_num": 456, "num_intruder": 1, "image_index": 30568, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.9294], "false_alarm": 0, "miss": 0, "preds": [[87.5, 44.5]], "time": 7.42725, "power_error": [0.1559]}
+
+{"experiment_num": 457, "num_intruder": 1, "image_index": 4162, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.9583], "false_alarm": 0, "miss": 0, "preds": [[20.5, 43.5]], "time": 8.25245, "power_error": [-0.1426]}
+
+{"experiment_num": 458, "num_intruder": 1, "image_index": 17309, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.9843], "false_alarm": 0, "miss": 0, "preds": [[54.5, 31.5]], "time": 11.13396, "power_error": [0.1203]}
+
+{"experiment_num": 459, "num_intruder": 1, "image_index": 20907, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.8869], "false_alarm": 0, "miss": 0, "preds": [[63.5, 31.5]], "time": 7.261, "power_error": [0.0849]}
+
+{"experiment_num": 460, "num_intruder": 1, "image_index": 26917, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.4687], "false_alarm": 0, "miss": 0, "preds": [[77.5, 33.5]], "time": 7.22779, "power_error": [0.101]}
+
+{"experiment_num": 461, "num_intruder": 1, "image_index": 6658, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.477], "false_alarm": 0, "miss": 0, "preds": [[27.5, 62.5]], "time": 9.07599, "power_error": [0.124]}
+
+{"experiment_num": 462, "num_intruder": 1, "image_index": 26314, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.3395], "false_alarm": 0, "miss": 0, "preds": [[75.5, 72.5]], "time": 10.23279, "power_error": [0.0318]}
+
+{"experiment_num": 463, "num_intruder": 1, "image_index": 29946, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.5007], "false_alarm": 0, "miss": 0, "preds": [[84.5, 79.5]], "time": 5.16257, "power_error": [0.0438]}
+
+{"experiment_num": 464, "num_intruder": 1, "image_index": 8295, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.0127], "false_alarm": 0, "miss": 0, "preds": [[31.5, 70.5]], "time": 3.24801, "power_error": [0.3469]}
+
+{"experiment_num": 465, "num_intruder": 1, "image_index": 24439, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.8785], "false_alarm": 0, "miss": 0, "preds": [[71.5, 18.5]], "time": 11.17821, "power_error": [-0.0976]}
+
+{"experiment_num": 466, "num_intruder": 1, "image_index": 22144, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.087], "false_alarm": 0, "miss": 0, "preds": [[65.5, 39.5]], "time": 11.64018, "power_error": [0.1513]}
+
+{"experiment_num": 467, "num_intruder": 1, "image_index": 21997, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.386], "false_alarm": 0, "miss": 0, "preds": [[64.5, 89.5]], "time": 5.59463, "power_error": [-0.3694]}
+
+{"experiment_num": 468, "num_intruder": 1, "image_index": 29187, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.9884], "false_alarm": 0, "miss": 0, "preds": [[83.5, 87.5]], "time": 5.81024, "power_error": [0.1214]}
+
+{"experiment_num": 469, "num_intruder": 1, "image_index": 6047, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.0101], "false_alarm": 0, "miss": 0, "preds": [[26.5, 19.5]], "time": 6.43232, "power_error": [0.5557]}
+
+{"experiment_num": 470, "num_intruder": 1, "image_index": 10097, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.9141], "false_alarm": 0, "miss": 0, "preds": [[36.5, 29.5]], "time": 7.88552, "power_error": [0.0414]}
+
+{"experiment_num": 471, "num_intruder": 1, "image_index": 12398, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.1253], "false_alarm": 0, "miss": 0, "preds": [[41.5, 89.5]], "time": 7.36051, "power_error": [-0.2293]}
+
+{"experiment_num": 472, "num_intruder": 1, "image_index": 26410, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.4075], "false_alarm": 0, "miss": 0, "preds": [[77.5, 13.5]], "time": 2.54085, "power_error": [-0.7561]}
+
+{"experiment_num": 473, "num_intruder": 1, "image_index": 12847, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.5346], "false_alarm": 0, "miss": 0, "preds": [[43.5, 19.5]], "time": 6.99597, "power_error": [0.1227]}
+
+{"experiment_num": 474, "num_intruder": 1, "image_index": 4572, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.3746], "false_alarm": 0, "miss": 0, "preds": [[21.5, 44.5]], "time": 7.52595, "power_error": [0.1045]}
+
+{"experiment_num": 475, "num_intruder": 1, "image_index": 25813, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.1839], "false_alarm": 0, "miss": 0, "preds": [[74.5, 53.5]], "time": 9.72012, "power_error": [0.3384]}
+
+{"experiment_num": 476, "num_intruder": 1, "image_index": 27823, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.9203], "false_alarm": 0, "miss": 0, "preds": [[79.5, 55.5]], "time": 8.39094, "power_error": [0.124]}
+
+{"experiment_num": 477, "num_intruder": 1, "image_index": 27048, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.572], "false_alarm": 0, "miss": 0, "preds": [[78.5, 59.5]], "time": 8.95982, "power_error": [0.0138]}
+
+{"experiment_num": 478, "num_intruder": 1, "image_index": 30562, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.5123], "false_alarm": 0, "miss": 0, "preds": [[86.5, 43.5]], "time": 6.12474, "power_error": [0.0114]}
+
+{"experiment_num": 479, "num_intruder": 1, "image_index": 27978, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.5907], "false_alarm": 0, "miss": 0, "preds": [[80.5, 85.5]], "time": 7.8403, "power_error": [0.0]}
+
+{"experiment_num": 480, "num_intruder": 1, "image_index": 21956, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.7393], "false_alarm": 0, "miss": 0, "preds": [[65.5, 82.5]], "time": 4.41135, "power_error": [0.0363]}
+
+{"experiment_num": 481, "num_intruder": 1, "image_index": 20898, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.6028], "false_alarm": 0, "miss": 0, "preds": [[63.5, 29.5]], "time": 9.59139, "power_error": [-0.1231]}
+
+{"experiment_num": 482, "num_intruder": 1, "image_index": 15304, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.043], "false_alarm": 0, "miss": 0, "preds": [[48.5, 30.5]], "time": 11.27993, "power_error": [0.1343]}
+
+{"experiment_num": 483, "num_intruder": 1, "image_index": 15506, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.8153], "false_alarm": 0, "miss": 0, "preds": [[49.5, 71.5]], "time": 5.11755, "power_error": [0.0389]}
+
+{"experiment_num": 484, "num_intruder": 1, "image_index": 15069, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.9228], "false_alarm": 0, "miss": 0, "preds": [[48.5, 64.5]], "time": 12.42249, "power_error": [0.1906]}
+
+{"experiment_num": 485, "num_intruder": 1, "image_index": 16607, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.3735], "false_alarm": 0, "miss": 0, "preds": [[52.5, 52.5]], "time": 6.91456, "power_error": [-0.1934]}
+
+{"experiment_num": 486, "num_intruder": 1, "image_index": 11413, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.617], "false_alarm": 0, "miss": 0, "preds": [[38.5, 53.5]], "time": 11.18854, "power_error": [-0.0433]}
+
+{"experiment_num": 487, "num_intruder": 1, "image_index": 7305, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.5169], "false_alarm": 0, "miss": 0, "preds": [[29.5, 31.5]], "time": 3.17619, "power_error": [-0.286]}
+
+{"experiment_num": 488, "num_intruder": 1, "image_index": 1864, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.6739], "false_alarm": 0, "miss": 0, "preds": [[15.5, 62.5]], "time": 9.80988, "power_error": [0.0598]}
+
+{"experiment_num": 489, "num_intruder": 1, "image_index": 5739, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.9589], "false_alarm": 0, "miss": 0, "preds": [[25.5, 37.5]], "time": 11.7351, "power_error": [0.0006]}
+
+{"experiment_num": 490, "num_intruder": 1, "image_index": 17015, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.9395], "false_alarm": 0, "miss": 0, "preds": [[52.5, 54.5]], "time": 3.06671, "power_error": [-0.0697]}
+
+{"experiment_num": 491, "num_intruder": 1, "image_index": 13980, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.1623], "false_alarm": 0, "miss": 0, "preds": [[45.5, 87.5]], "time": 2.92642, "power_error": [0.2775]}
+
+{"experiment_num": 492, "num_intruder": 1, "image_index": 2007, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.7902], "false_alarm": 0, "miss": 0, "preds": [[15.5, 12.5]], "time": 5.7486, "power_error": [-0.5151]}
+
+{"experiment_num": 493, "num_intruder": 1, "image_index": 5304, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.4115], "false_alarm": 0, "miss": 0, "preds": [[23.5, 30.5]], "time": 10.72392, "power_error": [0.0323]}
+
+{"experiment_num": 494, "num_intruder": 1, "image_index": 24259, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.3091], "false_alarm": 0, "miss": 0, "preds": [[71.5, 62.5]], "time": 12.39417, "power_error": [-0.0257]}
+
+{"experiment_num": 495, "num_intruder": 1, "image_index": 21185, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.0853], "false_alarm": 0, "miss": 0, "preds": [[63.5, 87.5]], "time": 2.33529, "power_error": [-0.2858]}
+
+{"experiment_num": 496, "num_intruder": 1, "image_index": 25637, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.8529], "false_alarm": 0, "miss": 0, "preds": [[74.5, 18.5]], "time": 6.8313, "power_error": [-0.1136]}
+
+{"experiment_num": 497, "num_intruder": 1, "image_index": 11395, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.4132], "false_alarm": 0, "miss": 0, "preds": [[38.5, 49.5]], "time": 3.00077, "power_error": [-0.113]}
+
+{"experiment_num": 498, "num_intruder": 1, "image_index": 20319, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.1431], "false_alarm": 0, "miss": 0, "preds": [[61.5, 74.5]], "time": 12.88478, "power_error": [0.0516]}
+
+{"experiment_num": 499, "num_intruder": 1, "image_index": 24515, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.2495], "false_alarm": 0, "miss": 0, "preds": [[71.5, 33.5]], "time": 3.32467, "power_error": [-0.2155]}
+
+{"experiment_num": 500, "num_intruder": 1, "image_index": 18195, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.1138], "false_alarm": 0, "miss": 0, "preds": [[56.5, 50.5]], "time": 2.88756, "power_error": [-0.1563]}
+
+{"experiment_num": 501, "num_intruder": 1, "image_index": 4164, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.5359], "false_alarm": 0, "miss": 0, "preds": [[20.5, 42.5]], "time": 9.96931, "power_error": [-0.2324]}
+
+{"experiment_num": 502, "num_intruder": 1, "image_index": 19856, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.0985], "false_alarm": 0, "miss": 0, "preds": [[59.5, 62.5]], "time": 4.86009, "power_error": [0.27]}
+
+{"experiment_num": 503, "num_intruder": 1, "image_index": 11592, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.4996], "false_alarm": 0, "miss": 0, "preds": [[38.5, 88.5]], "time": 6.04546, "power_error": [-0.1239]}
+
+{"experiment_num": 504, "num_intruder": 1, "image_index": 9993, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.941], "false_alarm": 0, "miss": 0, "preds": [[35.5, 89.5]], "time": 8.37302, "power_error": [0.2176]}
+
+{"experiment_num": 505, "num_intruder": 1, "image_index": 16904, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.7557], "false_alarm": 0, "miss": 0, "preds": [[52.5, 31.5]], "time": 12.90271, "power_error": [-0.119]}
+
+{"experiment_num": 506, "num_intruder": 1, "image_index": 12311, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.9561], "false_alarm": 0, "miss": 0, "preds": [[40.5, 73.5]], "time": 5.49668, "power_error": [0.2412]}
+
+{"experiment_num": 507, "num_intruder": 1, "image_index": 14719, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.1065], "false_alarm": 0, "miss": 0, "preds": [[47.5, 74.5]], "time": 12.61038, "power_error": [0.0146]}
+
+{"experiment_num": 508, "num_intruder": 1, "image_index": 25607, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.4496], "false_alarm": 0, "miss": 0, "preds": [[74.5, 11.5]], "time": 5.54285, "power_error": [-0.0176]}
+
+{"experiment_num": 509, "num_intruder": 1, "image_index": 2146, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.2913], "false_alarm": 0, "miss": 0, "preds": [[15.5, 39.5]], "time": 4.47113, "power_error": [0.5679]}
+
+{"experiment_num": 510, "num_intruder": 1, "image_index": 2720, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.148], "false_alarm": 0, "miss": 0, "preds": [[17.5, 75.5]], "time": 2.82224, "power_error": [0.208]}
+
+{"experiment_num": 511, "num_intruder": 1, "image_index": 23862, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.8842], "false_alarm": 0, "miss": 0, "preds": [[69.5, 63.5]], "time": 7.22317, "power_error": [-0.3041]}
+
+{"experiment_num": 512, "num_intruder": 1, "image_index": 30927, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.9481], "false_alarm": 0, "miss": 0, "preds": [[88.5, 35.5]], "time": 7.27763, "power_error": [-0.3316]}
+
+{"experiment_num": 513, "num_intruder": 1, "image_index": 26672, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.2185], "false_alarm": 0, "miss": 0, "preds": [[77.5, 64.5]], "time": 6.43367, "power_error": [0.2849]}
+
+{"experiment_num": 514, "num_intruder": 1, "image_index": 12167, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.1862], "false_alarm": 0, "miss": 0, "preds": [[41.5, 44.5]], "time": 8.63178, "power_error": [0.0505]}
+
+{"experiment_num": 515, "num_intruder": 1, "image_index": 6284, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.1116], "false_alarm": 0, "miss": 0, "preds": [[26.5, 67.5]], "time": 10.72083, "power_error": [0.0233]}
+
+{"experiment_num": 516, "num_intruder": 1, "image_index": 30342, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.8589], "false_alarm": 0, "miss": 0, "preds": [[85.5, 79.5]], "time": 6.29978, "power_error": [0.0239]}
+
+{"experiment_num": 517, "num_intruder": 1, "image_index": 6654, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.1456], "false_alarm": 0, "miss": 0, "preds": [[27.5, 61.5]], "time": 11.21369, "power_error": [-0.232]}
+
+{"experiment_num": 518, "num_intruder": 1, "image_index": 22413, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.8315], "false_alarm": 0, "miss": 0, "preds": [[67.5, 12.5]], "time": 8.27525, "power_error": [0.0894]}
+
+{"experiment_num": 519, "num_intruder": 1, "image_index": 28329, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.4052], "false_alarm": 0, "miss": 0, "preds": [[80.5, 75.5]], "time": 9.95811, "power_error": [0.0365]}
+
+{"experiment_num": 520, "num_intruder": 1, "image_index": 31588, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.4594], "false_alarm": 0, "miss": 0, "preds": [[88.5, 87.5]], "time": 7.21818, "power_error": [-0.1549]}
+
+{"experiment_num": 521, "num_intruder": 1, "image_index": 18411, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.9437], "false_alarm": 0, "miss": 0, "preds": [[57.5, 12.5]], "time": 5.4487, "power_error": [0.4071]}
+
+{"experiment_num": 522, "num_intruder": 1, "image_index": 31665, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.6185], "false_alarm": 0, "miss": 0, "preds": [[89.5, 24.5]], "time": 2.5084, "power_error": [0.1245]}
+
+{"experiment_num": 523, "num_intruder": 1, "image_index": 360, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.1752], "false_alarm": 0, "miss": 0, "preds": [[11.5, 83.5]], "time": 2.42827, "power_error": [0.1194]}
+
+{"experiment_num": 524, "num_intruder": 1, "image_index": 20154, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.8888], "false_alarm": 0, "miss": 0, "preds": [[60.5, 41.5]], "time": 12.20691, "power_error": [-0.0144]}
+
+{"experiment_num": 525, "num_intruder": 1, "image_index": 15792, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.8033], "false_alarm": 0, "miss": 0, "preds": [[50.5, 48.5]], "time": 7.91673, "power_error": [0.1919]}
+
+{"experiment_num": 526, "num_intruder": 1, "image_index": 12722, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.7147], "false_alarm": 0, "miss": 0, "preds": [[42.5, 74.5]], "time": 7.0546, "power_error": [0.1519]}
+
+{"experiment_num": 527, "num_intruder": 1, "image_index": 29964, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.526], "false_alarm": 0, "miss": 0, "preds": [[84.5, 82.5]], "time": 10.63685, "power_error": [-0.021]}
+
+{"experiment_num": 528, "num_intruder": 1, "image_index": 20125, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.9289], "false_alarm": 0, "miss": 0, "preds": [[60.5, 36.5]], "time": 3.59185, "power_error": [-0.309]}
+
+{"experiment_num": 529, "num_intruder": 1, "image_index": 15573, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.0556], "false_alarm": 0, "miss": 0, "preds": [[49.5, 85.5]], "time": 8.21434, "power_error": [-0.0034]}
+
+{"experiment_num": 530, "num_intruder": 1, "image_index": 10025, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.1726], "false_alarm": 0, "miss": 0, "preds": [[35.5, 16.5]], "time": 3.23792, "power_error": [0.0938]}
+
+{"experiment_num": 531, "num_intruder": 1, "image_index": 21609, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.1522], "false_alarm": 0, "miss": 0, "preds": [[64.5, 11.5]], "time": 11.41001, "power_error": [0.2502]}
+
+{"experiment_num": 532, "num_intruder": 1, "image_index": 24337, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.8186], "false_alarm": 0, "miss": 0, "preds": [[71.5, 77.5]], "time": 7.6774, "power_error": [-0.0111]}
+
+{"experiment_num": 533, "num_intruder": 1, "image_index": 8462, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.2942], "false_alarm": 0, "miss": 0, "preds": [[31.5, 22.5]], "time": 7.41206, "power_error": [0.3849]}
+
+{"experiment_num": 534, "num_intruder": 1, "image_index": 9624, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.0409], "false_alarm": 0, "miss": 0, "preds": [[35.5, 14.5]], "time": 10.17498, "power_error": [-0.0714]}
+
+{"experiment_num": 535, "num_intruder": 1, "image_index": 3831, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.4836], "false_alarm": 0, "miss": 0, "preds": [[19.5, 56.5]], "time": 5.43188, "power_error": [-0.0757]}
+
+{"experiment_num": 536, "num_intruder": 1, "image_index": 22099, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.8782], "false_alarm": 0, "miss": 0, "preds": [[66.5, 30.5]], "time": 12.35632, "power_error": [-0.034]}
+
+{"experiment_num": 537, "num_intruder": 1, "image_index": 24606, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.8492], "false_alarm": 0, "miss": 0, "preds": [[72.5, 52.5]], "time": 5.32418, "power_error": [-0.1951]}
+
+{"experiment_num": 538, "num_intruder": 1, "image_index": 22406, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.4842], "false_alarm": 0, "miss": 0, "preds": [[66.5, 11.5]], "time": 4.01417, "power_error": [0.2047]}
+
+{"experiment_num": 539, "num_intruder": 1, "image_index": 31808, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.2852], "false_alarm": 0, "miss": 0, "preds": [[89.5, 51.5]], "time": 7.67595, "power_error": [-0.1111]}
+
+{"experiment_num": 540, "num_intruder": 1, "image_index": 21541, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.7748], "false_alarm": 0, "miss": 0, "preds": [[63.5, 79.5]], "time": 4.54171, "power_error": [0.0924]}
+
+{"experiment_num": 541, "num_intruder": 1, "image_index": 8754, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.0596], "false_alarm": 0, "miss": 0, "preds": [[31.5, 80.5]], "time": 10.47074, "power_error": [0.1847]}
+
+{"experiment_num": 542, "num_intruder": 1, "image_index": 9117, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.9785], "false_alarm": 0, "miss": 0, "preds": [[32.5, 74.5]], "time": 6.93021, "power_error": [0.2537]}
+
+{"experiment_num": 543, "num_intruder": 1, "image_index": 28720, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.5889], "false_alarm": 0, "miss": 0, "preds": [[82.5, 75.5]], "time": 2.79442, "power_error": [-0.5236]}
+
+{"experiment_num": 544, "num_intruder": 1, "image_index": 18677, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.557], "false_alarm": 0, "miss": 0, "preds": [[57.5, 65.5]], "time": 8.26127, "power_error": [-0.1555]}
+
+{"experiment_num": 545, "num_intruder": 1, "image_index": 29667, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.56], "false_alarm": 0, "miss": 0, "preds": [[85.5, 23.5]], "time": 5.99019, "power_error": [0.0949]}
+
+{"experiment_num": 546, "num_intruder": 1, "image_index": 17646, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.6731], "false_alarm": 0, "miss": 0, "preds": [[54.5, 20.5]], "time": 4.80205, "power_error": [0.3443]}
+
+{"experiment_num": 547, "num_intruder": 1, "image_index": 2833, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [], "false_alarm": 0, "miss": 1, "preds": [], "time": 10.84316, "power_error": []}
+
+{"experiment_num": 548, "num_intruder": 1, "image_index": 3793, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.6558], "false_alarm": 0, "miss": 0, "preds": [[19.5, 49.5]], "time": 8.87178, "power_error": [0.1789]}
+
+{"experiment_num": 549, "num_intruder": 1, "image_index": 11397, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.4606], "false_alarm": 0, "miss": 0, "preds": [[38.5, 49.5]], "time": 8.51412, "power_error": [-0.0911]}
+
+{"experiment_num": 550, "num_intruder": 1, "image_index": 22170, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.9509], "false_alarm": 0, "miss": 0, "preds": [[65.5, 45.5]], "time": 3.63212, "power_error": [-0.4934]}
+
+{"experiment_num": 551, "num_intruder": 1, "image_index": 25059, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.695], "false_alarm": 0, "miss": 0, "preds": [[73.5, 61.5]], "time": 12.7235, "power_error": [0.013]}
+
+{"experiment_num": 552, "num_intruder": 1, "image_index": 6683, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.0431], "false_alarm": 0, "miss": 0, "preds": [[27.5, 67.5]], "time": 8.73511, "power_error": [0.5726]}
+
+{"experiment_num": 553, "num_intruder": 1, "image_index": 22907, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.4712], "false_alarm": 0, "miss": 0, "preds": [[67.5, 31.5]], "time": 7.22009, "power_error": [0.056]}
+
+{"experiment_num": 554, "num_intruder": 1, "image_index": 5047, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.7175], "false_alarm": 0, "miss": 0, "preds": [[22.5, 60.5]], "time": 6.9407, "power_error": [0.1255]}
+
+{"experiment_num": 555, "num_intruder": 1, "image_index": 25619, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.5393], "false_alarm": 0, "miss": 0, "preds": [[74.5, 13.5]], "time": 9.72768, "power_error": [0.0255]}
+
+{"experiment_num": 556, "num_intruder": 1, "image_index": 20685, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.3094], "false_alarm": 0, "miss": 0, "preds": [[62.5, 68.5]], "time": 2.9342, "power_error": [0.5531]}
+
+{"experiment_num": 557, "num_intruder": 1, "image_index": 7319, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.6212], "false_alarm": 0, "miss": 0, "preds": [[29.5, 33.5]], "time": 11.84402, "power_error": [0.028]}
+
+{"experiment_num": 558, "num_intruder": 1, "image_index": 13436, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.4817], "false_alarm": 0, "miss": 0, "preds": [[43.5, 57.5]], "time": 6.26168, "power_error": [0.004]}
+
+{"experiment_num": 559, "num_intruder": 1, "image_index": 25336, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.9911], "false_alarm": 0, "miss": 0, "preds": [[73.5, 38.5]], "time": 5.28769, "power_error": [-0.1844]}
+
+{"experiment_num": 560, "num_intruder": 1, "image_index": 31004, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.4777], "false_alarm": 0, "miss": 0, "preds": [[87.5, 50.5]], "time": 9.38219, "power_error": [0.1161]}
+
+{"experiment_num": 561, "num_intruder": 1, "image_index": 14955, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.7398], "false_alarm": 0, "miss": 0, "preds": [[47.5, 42.5]], "time": 3.29422, "power_error": [0.313]}
+
+{"experiment_num": 562, "num_intruder": 1, "image_index": 11048, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.0256], "false_alarm": 0, "miss": 0, "preds": [[38.5, 60.5]], "time": 9.79093, "power_error": [-0.1218]}
+
+{"experiment_num": 563, "num_intruder": 1, "image_index": 23053, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.9715], "false_alarm": 0, "miss": 0, "preds": [[68.5, 61.5]], "time": 10.20013, "power_error": [-0.044]}
+
+{"experiment_num": 564, "num_intruder": 1, "image_index": 13013, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.0255], "false_alarm": 0, "miss": 0, "preds": [[43.5, 52.5]], "time": 10.48025, "power_error": [-0.148]}
+
+{"experiment_num": 565, "num_intruder": 1, "image_index": 19156, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.7732], "false_alarm": 0, "miss": 0, "preds": [[58.5, 82.5]], "time": 4.36375, "power_error": [0.53]}
+
+{"experiment_num": 566, "num_intruder": 1, "image_index": 12648, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.9038], "false_alarm": 0, "miss": 0, "preds": [[41.5, 60.5]], "time": 10.25224, "power_error": [-0.0811]}
+
+{"experiment_num": 567, "num_intruder": 1, "image_index": 13661, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.4438], "false_alarm": 0, "miss": 0, "preds": [[44.5, 22.5]], "time": 4.99378, "power_error": [-0.0282]}
+
+{"experiment_num": 568, "num_intruder": 1, "image_index": 1201, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.0549], "false_alarm": 0, "miss": 0, "preds": [[14.5, 11.5]], "time": 4.02428, "power_error": [0.2813]}
+
+{"experiment_num": 569, "num_intruder": 1, "image_index": 1445, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.898], "false_alarm": 0, "miss": 0, "preds": [[14.5, 59.5]], "time": 2.77756, "power_error": [-0.2189]}
+
+{"experiment_num": 570, "num_intruder": 1, "image_index": 25991, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.8135], "false_alarm": 0, "miss": 0, "preds": [[74.5, 89.5]], "time": 4.63608, "power_error": [-0.1808]}
+
+{"experiment_num": 571, "num_intruder": 1, "image_index": 12926, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.2041], "false_alarm": 0, "miss": 0, "preds": [[42.5, 35.5]], "time": 4.91245, "power_error": [0.555]}
+
+{"experiment_num": 572, "num_intruder": 1, "image_index": 27072, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.9271], "false_alarm": 0, "miss": 0, "preds": [[77.5, 65.5]], "time": 7.03543, "power_error": [0.0675]}
+
+{"experiment_num": 573, "num_intruder": 1, "image_index": 10470, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.101], "false_alarm": 0, "miss": 0, "preds": [[36.5, 25.5]], "time": 2.91495, "power_error": [0.009]}
+
+{"experiment_num": 574, "num_intruder": 1, "image_index": 26566, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.8151], "false_alarm": 0, "miss": 0, "preds": [[77.5, 43.5]], "time": 4.62916, "power_error": [0.5322]}
+
+{"experiment_num": 575, "num_intruder": 1, "image_index": 24711, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.3077], "false_alarm": 0, "miss": 0, "preds": [[72.5, 73.5]], "time": 5.05632, "power_error": [-0.1351]}
+
+{"experiment_num": 576, "num_intruder": 1, "image_index": 2516, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [0.2215], "false_alarm": 0, "miss": 0, "preds": [[16.5, 33.5]], "time": 4.76003, "power_error": [-0.0365]}
+
+{"experiment_num": 577, "num_intruder": 1, "image_index": 18847, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.3411], "false_alarm": 0, "miss": 0, "preds": [[58.5, 20.5]], "time": 7.38904, "power_error": [-0.0409]}
+
+{"experiment_num": 578, "num_intruder": 1, "image_index": 9361, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.1449], "false_alarm": 0, "miss": 0, "preds": [[34.5, 43.5]], "time": 5.40662, "power_error": [0.2411]}
+
+{"experiment_num": 579, "num_intruder": 1, "image_index": 27278, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.7934], "false_alarm": 0, "miss": 0, "preds": [[78.5, 26.5]], "time": 9.01211, "power_error": [0.1898]}
+
+{"experiment_num": 580, "num_intruder": 1, "image_index": 12561, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.3079], "false_alarm": 0, "miss": 0, "preds": [[42.5, 43.5]], "time": 6.04022, "power_error": [-0.3197]}
+
+{"experiment_num": 581, "num_intruder": 1, "image_index": 18687, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.9534], "false_alarm": 0, "miss": 0, "preds": [[57.5, 68.5]], "time": 7.30552, "power_error": [0.1124]}
+
+{"experiment_num": 582, "num_intruder": 1, "image_index": 15029, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [1.2194], "false_alarm": 0, "miss": 0, "preds": [[48.5, 56.5]], "time": 12.97909, "power_error": [0.0454]}
+
+{"experiment_num": 583, "num_intruder": 1, "image_index": 20213, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [0.6351], "false_alarm": 0, "miss": 0, "preds": [[60.5, 53.5]], "time": 11.14676, "power_error": [0.1795]}
+
+{"experiment_num": 584, "num_intruder": 1, "image_index": 25046, "methods": ["map"], "data_source": "data/605test", "sensor_density": 400}
+{"method": "map", "error": [1.5568], "false_alarm": 0, "miss": 0, "preds": [[73.5, 60.5]], "time": 5.72641, "power_error": [0.216]}
+
+{"experiment_num": 585, "num_intruder": 1, "image_index": 28789, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.6336], "false_alarm": 0, "miss": 0, "preds": [[81.5, 87.5]], "time": 8.97085, "power_error": [0.2634]}
+
+{"experiment_num": 586, "num_intruder": 1, "image_index": 4698, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.1462], "false_alarm": 0, "miss": 0, "preds": [[22.5, 69.5]], "time": 8.96346, "power_error": [0.0306]}
+
+{"experiment_num": 587, "num_intruder": 1, "image_index": 22965, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.2334], "false_alarm": 0, "miss": 0, "preds": [[68.5, 44.5]], "time": 3.00589, "power_error": [0.0953]}
+
+{"experiment_num": 588, "num_intruder": 1, "image_index": 5767, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [1.0094], "false_alarm": 0, "miss": 0, "preds": [[25.5, 43.5]], "time": 7.00385, "power_error": [0.285]}
+
+{"experiment_num": 589, "num_intruder": 1, "image_index": 14559, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.9213], "false_alarm": 0, "miss": 0, "preds": [[46.5, 42.5]], "time": 12.89308, "power_error": [-0.0611]}
+
+{"experiment_num": 590, "num_intruder": 1, "image_index": 26838, "methods": ["map"], "data_source": "data/605test", "sensor_density": 800}
+{"method": "map", "error": [1.0118], "false_alarm": 0, "miss": 0, "preds": [[77.5, 18.5]], "time": 7.03493, "power_error": [0.1888]}
+
+{"experiment_num": 591, "num_intruder": 1, "image_index": 9125, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.0926], "false_alarm": 0, "miss": 0, "preds": [[32.5, 76.5]], "time": 3.06497, "power_error": [-0.5074]}
+
+{"experiment_num": 592, "num_intruder": 1, "image_index": 8022, "methods": ["map"], "data_source": "data/605test", "sensor_density": 600}
+{"method": "map", "error": [0.449], "false_alarm": 0, "miss": 0, "preds": [[30.5, 14.5]], "time": 5.92422, "power_error": [0.0622]}
+
+{"experiment_num": 593, "num_intruder": 1, "image_index": 24674, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.4228], "false_alarm": 0, "miss": 0, "preds": [[71.5, 64.5]], "time": 11.42176, "power_error": [0.1815]}
+
+{"experiment_num": 594, "num_intruder": 1, "image_index": 18835, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [1.0414], "false_alarm": 0, "miss": 0, "preds": [[58.5, 17.5]], "time": 2.76111, "power_error": [0.1166]}
+
+{"experiment_num": 595, "num_intruder": 1, "image_index": 18129, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.5701], "false_alarm": 0, "miss": 0, "preds": [[56.5, 35.5]], "time": 11.3294, "power_error": [-0.1397]}
+
+{"experiment_num": 596, "num_intruder": 1, "image_index": 18374, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.4299], "false_alarm": 0, "miss": 0, "preds": [[55.5, 84.5]], "time": 9.19172, "power_error": [0.0013]}
+
+{"experiment_num": 597, "num_intruder": 1, "image_index": 6364, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.7556], "false_alarm": 0, "miss": 0, "preds": [[26.5, 83.5]], "time": 8.25375, "power_error": [0.2979]}
+
+{"experiment_num": 598, "num_intruder": 1, "image_index": 14700, "methods": ["map"], "data_source": "data/605test", "sensor_density": 200}
+{"method": "map", "error": [0.6278], "false_alarm": 0, "miss": 0, "preds": [[46.5, 71.5]], "time": 2.61472, "power_error": [0.1111]}
+
+{"experiment_num": 599, "num_intruder": 1, "image_index": 13674, "methods": ["map"], "data_source": "data/605test", "sensor_density": 1000}
+{"method": "map", "error": [0.3382], "false_alarm": 0, "miss": 0, "preds": [[44.5, 24.5]], "time": 10.66528, "power_error": [0.1684]}
+

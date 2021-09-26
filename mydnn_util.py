@@ -49,7 +49,8 @@ class SensorInputDatasetTranslation(Dataset):
         folder = glob.glob(os.path.join(self.root_dir, '*'))[0]
         samples = glob.glob(os.path.join(folder, '*.npy'))
         targets = glob.glob(os.path.join(folder, '*.target.npy'))
-        return len(samples) - len(targets)
+        powers = glob.glob(os.path.join(folder, '*.power.npy'))
+        return len(samples) - len(targets) - len(powers)
 
     def get_translation_target(self, folder: str, target_name: str):
         '''
