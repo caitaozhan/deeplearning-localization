@@ -252,7 +252,7 @@ class DataInfo:
             ipsn_hypo_list = ['data/300test-ipsn/hypothesis', 'data/301test-ipsn/hypothesis', 'data/302test-ipsn/hypothesis', 'data/303test-ipsn/hypothesis', 'data/304test-ipsn/hypothesis']
             translate_net  = 'model/model1-12.13-net5-norm-32-splat.pt'
             yolocust_def     = '../PyTorch-YOLOv3/config/yolov3-custom.cfg'
-            yolocust_weights = '../PyTorch-YOLOv3/checkpoints/yolov3_ckpt_5.pth'
+            yolocust_weights = '../PyTorch-YOLOv3/checkpoints_splat/yolov3_ckpt_5.pth'
             yolo_def         = '../PyTorch-YOLOv3/config/yolov3-custom-class.cfg'
             yolo_weights     = '../PyTorch-YOLOv3/checkpoints_logdistance_class/yolov3_ckpt_5.pth'
             dtxf_cnn1        =   'model_dtxf/12.13-cnn1-splat.pt'

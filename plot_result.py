@@ -647,7 +647,7 @@ class PlotResults:
         pos2 = ind + 0.5*width + 0.005
         ax0.bar(pos1, predpower_abserror_logdist, width, edgecolor='black', color=PlotResults.COLOR['predpower'], label=PlotResults.LEGEND['predpower'])
         ax0.bar(pos2, ipsn_abserror_logdist,      width, edgecolor='black', color=PlotResults.COLOR['map'],       label=PlotResults.LEGEND['map']      )
-        ax0.legend(fontsize=40)
+        ax0.legend(fontsize=45)
         ax0.set_ylim([0, 0.5])
         ax0.set_xticks(ind)
         ax0.set_xticklabels([str(int(int(x)/10000*100)) for x in X_label])
@@ -659,7 +659,7 @@ class PlotResults:
 
         ax1.bar(pos1, predpower_abserror_splat,   width, edgecolor='black', color=PlotResults.COLOR['predpower'], label=PlotResults.LEGEND['predpower'])
         ax1.bar(pos2, ipsn_abserror_splat,        width, edgecolor='black', color=PlotResults.COLOR['map'],       label=PlotResults.LEGEND['map']      )
-        ax1.legend(fontsize=40)
+        ax1.legend(fontsize=45)
         ax1.set_ylim([0, 0.5])
         ax1.set_xticks(ind)
         ax1.set_xticklabels([str(int(int(x)/10000*100)) for x in X_label])

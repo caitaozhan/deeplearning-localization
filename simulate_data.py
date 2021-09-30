@@ -18,6 +18,7 @@ if __name__ == '__main__':
 
     # 1. generate 5 train and 5 test   [output_filename, sample_label, sensor_density, random_seed, vary_power]
     print('step 1 ...')
+    # 200train (log distance) and 300train (splat) series are used in the WoWMoM
     # config = [['200train', 2, 200, 0,  vary_power],  ['200test', 1, 200, 100, vary_power],
     #           ['201train', 2, 400, 0,  vary_power],  ['201test', 1, 400, 100, vary_power],
     #           ['202train', 2, 600, 0,  vary_power],  ['202test', 1, 600, 100, vary_power],
@@ -25,8 +26,6 @@ if __name__ == '__main__':
     #           ['204train', 2, 1000, 0, vary_power],  ['204test', 1, 1000, 100, vary_power],
     #         ]
     # template = 'python generate.py -gd -rd data/{} -sl {} -sd {} -rs {} -nt 10 -ntup -mind 1 -vp {}'
-
-    # 200train and 300train series are used in the WoWMoM
     # config = [['300train', 2, 200,  1, vary_power],  ['300test', 1, 200,  101, vary_power],
     #           ['301train', 2, 400,  1, vary_power],  ['301test', 1, 400,  101, vary_power],
     #           ['302train', 2, 600,  1, vary_power],  ['302test', 1, 600,  101, vary_power],
@@ -34,49 +33,74 @@ if __name__ == '__main__':
     #           ['304train', 2, 1000, 1, vary_power],  ['304test', 1, 1000, 101, vary_power],
     #         ]
     
-    # for power estimation
-    config = [['600train', 2, 200,  1, vary_power, power],  ['600test', 1, 200,  101, vary_power, power],
-              ['601train', 2, 400,  1, vary_power, power],  ['601test', 1, 400,  101, vary_power, power],
-              ['602train', 2, 600,  1, vary_power, power],  ['602test', 1, 600,  101, vary_power, power],
-              ['603train', 2, 800,  1, vary_power, power],  ['603test', 1, 800,  101, vary_power, power],
-              ['604train', 2, 1000, 1, vary_power, power],  ['604test', 1, 1000, 101, vary_power, power],
+    # for single TX power estimation in DeepMTL Pro
+    # config = [['600train', 2, 200,  1, vary_power, power],  ['600test', 1, 200,  101, vary_power, power],
+    #           ['601train', 2, 400,  1, vary_power, power],  ['601test', 1, 400,  101, vary_power, power],
+    #           ['602train', 2, 600,  1, vary_power, power],  ['602test', 1, 600,  101, vary_power, power],
+    #           ['603train', 2, 800,  1, vary_power, power],  ['603test', 1, 800,  101, vary_power, power],
+    #           ['604train', 2, 1000, 1, vary_power, power],  ['604test', 1, 1000, 101, vary_power, power],
+    #         ]
+    # config = [['700train', 2, 200,  1, vary_power, power],  ['700test', 1, 200,  101, vary_power, power],
+    #           ['701train', 2, 400,  1, vary_power, power],  ['701test', 1, 400,  101, vary_power, power],
+    #           ['702train', 2, 600,  1, vary_power, power],  ['702test', 1, 600,  101, vary_power, power],
+    #           ['703train', 2, 800,  1, vary_power, power],  ['703test', 1, 800,  101, vary_power, power],
+    #           ['704train', 2, 1000, 1, vary_power, power],  ['704test', 1, 1000, 101, vary_power, power],
+    #         ]
+    # template = 'python generate.py -gd -rd data/{} -sl {} -sd {} -rs {} -nt 1 -ntup -mind 1 -vp {} -spt -po {} -ed 10 -al 3.6'  # adding -spt, power. adding -ed 10 -al 3.6 for power estimation
+    # template = 'python generate.py -gd -rd data/{} -sl {} -sd {} -rs {} -nt 1 -ntup -mind 1 -vp {} -po {} -ed 10 -al 3.6'  # adding power. adding -ed 10 -al 3.6 for power estimation
+
+    # for multiple TX power estimation in DeepMTL Pro
+    # config = [['800train', 2, 200,  1, vary_power, power],  ['800test', 1, 200,  101, vary_power, power],
+    #           ['801train', 2, 400,  1, vary_power, power],  ['801test', 1, 400,  101, vary_power, power],
+    #           ['802train', 2, 600,  1, vary_power, power],  ['802test', 1, 600,  101, vary_power, power],
+    #           ['803train', 2, 800,  1, vary_power, power],  ['803test', 1, 800,  101, vary_power, power],
+    #           ['804train', 2, 1000, 1, vary_power, power],  ['804test', 1, 1000, 101, vary_power, power],
+    #         ]
+    config = [['900train', 2, 200,  1, vary_power, power],  ['900test', 1, 200,  101, vary_power, power],
+              ['901train', 2, 400,  1, vary_power, power],  ['901test', 1, 400,  101, vary_power, power],
+              ['902train', 2, 600,  1, vary_power, power],  ['902test', 1, 600,  101, vary_power, power],
+              ['903train', 2, 800,  1, vary_power, power],  ['903test', 1, 800,  101, vary_power, power],
+              ['904train', 2, 1000, 1, vary_power, power],  ['904test', 1, 1000, 101, vary_power, power],
             ]
-    
+    template = 'python generate.py -gd -rd data/{} -sl {} -sd {} -rs {} -nt 10 -ntup -mind 1 -vp {} -po {} -ed 10 -al 3.6 -spt'  # adding -spt, power. adding -ed 10 -al 3.6 for power estimation
+    # template = 'python generate.py -gd -rd data/{} -sl {} -sd {} -rs {} -nt 10 -ntup -mind 1 -vp {} -po {} -ed 10 -al 3.6'  # adding power. adding -ed 10 -al 3.6 for power estimation
+
     # for power estimation, first fix the sensor density to 600
     # config = [['401train', 1, 600, 1, vary_power], ['401test', 1, 600, 101, vary_power]]
 
-    # template = 'python generate.py -gd -rd data/{} -sl {} -sd {} -rs {} -nt 1 -ntup -mind 1 -vp {} -spt -po {} -ed 10 -al 3.6'  # adding -spt, power. adding -ed 10 -al 3.6 for power estimation
-    # template = 'python generate.py -gd -rd data/{} -sl {} -sd {} -rs {} -nt 1 -ntup -mind 1 -vp {} -po {} -ed 10 -al 3.6'  # adding -spt, power. adding -ed 10 -al 3.6 for power estimation
-
     # ps = []
     # for i, c in enumerate(config):
-    #     # if i not in [0, 1, 2, 3]:   # core issue, bus issue ...
-    #     #     continue
+    #     if i not in [8, 9]:   # core issue, bus issue, cannot load more than 2 SPLAT dataset at the same time ...
+    #         continue
     #     command = template.format(c[0], c[1], c[2], c[3], c[4], c[5])
     #     print(command)
     #     p = Popen(command, shell=True, stdout=PIPE)
     #     ps.append(p)
     # for p in ps:
     #     p.wait()
- 
 
-    # # 2. generate the IPSN format data
+
+
+    # 2. generate the IPSN format data
     # print('step 2 ...')
     # template = 'python generate.py -ipsn -rd data/{} -sd {} -rs {} -po 3 -al 3.6'
-    # # template = 'python generate.py -ipsn -rd data/{} -sd {} -rs {} -spt -po 0 -al 3.6'  # add -spt and power=0
+    # # template = 'python generate.py -ipsn -rd data/{} -sd {} -rs {} -spt -po 3 -al 3.6'  # add -spt and power=0
     # ps = []
-    # for c in config[1::2]:  # test
+    # for i, c in enumerate(config[1::2]):  # test
+    #     # if i not in [2, 3, 4]:   # core issue, bus issue, cannot load more than 2 SPLAT dataset at the same time ...
+    #     #     continue
     #     command = template.format(c[0], c[2], c[3])
+    #     print(command)
     #     p = Popen(command, shell=True, stdout=PIPE)
     #     ps.append(p)
     # for p in ps:
     #     p.wait()
 
-    # # 3. merge the data of step 1
-    print('step 3 ...')
-    # train_dir = 'data/205train'
-    # train_dir = 'data/305train'
-    train_dir = 'data/605train'
+
+
+    # 3. merge the data of step 1
+    # print('step 3 ...')
+    train_dir = 'data/905train'
     Utility.remove_make(train_dir)
     # size = 9216
     size = 6400
@@ -96,9 +120,7 @@ if __name__ == '__main__':
                 shutil.copy(source + '.json',       os.path.join(dest_dir, str(counter) + '.json'))
                 counter += 1
 
-    # test_dir = 'data/205test'
-    # test_dir = 'data/305test'
-    test_dir = 'data/605test'
+    test_dir = 'data/905test'
     Utility.remove_make(test_dir)
     for i in range(size):
         if i % 1000 == 0:
