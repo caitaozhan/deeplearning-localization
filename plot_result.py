@@ -19,12 +19,12 @@ class PlotResults:
     plt.rcParams['font.weight'] = 'bold'
     plt.rcParams['axes.labelweight'] = 'bold'
 
-    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',     'splot', 'dtxf',         'deepmtl_noretrain',          'predpower']
-    _LEGEND = ['DeepMTL', 'DeepMTL-yolo', 'DeepMTL-peak',   'MAP$^*$', 'SPLOT', 'DeepTxFinder', 'DeepMTL(No Part 2 Retrain)', 'PredPower']
+    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',     'splot', 'dtxf',         'deepmtl_noretrain',          'predpower', 'predpower_nocorrect']
+    _LEGEND = ['DeepMTL', 'DeepMTL-yolo', 'DeepMTL-peak',   'MAP$^*$', 'SPLOT', 'DeepTxFinder', 'DeepMTL(No Part 2 Retrain)', 'PredPower (With Correction)', 'PredPower (No Correction)']
     LEGEND  = dict(zip(METHOD, _LEGEND))
 
-    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',       'splot',       'dtxf', 'deepmtl_noretrain', 'predpower']
-    _COLOR  = ['r',       'tab:cyan',     'tab:orange',     'limegreen', 'deepskyblue', 'gold', 'tab:purple',        'tab:gray']
+    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',       'splot',       'dtxf', 'deepmtl_noretrain', 'predpower', 'predpower_nocorrect']
+    _COLOR  = ['r',       'tab:cyan',     'tab:orange',     'limegreen', 'deepskyblue', 'gold', 'tab:purple',        'tab:gray',  'lightgray']
     COLOR   = dict(zip(METHOD, _COLOR))
 
     METRIC = ['miss', 'false']
@@ -674,6 +674,91 @@ class PlotResults:
         fig.savefig(figname)
 
 
+    @staticmethod
+    def powererror_varyintru(data, sen_density, data_source, figname):
+        
+        # metric = 'error'
+        # methods = ['map', 'predpower']
+        # table = defaultdict(list)
+        # reduce_f = PlotResults.reduce_avg
+        # for myinput, output_by_method in data:
+        #     if myinput.sensor_density == sen_density and myinput.data_source == data_source:
+        #         table[myinput.num_intruder].append({method: output.get_metric(metric) for method, output in output_by_method.items()})
+        # print_table = []
+        # for x, list_of_y_by_method in sorted(table.items()):
+        #     tmp_list = [reduce_f([(y_by_method[method] if method in y_by_method else None) for y_by_method in list_of_y_by_method]) for method in methods]
+        #     print_table.append([x] + tmp_list)
+        # print('Metric:', metric)
+        # print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
+
+        # metric = 'miss'
+        # methods = ['map', 'predpower']
+        # table = defaultdict(list)
+        # reduce_f = PlotResults.reduce_avg
+        # for myinput, output_by_method in data:
+        #     if myinput.sensor_density == sen_density and myinput.data_source == data_source:
+        #         table[myinput.num_intruder].append({method: output.get_metric(metric) for method, output in output_by_method.items()})
+        # print_table = []
+        # for x, list_of_y_by_method in sorted(table.items()):
+        #     tmp_list = [reduce_f([(y_by_method[method] if method in y_by_method else None) for y_by_method in list_of_y_by_method]) for method in methods]
+        #     print_table.append([x] + tmp_list)
+        # print('Metric', metric)
+        # print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
+
+        # metric = 'false_alarm'
+        # methods = ['map', 'predpower']
+        # table = defaultdict(list)
+        # reduce_f = PlotResults.reduce_avg
+        # for myinput, output_by_method in data:
+        #     if myinput.sensor_density == sen_density and myinput.data_source == data_source:
+        #         table[myinput.num_intruder].append({method: output.get_metric(metric) for method, output in output_by_method.items()})
+        # print_table = []
+        # for x, list_of_y_by_method in sorted(table.items()):
+        #     tmp_list = [reduce_f([(y_by_method[method] if method in y_by_method else None) for y_by_method in list_of_y_by_method]) for method in methods]
+        #     print_table.append([x] + tmp_list)
+        # print('Metric:', metric)
+        # print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
+
+        metric = 'power_error'
+        methods = ['map', 'predpower_nocorrect', 'predpower']
+        table = defaultdict(list)
+        reduce_f = PlotResults.reduce_avg
+        for myinput, output_by_method in data:
+            if myinput.sensor_density == sen_density and myinput.data_source == data_source:
+                table[myinput.num_intruder].append({method: output.get_metric(metric) for method, output in output_by_method.items()})
+        print_table = []
+        for x, list_of_y_by_method in sorted(table.items()):
+            tmp_list = [reduce_f([(y_by_method[method] if method in y_by_method else None) for y_by_method in list_of_y_by_method]) for method in methods]
+            print_table.append([x] + tmp_list)
+        print('Metric:', metric)
+        print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
+        arr = np.array(print_table)
+        X_label = arr[:, 0]
+        map = arr[:, 1]
+        predpower_nocorrect = arr[:, 2]
+        predpower = arr[:, 3]
+        
+        # the plot
+        fig, ax = plt.subplots(1, 1, figsize=(40, 20))
+        fig.subplots_adjust(left=0.08, right=0.99, top=0.96, bottom=0.12)
+        ind = np.arange(len(map))
+        width = 0.25
+        pos1 = ind - width
+        pos2 = ind
+        pos3 = ind + width
+        ax.bar(pos1, map, width, edgecolor='black', label=PlotResults.LEGEND['map'], color=PlotResults.COLOR['map'])
+        ax.bar(pos2, predpower_nocorrect, width, edgecolor='black', label=PlotResults.LEGEND['predpower_nocorrect'], color=PlotResults.COLOR['predpower_nocorrect'])
+        ax.bar(pos3, predpower, width, edgecolor='black', label=PlotResults.LEGEND['predpower'], color=PlotResults.COLOR['predpower'])
+        ax.legend()
+        ax.set_xticks(ind)
+        ax.set_xticklabels([str(int(x)) for x in X_label])
+        ax.tick_params(axis='x', pad=15)
+        ax.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
+        ax.set_ylabel('Power Estimation Error (dBm)', fontsize=55)
+        ax.set_xlabel('Number of Transmitters', labelpad=20)
+        fig.savefig(figname)
+
+
 def test():
     logs = ['result/11.19/log-differentsensor']
     methods = ['dl', 'dl2', 'map']
@@ -865,6 +950,25 @@ def power_varysensor():
     PlotResults.powererror_varysensor(data, data_ipsn, data_splat, figname)
 
 
+def power_varyintru():
+    data_ipsn = 'data/805test'
+    data_splat = 'data/905test'
+    logs = ['result/10.2/logdistance-map-5000', 'result/10.2/logdistance-deepmtl.predpower-5000', 'result/10.2/logdistance-deepmtl.predpower_nocorrect-5000']
+    data = IOUtility.read_logs(logs)
+    figname = 'result/10.2/logdist-powererror_varyintru.png'
+    sen_density = 600
+    PlotResults.powererror_varyintru(data, sen_density, data_ipsn, figname)
+
+
+    logs = ['result/10.3/logdistance-deepmtl.predpower_and_nocorrect-5000', 'result/10.3/splat-map-5000', 'result/10.3/splat-map-5005',
+            'result/10.3/splat-map-5006', 'result/10.3/splat-map-5007', 'result/10.3/splat-map-5008', 'result/10.3/splat-map-5009']
+    data = IOUtility.read_logs(logs)
+    figname = 'result/10.3/splat-powererror_varyintru.png'
+    sen_density = 600
+    PlotResults.powererror_varyintru(data, sen_density, data_splat, figname)
+
+
+
 if __name__ == '__main__':
     # test()
 
@@ -876,9 +980,9 @@ if __name__ == '__main__':
 
     # noretrain()
 
-    power_varysensor()
+    # power_varysensor()
 
-
+    power_varyintru()
 
 
 ###################### compare_ours()  ###########################
@@ -1091,4 +1195,32 @@ if __name__ == '__main__':
 
 
 
+#########################################################################
+###################### power_varyintru()  ###########################
 
+# Metric: power_error
+#   NUM TX     map    predpower_nocorrect    predpower
+# --------  ------  ---------------------  -----------
+#        1  0.175                  0.2069       0.2069
+#        2  0.3463                 0.3775       0.2808
+#        3  0.4356                 0.5374       0.3399
+#        4  0.5292                 0.6783       0.3737
+#        5  0.574                  0.7979       0.4133
+#        6  0.6462                 0.9381       0.468
+#        7  0.6924                 1.0961       0.509
+#        8  0.7369                 1.2011       0.5514
+#        9  0.7829                 1.3298       0.5732
+#       10  0.8035                 1.4271       0.6067
+# Metric: power_error
+#   NUM TX     map    predpower_nocorrect    predpower
+# --------  ------  ---------------------  -----------
+#        1  0.4362                 0.145        0.145
+#        2  0.6244                 0.4786       0.3338
+#        3  0.7075                 0.7663       0.4363
+#        4  0.8727                 1.0129       0.5345
+#        5  1.0072                 1.3557       0.6307
+#        6  1.1175                 1.6306       0.7242
+#        7  1.2473                 1.8408       0.7991
+#        8  1.3258                 2.1672       0.909
+#        9  1.3921                 2.3211       0.9726
+#       10  1.4768                 2.5541       1.0551

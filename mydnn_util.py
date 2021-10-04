@@ -42,7 +42,10 @@ class SensorInputDatasetTranslation(Dataset):
         if self.transform:
             matrix = self.transform(matrix)
         target_num = len(target_float)
-        sample = {'matrix':matrix, 'target':target_img, 'target_float':target_float, 'target_num':target_num, 'index':idx}
+        power_name = str(idx%self.sample_per_label) + '.power.npy'
+        power_path = os.path.join(self.root_dir, folder, power_name)
+        power = np.load(power_path)
+        sample = {'matrix':matrix, 'target':target_img, 'target_float':target_float, 'target_num':target_num, 'power': power, 'index':idx}
         return sample
 
     def get_sample_per_label(self):
@@ -233,6 +236,41 @@ class Metrics:
                 print(i, indx, 'pred', [(round(loc[0], 2), round(loc[1], 2)) for loc in pred], '; truth', \
                       [(round(loc[0], 2), round(loc[1], 2)) for loc in truth], ' ; error', error, ' ; miss', miss, ' ; false', false)
         return pred_locs, errors, misses, falses
+
+
+    @staticmethod
+    def localization_error_image_continuous_detection_power(pred_batch, truth_batch, truth_power_batch, index, debug=False):
+        '''Include the power estimation
+           This is for the output of object detection, where there is no need to pass in num of TX. Because the output is directly (x, y)
+           Continuous -- for single TX
+           euclidian error when modeling the output representation is a matrix (image)
+           both pred and truth are batches, typically a batch of 32
+           now both prediction and truth are continuous numbers
+        Args:
+            pred_batch:  numpy.ndarray -- size=(N, num_tx, 2)
+            truth_batch: numpy.ndarray -- size=(N, num_tx, 2)       ground truth for location
+            truth_power_batch: np.ndarray -- size=(N, num_tx, 1)    ground truth for power
+        Return:
+            pred_locs -- list<np.ndarray>
+            errors    -- list<list>
+            misses    -- list
+            false     -- list
+        '''
+        pred_locs, errors, misses, falses = [], [], [], []
+        power_dicts = []
+        for i, pred, truth, power, indx in zip(range(len(pred_batch)), pred_batch, truth_batch, truth_power_batch, index):
+            # do a matching and get the error
+            radius_threshold = Default.grid_length * Default.error_threshold
+            error, miss, false, power_dict = Utility.compute_error_power(pred, truth, power, radius_threshold, False)
+            pred_locs.append(pred)
+            errors.append(error)
+            misses.append(miss)
+            falses.append(false)
+            power_dicts.append(power_dict)
+            if debug:
+                print(i, indx, 'pred', [(round(loc[0], 2), round(loc[1], 2)) for loc in pred], '; truth', \
+                      [(round(loc[0], 2), round(loc[1], 2)) for loc in truth], ' ; error', error, ' ; miss', miss, ' ; false', false, 'power dict', power_dict)
+        return pred_locs, errors, misses, falses, power_dicts
 
 
     @staticmethod

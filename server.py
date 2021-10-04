@@ -8,9 +8,12 @@ import torch
 import sys
 import json
 import numpy as np
+import pickle
+import copy
+from sklearn import linear_model
 from flask import Flask, request
 from dataclasses import dataclass
-from mydnn import NetTranslation5, CNN_NoTx, CNN_i
+from mydnn import NetTranslation5, CNN_NoTx, CNN_i, PowerPredictor5
 import mydnn_util
 import myplots
 from input_output import Input, Output, Default, DataInfo
@@ -51,6 +54,17 @@ def localize():
     if port == 5003 and myinput.sensor_density in [200, 400, 800, 1000]:       # splot: 5003 port is for varying num of intruders
         return 'hello world'
     if port == 5004 and myinput.num_intruder in [1, 2, 3, 4, 6, 7, 8, 9, 10]:  # splot: 5004 port is for varying sensor density
+        return 'hello world'
+
+    if port == 5005 and myinput.sensor_density in [200, 400, 800, 1000]:       # ipsn: 5000 port is for varying num of intruders
+        return 'hello world'
+    if port == 5006 and myinput.sensor_density in [200, 400, 800, 1000]:       # ipsn: 5000 port is for varying num of intruders
+        return 'hello world'
+    if port == 5007 and myinput.sensor_density in [200, 400, 800, 1000]:       # ipsn: 5000 port is for varying num of intruders
+        return 'hello world'
+    if port == 5008 and myinput.sensor_density in [200, 400, 800, 1000]:       # ipsn: 5000 port is for varying num of intruders
+        return 'hello world'
+    if port == 5009 and myinput.sensor_density in [200, 400, 800, 1000]:       # ipsn: 5000 port is for varying num of intruders
         return 'hello world'
 
 
@@ -141,8 +155,8 @@ def localize():
         pred_locations, pred_power = ll.our_localization(np.copy(sensor_outputs), intruders, myinput.experiment_num)
         end = time.time()
         pred_locations = server.pred_loc_to_center(pred_locations)
-        errors, miss, false_alarm, _ = ll.compute_error(true_locations, true_powers, pred_locations, pred_power)
-        outputs.append(Output('map', errors, false_alarm, miss, pred_locations, end-start))
+        errors, miss, false_alarm, power_errors = ll.compute_error(true_locations, true_powers, pred_locations, pred_power)
+        outputs.append(Output('map', errors, false_alarm, miss, pred_locations, end-start, power_errors))
 
     if 'splot' in myinput.methods:
         ll = lls[ll_index[myinput.sensor_density]]
@@ -163,6 +177,122 @@ def localize():
         errors, miss, false_alarm = ll.compute_error2(true_locations, pred_locations)
         outputs.append(Output('splot', errors, false_alarm, miss, pred_locations, end-start))
 
+    if 'predpower' in myinput.methods:
+        # step 1: deepmtl
+        sample = sensor_input_dataset[myinput.image_index]
+        X      = torch.as_tensor(sample['matrix']).unsqueeze(0).to(device)
+        y_f    = np.expand_dims(sample['target_float'], 0)
+        power_true = np.expand_dims(sample['power'], 0)
+        indx   = np.expand_dims(np.array(sample['index']), 0)
+        start  = time.time()
+        pred_matrix = translate_net(X)
+        pred_matrix = pred_matrix[0][0]  # one batch, one dimension
+        img = torch.stack((pred_matrix, pred_matrix, pred_matrix), axis=0) # stack 3 together
+        img = resize(img, server.DETECT_IMG_SIZE).unsqueeze(0)
+        detections = darknet_cust(img)
+        detections = non_max_suppression(detections, conf_thres=0.8, nms_thres=0.5)
+        pred_xy = [server.box2xy(detections[0].numpy())]  # add a batch dimension
+        preds, errors, misses, falses, power_dicts = mydnn_util.Metrics.localization_error_image_continuous_detection_power(pred_xy, y_f, power_true, indx, debug=False)
+
+        # step 2: predict power & power correction
+        memorize = {}
+        def pred_power_helper(X, a, b):
+            '''X is the full size matrix
+               a and b are two integers, (a, b) is the center of the croped image, i.e. TX location
+               Return the predicted power in a 21x21 grid centered at (a, b)
+            '''
+            if (a, b) in memorize:
+                return memorize[(a, b)]
+            X = X[a - 10: a + 11, b - 10: b + 11]
+            X = torch.as_tensor(X).unsqueeze(0).unsqueeze(0).to(device)
+            pred_power = predpower_net(X)
+            pred_power = pred_power.data.cpu().numpy()[0][0]
+            memorize[(a, b)] = pred_power
+            return pred_power
+
+        power_errors = []
+        for pred_location, true_power in power_dicts[0].items():  # return is in batch, the batch size is one
+            # step 2.1 predict power
+            a, b = int(pred_location[0]), int(pred_location[1])
+            X = sample['matrix'][0]
+            pred_power = pred_power_helper(X, a, b)
+            # print('pred_location:', pred_location, 'true_power:', true_power, 'pred_power:', pred_power, end=',  ')
+            # step 2.2 power correction
+            radius = 20
+            closeby = []
+            for pred_location2 in power_dicts[0].keys():
+                c, d = int(pred_location2[0]), int(pred_location2[1])
+                if (a, b) != (c, d) and np.abs(a - c) <= radius and np.abs(b - d) <= radius:
+                    dist = Utility.distance(pred_location, pred_location2)
+                    closeby.append((round(dist, 4), round(pred_power_helper(X, c, d), 4), round(pred_power_helper(X, c, d) / dist, 4)))
+            if closeby:
+                closeby_sorted = sorted(closeby)
+                closeby = []
+                for item in closeby_sorted:
+                    closeby.append(item[0])
+                    closeby.append(item[1])
+                    closeby.append(item[2])
+                # print('closeby', closeby, end=',  ')
+                closeby.insert(0, pred_power)
+                zero_padding = [0 for _ in range(25 - len(closeby))]
+                closeby.extend(zero_padding)
+                delta = ridgereg.predict([closeby])
+                delta = round(delta[0], 4)
+                corrected_power = round(pred_power - delta, 4)
+                # print('delta:', delta, 'corrected_power:', corrected_power)
+                power_errors.append(float(abs(corrected_power - true_power)))
+            else:
+                power_errors.append(float(abs(pred_power - true_power)))
+                # print()
+
+        end = time.time()
+        outputs.append(Output('predpower', errors[0], falses[0], misses[0], preds[0], end-start, power_errors))
+
+    if 'predpower_nocorrect' in myinput.methods:
+        # step 1: deepmtl
+        sample = sensor_input_dataset[myinput.image_index]
+        X      = torch.as_tensor(sample['matrix']).unsqueeze(0).to(device)
+        y_f    = np.expand_dims(sample['target_float'], 0)
+        power_true = np.expand_dims(sample['power'], 0)
+        indx   = np.expand_dims(np.array(sample['index']), 0)
+        start  = time.time()
+        pred_matrix = translate_net(X)
+        pred_matrix = pred_matrix[0][0]  # one batch, one dimension
+        img = torch.stack((pred_matrix, pred_matrix, pred_matrix), axis=0) # stack 3 together
+        img = resize(img, server.DETECT_IMG_SIZE).unsqueeze(0)
+        detections = darknet_cust(img)
+        detections = non_max_suppression(detections, conf_thres=0.8, nms_thres=0.5)
+        pred_xy = [server.box2xy(detections[0].numpy())]  # add a batch dimension
+        preds, errors, misses, falses, power_dicts = mydnn_util.Metrics.localization_error_image_continuous_detection_power(pred_xy, y_f, power_true, indx, debug=False)
+
+        # step 2: predict power & power correction
+        memorize = {}
+        def pred_power_helper(X, a, b):
+            '''X is the full size matrix
+               a and b are two integers, (a, b) is the center of the croped image, i.e. TX location
+               Return the predicted power in a 21x21 grid centered at (a, b)
+            '''
+            if (a, b) in memorize:
+                return memorize[(a, b)]
+            X = X[a - 10: a + 11, b - 10: b + 11]
+            X = torch.as_tensor(X).unsqueeze(0).unsqueeze(0).to(device)
+            pred_power = predpower_net(X)
+            pred_power = pred_power.data.cpu().numpy()[0][0]
+            memorize[(a, b)] = pred_power
+            return pred_power
+
+        power_errors = []
+        for pred_location, true_power in power_dicts[0].items():  # return is in batch, the batch size is one
+            # step 2.1 predict power
+            a, b = int(pred_location[0]), int(pred_location[1])
+            X = sample['matrix'][0]
+            pred_power = pred_power_helper(X, a, b)
+            # print('pred_location:', pred_location, 'true_power:', true_power, 'pred_power:', pred_power, end=',  ')
+            power_errors.append(float(abs(pred_power - true_power)))
+            # print()
+
+        end = time.time()
+        outputs.append(Output('predpower_nocorrect', errors[0], falses[0], misses[0], preds[0], end-start, power_errors))
 
     server.log(myinput, outputs)
     return 'hello world'
@@ -239,7 +369,8 @@ class Server:
                 elif key == 'gain':
                     # train_power = self.tx_calibrate[tx]
                     # true_powers.append(float(value) - train_power)
-                    true_powers.append(0)  # all TX are well calibrated
+                    # true_powers.append(0)  # all TX are well calibrated
+                    true_powers.append(value)  # all TX are well calibrated
                 else:
                     raise Exception('key = {} invalid!'.format(key))
         return true_locations, true_powers, intruders
@@ -324,17 +455,20 @@ if __name__ == '__main__':
 
     data = DataInfo.naive_factory(data_source=data_source)
     # 1: init server utilities
-    date = '9.20'                                                 # 1
+    date = '10.3'                                                 # 1
     output_dir = f'result/{date}'
     # output_file = f'splat-dtxf-{port}'                                        # 2
-    # output_file = f'splat-map-{port}-2'                                        # 2
+    output_file = f'splat-map-{port}'                                        # 2
     # output_file = f'splat-splot-{port}'                                        # 2
     # output_file = f'logdistance-deepmtl-{port}'                                        # 2
-    output_file = f'splat-deepmtl-{port}'                                        # 2
-    if args.plus:
-        output_file += '_plus'
+    # output_file = f'splat-deepmtl-{port}'                                        # 2
+    # output_file = f'logdistance-deepmtl.predpower-{port}'
+    # output_file = f'logdistance-deepmtl.predpower_and_nocorrect-{port}'
+    # if args.plus:
+    #     output_file += '_plus'                                  # for the journal: no replace part 2
     server = Server(output_dir, output_file)
 
+    '''
     # 2: init image to image translation model
     device = torch.device('cuda')
     translate_net = NetTranslation5()
@@ -347,27 +481,36 @@ if __name__ == '__main__':
     darknet_cust.load_state_dict(torch.load(data.yolocust_weights))
     darknet_cust.eval()
 
+    # *** FOR Power Estimation only, init both predpower and ridgereg ***
+    predpower_net = PowerPredictor5()
+    predpower_net.load_state_dict(torch.load(data.predpower_net))
+    predpower_net = predpower_net.to(device)
+    predpower_net.eval()
+
+    ridgereg = pickle.load(open(data.power_corrector, 'rb'))
+    '''
+
     # 3.1: init the darknet
     # darknet = Darknet(data.yolo_def, img_size=server.DETECT_IMG_SIZE).to(device)
     # darknet.load_state_dict(torch.load(data.yolo_weights))
     # darknet.eval()
 
     # 4: init MAP* (and SPLOT)
-    # grid_len = 100
-    # debug = False                                                   # 3
-    # # case = 'lognormal2'                                             # 4
-    # case = 'splat2'                                             # 4
-    # lls = []
-    # ll_index = {200:0, 400:1, 600:2, 800:3, 1000:4}
-    # for i in range(len(data.ipsn_cov_list)):
-    #     ll = Localization(grid_len=grid_len, case=case, debug=debug)
-    #     ll.init_data(data.ipsn_cov_list[i], data.ipsn_sensors_list[i], data.ipsn_hypothesis_list[i], None)
-    #     lls.append(ll)
+    grid_len = 100
+    debug = False                                                   # 3
+    # case = 'lognormal3'                                             # 4
+    case = 'splat3'                                               # 4
+    lls = []
+    ll_index = {200:0, 400:1, 600:2, 800:3, 1000:4}
+    for i in range(len(data.ipsn_cov_list)):
+        ll = Localization(grid_len=grid_len, case=case, debug=debug)
+        ll.init_data(data.ipsn_cov_list[i], data.ipsn_sensors_list[i], data.ipsn_hypothesis_list[i], None)
+        lls.append(ll)
 
-    # ll = Localization(grid_len=grid_len, case=case, debug=debug)
-    # ll.init_data(data.ipsn_cov_list[2], data.ipsn_sensors_list[2], data.ipsn_hypothesis_list[2], None)
-    # for i in range(len(data.ipsn_cov_list)):
-    #     lls.append(ll)
+    ll = Localization(grid_len=grid_len, case=case, debug=debug)
+    ll.init_data(data.ipsn_cov_list[2], data.ipsn_sensors_list[2], data.ipsn_hypothesis_list[2], None)
+    for i in range(len(data.ipsn_cov_list)):
+        lls.append(ll)
 
     # 5 init deeptxfinder
     # device = torch.device('cuda')

@@ -243,6 +243,71 @@ class Utility:
             return [], 0, 0
 
 
+    @staticmethod
+    def compute_error_power(pred_locations, true_locations, true_powers, distance_threshold, debug=False):
+        '''Given the true location and localization location, computer the error **for our localization**
+           also include the power
+        Args:
+            true_locations (list): an element is a tuple (true transmitter 2D location)
+            true_powers (list):    an element is a float
+            distance_threshold -- float -- a distance threshold for a predicted location being valid
+        Return:
+            (tuple): (list, float, float, list), (distance error, miss, false alarm, power error)
+        '''
+        if len(pred_locations) == 0:
+            return [], 1, 0
+        distances = np.zeros((len(true_locations), len(pred_locations)))
+        for i in range(len(true_locations)):
+            for j in range(len(pred_locations)):
+                distances[i, j] = np.sqrt((true_locations[i][0] - pred_locations[j][0]) ** 2 + (true_locations[i][1] - pred_locations[j][1]) ** 2)
+
+        power_dict = {}  # (a, b) --> true_power
+
+        k = 0
+        matches = []
+        misses = list(range(len(true_locations)))
+        falses = list(range(len(pred_locations)))
+        while k < min(len(true_locations), len(pred_locations)):  # minimum weight matching
+            min_error = np.min(distances)
+            min_error_index = np.argmin(distances)
+            i = min_error_index // len(pred_locations)
+            j = min_error_index %  len(pred_locations)
+            matches.append((i, j, min_error))
+            power_dict[(round(pred_locations[j][0], 4), round(pred_locations[j][1], 4))] = (true_powers[i])
+            distances[i, :] = np.inf
+            distances[:, j] = np.inf
+            k += 1
+
+        errors = []               # distance error
+        detected = 0
+        for match in matches:
+            error = match[2]
+            if error <= distance_threshold:
+                errors.append(round(error, 4))
+                detected += 1
+                misses.remove(match[0])
+                falses.remove(match[1])
+
+        if debug:
+            print('\nPred:', end=' ')
+            for match in matches:
+                print(str(pred_locations[match[1]]).ljust(9), end='; ')
+            print('\nTrue:', end=' ')
+            for match in matches:
+                print(str(true_locations[match[0]]).ljust(9), end='; ')
+            print('\nMiss:', end=' ')
+            for miss in misses:
+                print(true_locations[miss], end=';  ')
+            print('\nFalse Alarm:', end=' ')
+            for false in falses:
+                print(pred_locations[false], end=';  ')
+            print()
+        try:
+            return errors, len(true_locations) - detected, len(pred_locations) - detected, power_dict  # error, miss (FN), false (FP), {pred_location: true_power}
+        except:
+            return [], 0, 0, {}
+
+
 if __name__ == '__main__':
     pred_image = np.loadtxt('test.txt')
     # print(pred_image[1, 3])

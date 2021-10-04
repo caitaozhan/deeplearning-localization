@@ -215,3 +215,39 @@ class CNN_i(nn.Module):
         x = F.relu(self.dense(x))
         x = self.dense1(x)
         return x
+
+
+class PowerPredictor5(nn.Module):
+    '''The input is 1 x 21 x 21, the output is a scaler between 0.5 and 5.5
+       No fully connected layer in the end
+       
+       The CHOSEN one.
+    '''
+    def __init__(self):
+        super(PowerPredictor5, self).__init__()
+        self.conv1 = nn.Conv2d(1, 32, 5)
+        self.conv2 = nn.Conv2d(32, 128, 5)
+        self.conv3 = nn.Conv2d(128, 32, 5)
+        self.conv4 = nn.Conv2d(32, 8, 5)
+        self.conv5 = nn.Conv2d(8, 1, 5)
+        self.norm1 = nn.BatchNorm2d(32)
+        self.norm2 = nn.BatchNorm2d(128)
+        self.norm3 = nn.BatchNorm2d(32)
+        self.norm4 = nn.BatchNorm2d(8)
+    
+    def forward(self, x):
+        x = F.relu(self.norm1(self.conv1(x)))
+        x = F.relu(self.norm2(self.conv2(x)))
+        x = F.relu(self.norm3(self.conv3(x)))
+        x = F.relu(self.norm4(self.conv4(x)))
+        x = self.conv5(x)
+        x = x.view(-1, self.num_flat_features(x))
+        return x
+
+    def num_flat_features(self, x):
+        
+        size = x.size()[1:]
+        num_features = 1
+        for s in size:
+            num_features *= s
+        return num_features
