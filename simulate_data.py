@@ -10,8 +10,8 @@ from subprocess import Popen, PIPE
 from utility import Utility
 
 
-if __name__ == '__main__':
-# if __name__ == '':
+if __name__ == '__main__.old':
+    # for localization without authorized users
 
     vary_power = 2.5
     power = 3
@@ -80,7 +80,6 @@ if __name__ == '__main__':
     #     p.wait()
 
 
-
     # 2. generate the IPSN format data
     # print('step 2 ...')
     # template = 'python generate.py -ipsn -rd data/{} -sd {} -rs {} -po 3 -al 3.6'
@@ -95,7 +94,6 @@ if __name__ == '__main__':
     #     ps.append(p)
     # for p in ps:
     #     p.wait()
-
 
 
     # 3. merge the data of step 1
@@ -136,6 +134,103 @@ if __name__ == '__main__':
                 shutil.copy(source + '.target.npy', os.path.join(dest_dir, str(counter) + '.target.npy'))
                 shutil.copy(source + '.power.npy',  os.path.join(dest_dir, str(counter) + '.power.npy'))
                 shutil.copy(source + '.json',       os.path.join(dest_dir, str(counter) + '.json'))
+                counter += 1
+
+
+
+
+if __name__ == '__main__':
+    # for localization with authorized users in the background
+    vary_power = 2.5
+    power = 0
+
+    # 1. generate 5 train and 5 test   [output_filename, sample_label, sensor_density, random_seed, vary_power]
+    print('step 1 ...')
+    
+    config = [['1000train', 2, 200,  1, vary_power, power],  ['1000test', 1, 200,  101, vary_power, power],
+              ['1001train', 2, 400,  1, vary_power, power],  ['1001test', 1, 400,  101, vary_power, power],
+              ['1002train', 2, 600,  1, vary_power, power],  ['1002test', 1, 600,  101, vary_power, power],
+              ['1003train', 2, 800,  1, vary_power, power],  ['1003test', 1, 800,  101, vary_power, power],
+              ['1004train', 2, 1000, 1, vary_power, power],  ['1004test', 1, 1000, 101, vary_power, power],
+            ]
+    
+    # # adding -athu 5 for 5 authorized users. adding -spt, power.
+    # # for the authorized user in the background case, only do the splat model
+    # template = 'python generate.py -rd data/{} -gd -sl {} -sd {} -rs {} -nt 10 -ntup -mind 1 -vp {} -po {} -spt -auth 5' 
+
+    # ps = []
+    # for i, c in enumerate(config):
+    #     if i not in [0, 1]:   # core issue, bus issue, cannot load more than 2 SPLAT dataset at the same time ...
+    #         continue
+    #     command = template.format(c[0], c[1], c[2], c[3], c[4], c[5])
+    #     print(command)
+    #     p = Popen(command, shell=True, stdout=PIPE)
+    #     ps.append(p)
+    # for p in ps:
+    #     p.wait()
+
+
+
+    # 2. generate the IPSN format data
+    # print('step 2 ...')
+    # template = 'python generate.py -ipsn -rd data/{} -sd {} -rs {} -po 3 -al 3.6'
+    # # template = 'python generate.py -ipsn -rd data/{} -sd {} -rs {} -spt -po 3 -al 3.6'  # add -spt and power=0
+    # ps = []
+    # for i, c in enumerate(config[1::2]):  # test
+    #     # if i not in [2, 3, 4]:   # core issue, bus issue, cannot load more than 2 SPLAT dataset at the same time ...
+    #     #     continue
+    #     command = template.format(c[0], c[2], c[3])
+    #     print(command)
+    #     p = Popen(command, shell=True, stdout=PIPE)
+    #     ps.append(p)
+    # for p in ps:
+    #     p.wait()
+
+
+    # 3. merge the data of step 1
+    # print('step 3 ...')
+    train_dir = 'data/1005train'
+    Utility.remove_make(train_dir)
+    size = 9216
+    # size = 6400
+    for i in range(size):
+        if i % 1000 == 0:
+            print(i)
+        folder = format(i, '06d')
+        dest_dir = os.path.join(train_dir, folder)
+        Utility.remove_make(dest_dir)
+        counter = 0
+        for c in config[::2]:   # train
+            for j in range(c[1]):
+                source = os.path.join('data', c[0], folder, str(j))
+                shutil.copy(source + '.npy',        os.path.join(dest_dir, str(counter) + '.npy'))
+                shutil.copy(source + '.target.npy', os.path.join(dest_dir, str(counter) + '.target.npy'))
+                shutil.copy(source + '.power.npy',  os.path.join(dest_dir, str(counter) + '.power.npy'))
+                shutil.copy(source + '.json',       os.path.join(dest_dir, str(counter) + '.json'))
+                shutil.copy(source + '.auth.npy',         os.path.join(dest_dir, str(counter) + '.auth.npy'))
+                shutil.copy(source + '.auth.power.npy',   os.path.join(dest_dir, str(counter) + '.auth.power.npy'))
+                shutil.copy(source + '.auth.target.npy',  os.path.join(dest_dir, str(counter) + '.auth.target.npy'))
+                counter += 1
+
+    test_dir = 'data/1005test'
+    Utility.remove_make(test_dir)
+    for i in range(size):
+        if i % 1000 == 0:
+            print(i)
+        folder = format(i, '06d')
+        dest_dir = os.path.join(test_dir, folder)
+        Utility.remove_make(dest_dir)
+        counter = 0
+        for c in config[1::2]:  # test
+            for j in range(c[1]):
+                source = os.path.join('data', c[0], folder, str(j))
+                shutil.copy(source + '.npy',        os.path.join(dest_dir, str(counter) + '.npy'))
+                shutil.copy(source + '.target.npy', os.path.join(dest_dir, str(counter) + '.target.npy'))
+                shutil.copy(source + '.power.npy',  os.path.join(dest_dir, str(counter) + '.power.npy'))
+                shutil.copy(source + '.json',       os.path.join(dest_dir, str(counter) + '.json'))
+                shutil.copy(source + '.auth.npy',         os.path.join(dest_dir, str(counter) + '.auth.npy'))
+                shutil.copy(source + '.auth.power.npy',   os.path.join(dest_dir, str(counter) + '.auth.power.npy'))
+                shutil.copy(source + '.auth.target.npy',  os.path.join(dest_dir, str(counter) + '.auth.target.npy'))
                 counter += 1
 
 

@@ -294,6 +294,26 @@ def localize():
         end = time.time()
         outputs.append(Output('predpower_nocorrect', errors[0], falses[0], misses[0], preds[0], end-start, power_errors))
 
+    if 'deepmtl_auth' in myinput.methods:  # two CNN in sequence, the second CNN is object detection
+        sample = sensor_input_dataset[myinput.image_index]
+        X      = torch.as_tensor(sample['matrix_auth']).unsqueeze(0).to(device)   # the matrix (sensor reading image) with invaders + authorized users
+        y_f    = np.expand_dims(sample['target_float'], 0)                        # ground truth location for the invaders
+        y_auth = sample['target_auth_float']                   # ground truth location for the authorized users
+        indx   = np.expand_dims(np.array(sample['index']), 0)
+        start  = time.time()
+        pred_matrix = translate_net(X)
+        pred_matrix = pred_matrix[0][0]  # one batch, one dimension
+        img = torch.stack((pred_matrix, pred_matrix, pred_matrix), axis=0) # stack 3 together
+        img = resize(img, server.DETECT_IMG_SIZE).unsqueeze(0)
+        detections = darknet_cust(img)
+        detections = non_max_suppression(detections, conf_thres=0.8, nms_thres=0.4)
+        pred_xy = server.box2xy(detections[0].numpy())
+        server.remove_authorized(pred_xy, y_auth)
+        pred_xy = [pred_xy]   # add a batch dimension
+        preds, errors, misses, falses = mydnn_util.Metrics.localization_error_image_continuous_detection(pred_xy, y_f, indx, debug=False)
+        end = time.time()
+        outputs.append(Output('deepmtl_auth', errors[0], falses[0], misses[0], preds[0], end-start, []))
+
     server.log(myinput, outputs)
     return 'hello world'
 
@@ -402,6 +422,37 @@ class Server:
             pred_locs.append((y, x))                                            # note that in YOLO v3, the (x, y) are opposite to my (x, y)
         return pred_locs
 
+    def remove_authorized(self, pred_locations, authorized):
+        '''remove the authorized user from the predicted locations
+        Args:
+            pred_locations -- np.ndarray, n=3, [tx_index, x, y]    -- update in place
+            authorized     -- np.ndarray, n=3, [auth_index, x, y]
+        '''
+        if len(pred_locations) == 0:
+            return
+        # print('\nAuthorized are:', authorized)
+        distances = np.zeros((len(authorized), len(pred_locations)))
+        for i in range(len(authorized)):
+            for j in range(len(pred_locations)):
+                distances[i, j] = np.sqrt((authorized[i][0] - pred_locations[j][0]) ** 2 + (authorized[i][1] - pred_locations[j][1]) ** 2)
+
+        k = 0
+        matches = []
+        pred_loc_remove = []
+        while k < min(len(authorized), len(pred_locations)):
+            min_distance_index = np.argmin(distances)
+            i = min_distance_index // len(pred_locations)
+            j = min_distance_index % len(pred_locations)
+            matches.append((i, j))          # authoried i matches predicted j
+            pred_loc_remove.append(pred_locations[j])
+            distances[i, :] = np.inf
+            distances[:, j] = np.inf
+            k += 1
+
+        for loc in pred_loc_remove:
+            pred_locations.remove(loc)
+
+
 # if __name__ == 'server':
 
     # hint = 'python server.py -src data/60test'
@@ -455,20 +506,21 @@ if __name__ == '__main__':
 
     data = DataInfo.naive_factory(data_source=data_source)
     # 1: init server utilities
-    date = '10.3'                                                 # 1
+    date = '10.6-0.4'                                                 # 1
     output_dir = f'result/{date}'
     # output_file = f'splat-dtxf-{port}'                                        # 2
-    output_file = f'splat-map-{port}'                                        # 2
+    # output_file = f'splat-map-{port}'                                        # 2
     # output_file = f'splat-splot-{port}'                                        # 2
     # output_file = f'logdistance-deepmtl-{port}'                                        # 2
     # output_file = f'splat-deepmtl-{port}'                                        # 2
+    output_file = f'splat-deepmtl_auth-{port}'                                        # 2
     # output_file = f'logdistance-deepmtl.predpower-{port}'
     # output_file = f'logdistance-deepmtl.predpower_and_nocorrect-{port}'
     # if args.plus:
     #     output_file += '_plus'                                  # for the journal: no replace part 2
     server = Server(output_dir, output_file)
 
-    '''
+
     # 2: init image to image translation model
     device = torch.device('cuda')
     translate_net = NetTranslation5()
@@ -482,13 +534,13 @@ if __name__ == '__main__':
     darknet_cust.eval()
 
     # *** FOR Power Estimation only, init both predpower and ridgereg ***
-    predpower_net = PowerPredictor5()
-    predpower_net.load_state_dict(torch.load(data.predpower_net))
-    predpower_net = predpower_net.to(device)
-    predpower_net.eval()
+    # predpower_net = PowerPredictor5()
+    # predpower_net.load_state_dict(torch.load(data.predpower_net))
+    # predpower_net = predpower_net.to(device)
+    # predpower_net.eval()
 
-    ridgereg = pickle.load(open(data.power_corrector, 'rb'))
-    '''
+    # ridgereg = pickle.load(open(data.power_corrector, 'rb'))
+
 
     # 3.1: init the darknet
     # darknet = Darknet(data.yolo_def, img_size=server.DETECT_IMG_SIZE).to(device)
@@ -496,21 +548,21 @@ if __name__ == '__main__':
     # darknet.eval()
 
     # 4: init MAP* (and SPLOT)
-    grid_len = 100
-    debug = False                                                   # 3
-    # case = 'lognormal3'                                             # 4
-    case = 'splat3'                                               # 4
-    lls = []
-    ll_index = {200:0, 400:1, 600:2, 800:3, 1000:4}
-    for i in range(len(data.ipsn_cov_list)):
-        ll = Localization(grid_len=grid_len, case=case, debug=debug)
-        ll.init_data(data.ipsn_cov_list[i], data.ipsn_sensors_list[i], data.ipsn_hypothesis_list[i], None)
-        lls.append(ll)
+    # grid_len = 100
+    # debug = False                                                   # 3
+    # # case = 'lognormal3'                                             # 4
+    # case = 'splat3'                                               # 4
+    # lls = []
+    # ll_index = {200:0, 400:1, 600:2, 800:3, 1000:4}
+    # for i in range(len(data.ipsn_cov_list)):
+    #     ll = Localization(grid_len=grid_len, case=case, debug=debug)
+    #     ll.init_data(data.ipsn_cov_list[i], data.ipsn_sensors_list[i], data.ipsn_hypothesis_list[i], None)
+    #     lls.append(ll)
 
-    ll = Localization(grid_len=grid_len, case=case, debug=debug)
-    ll.init_data(data.ipsn_cov_list[2], data.ipsn_sensors_list[2], data.ipsn_hypothesis_list[2], None)
-    for i in range(len(data.ipsn_cov_list)):
-        lls.append(ll)
+    # ll = Localization(grid_len=grid_len, case=case, debug=debug)
+    # ll.init_data(data.ipsn_cov_list[2], data.ipsn_sensors_list[2], data.ipsn_hypothesis_list[2], None)
+    # for i in range(len(data.ipsn_cov_list)):
+    #     lls.append(ll)
 
     # 5 init deeptxfinder
     # device = torch.device('cuda')

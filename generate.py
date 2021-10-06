@@ -110,7 +110,7 @@ class GenerateData:
         self.noise_floor = noise_floor
         self.propagation = Propagation(self.alpha, self.std)
 
-    def log(self, power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx, num_tx_upper, min_dist, max_dist, edge, splat):
+    def log(self, power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx, num_tx_upper, min_dist, max_dist, edge, splat, authorized):
         '''the meta data of the data
         '''
         with open(root_dir + '.txt', 'w') as f:
@@ -132,6 +132,7 @@ class GenerateData:
             f.write(f'max distance      = {max_dist}\n')
             f.write(f'edge              = {edge}\n')
             f.write(f'splat             = {splat}\n')
+            f.write(f'authorized        = {authorized}\n')
 
     def check_edge(self, tx, edge):
         '''if tx is at the edge, return false
@@ -154,7 +155,7 @@ class GenerateData:
             root_dir         -- the output directory
         '''
         Utility.remove_make(root_dir)
-        self.log(power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx, num_tx_upper, min_dist, max_dist, edge, splat)
+        self.log(power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx, num_tx_upper, min_dist, max_dist, edge, splat, authorized=0)
         # random.seed(self.seed)   # need to comment this line when running simulate_data.py, or they will generate the same TX locations
         # 1 read the sensor file, do a checking
         if str(self.grid_length) not in sensor_file[:sensor_file.find('-')]:
@@ -229,12 +230,156 @@ class GenerateData:
                 np.save(f'{folder}/{i}.target', np.array(targets).astype(np.float32))
                 np.save(f'{folder}/{i}.power', np.array(powers).astype(np.float32))  # Dec. 12, 2020: save in txt format (currently not used in the CNN)
                 self.save_ipsn_input(grid, targets, power_deltas, sensors, f'{folder}/{i}.json')
-                # if i == 0:
-                #     imageio.imwrite(f'{folder}/{tx}.png', grid)
             counter += 1
 
 
-    def save_ipsn_input(self, grid, targets, power_deltas, sensors, output_file):
+    def generate_authorized(self, power: float, cell_percentage: float, sample_per_label: int, sensor_file: str, root_dir: str, \
+                 num_tx: int, num_tx_upper: bool, min_dist: int, max_dist: int, edge: int, vary_power: int, splat: bool, center: bool, num_authorized: int):
+        '''
+        genearte the data with authorized users in the background. I created an individual function because the behavior difference is a little large
+        The generated input data is not images, but instead matrix. Because saving as images will loss some accuracy
+        Args:
+            power            -- the power of the transmitter
+            cell_percentage  -- percentage of cells being label (see if all discrete location needs to be labels)
+            sample_per_label -- samples per cell
+            sensor_file      -- sensor location file
+            root_dir         -- the output directory
+        '''
+        Utility.remove_make(root_dir)
+        self.log(power, cell_percentage, sample_per_label, sensor_file, root_dir, num_tx, num_tx_upper, min_dist, max_dist, edge, splat, num_authorized)
+        # random.seed(self.seed)   # need to comment this line when running simulate_data.py, or they will generate the same TX locations
+        # 1 read the sensor file, do a checking
+        if str(self.grid_length) not in sensor_file[:sensor_file.find('-')]:
+            print(f'grid length {self.grid_length} and sensor file {sensor_file} not match')
+
+        sensors = []
+        with open(sensor_file, 'r') as f:
+            indx = 0
+            for line in f:
+                x, y = line.split()
+                sensors.append(Sensor(int(x), int(y), indx))
+                indx += 1
+
+        # 2 start from (0, 0), generate data, might skip some locations
+        population = [(i, j) for i in range(self.grid_length) for j in range(self.grid_length) if self.check_edge((i, j), edge)]  # Tx is not at edge
+        label_count = int(len(population)*cell_percentage)
+        labels = random.sample(population, label_count)
+
+        counter = 0
+        for label in sorted(labels):
+            tx = label           # each label create a directory
+            if center:
+                if not (tx[0] == int(self.grid_length/2) and tx[1] == int(self.grid_length/2)):
+                    continue
+            tx_float = (tx[0] + random.uniform(0, 1), tx[1] + random.uniform(0, 1))
+            if counter % 100 == 0:
+                print(f'{counter/len(labels)*100}%')
+            folder = f'{root_dir}/{counter:06d}'
+            os.mkdir(folder)     # update on Aug. 27, change the name of the folder from label to counter index
+            for i in range(sample_per_label):
+                power_delta  = random.uniform(-vary_power, vary_power)
+                targets      = [tx_float]          # ground truth location
+                power_deltas = [power_delta]       # ground truth power
+                powers       = [power + power_delta]
+                grid = np.zeros((self.grid_length, self.grid_length))
+                grid.fill(Default.noise_floor)
+                for sensor in sensors:
+                    if not splat:
+                        dist = Utility.distance_propagation(tx_float, (sensor.x, sensor.y)) * Default.cell_length
+                        pathloss = self.propagation.pathloss(dist)
+                    else:
+                        pathloss = mysplat.pathloss(tx_float[0], tx_float[1], sensor.x, sensor.y) + random.uniform(-0.25, 0.25)
+                    rssi = (power + power_delta) - pathloss
+                    grid[sensor.x][sensor.y] = rssi if rssi > Default.noise_floor else Default.noise_floor
+                # the other TX
+                population_set = set(population)
+                if num_tx_upper is False:
+                    num_tx_copy = num_tx
+                else:
+                    num_tx_copy = random.randint(1, num_tx)
+                intru = tx
+                self.update_population(population_set, intru, Default.grid_length, min_dist, max_dist)
+                while num_tx_copy > 1:   # get one new TX at a time
+                    ntx = random.sample(population_set, 1)[0]
+                    ntx = (ntx[0] + random.uniform(0, 1), ntx[1] + random.uniform(0, 1))  # TX is not at the center of grid cell
+                    self.update_population(population_set, intru, Default.grid_length, min_dist, max_dist)
+                    power_delta = random.uniform(-vary_power, vary_power)
+                    targets.append(ntx)
+                    power_deltas.append(power_delta)
+                    powers.append(power + power_delta)
+                    for sensor in sensors:
+                        if not splat:
+                            dist = Utility.distance_propagation(ntx, (sensor.x, sensor.y)) * Default.cell_length
+                            pathloss = self.propagation.pathloss(dist)
+                        else:
+                            pathloss = mysplat.pathloss(ntx[0], ntx[1], sensor.x, sensor.y) + random.uniform(-0.25, 0.25)
+                        rssi = (power + power_delta) - pathloss
+                        exist_rssi = grid[sensor.x][sensor.y]
+                        grid[sensor.x][sensor.y] = Utility.linear2db(Utility.db2linear(exist_rssi) + Utility.db2linear(rssi))
+                    num_tx_copy -= 1
+                    intru = ntx
+                np.save(f'{folder}/{i}.npy', grid.astype(np.float32))
+                np.save(f'{folder}/{i}.target', np.array(targets).astype(np.float32))
+                np.save(f'{folder}/{i}.power', np.array(powers).astype(np.float32))  # Dec. 12, 2020: save in txt format (currently not used in the CNN)
+
+                # now the authorized users
+                authorized_tx = []
+                authorized_power = []
+                auth = 0
+                while auth < num_authorized:
+                    auth_tx = self.create_authorized(auth, population_set, edge)
+                    ntx = (auth_tx[0] + random.uniform(0, 1), auth_tx[1] + random.uniform(0, 1))
+                    self.update_population(population_set, auth_tx, Default.grid_length, min_dist, max_dist)
+                    power_delta = random.uniform(-vary_power, vary_power)
+                    authorized_tx.append(ntx)
+                    authorized_power.append(power + power_delta)
+                    for sensor in sensors:
+                        if not splat:
+                            dist = Utility.distance_propagation(ntx, (sensor.x, sensor.y)) * Default.cell_length
+                            pathloss = self.propagation.pathloss(dist)
+                        else:
+                            pathloss = mysplat.pathloss(ntx[0], ntx[1], sensor.x, sensor.y) + random.uniform(-0.25, 0.25)
+                        rssi = (power + power_delta) - pathloss
+                        exist_rssi = grid[sensor.x][sensor.y]
+                        grid[sensor.x][sensor.y] = Utility.linear2db(Utility.db2linear(exist_rssi) + Utility.db2linear(rssi))
+                    auth += 1
+                np.save(f'{folder}/{i}.auth.npy', grid.astype(np.float32))
+                np.save(f'{folder}/{i}.auth.target.npy', np.array(authorized_tx).astype(np.float32))
+                np.save(f'{folder}/{i}.auth.power.npy', np.array(authorized_power).astype(np.float32))
+                self.save_ipsn_input(grid, targets, power_deltas, sensors, f'{folder}/{i}.json', authorized_tx)
+
+            counter += 1
+
+
+    def create_authorized(self, auth: int, population_set: set, edge: int):
+        '''create an authorized user. they are confined in there own area so that they don't interfere each other
+        Args:
+            auth -- the authrized user index --> determine the confined area for a authorized area
+            population_set -- the candidate location for the authorized users
+        Return:
+            (int, int) -- the location of the authorized users
+        '''
+        def controlled_random(auth: int):
+            '''the five PUs are in 5 different area not affecting each other
+            '''
+            if auth == 0:
+                return (random.randint(10, 20), random.randint(10, 20))
+            elif auth == 1:
+                return (random.randint(10, 20), random.randint(80, 90))
+            elif auth == 2:
+                return (random.randint(47, 53), random.randint(47, 53))
+            elif auth == 3:
+                return (random.randint(80, 90), random.randint(10, 20))
+            elif auth == 4:
+                return (random.randint(80, 90), random.randint(80, 90))
+
+        authorized = controlled_random(auth)
+        while authorized not in population_set:
+            authorized = controlled_random(auth)
+        return authorized
+
+
+    def save_ipsn_input(self, grid, targets, power_deltas, sensors, output_file, authorized):
         '''
         Args:
             grid         -- np.ndarray, n = 2
@@ -242,6 +387,7 @@ class GenerateData:
             power_deltas -- list<float>                        -- power of the TX, varying
             sensors      -- list<Sensors>
             output_file  -- str
+            authorized   -- 
         '''
         tx_data = {}
         for i, tx in enumerate(targets):
@@ -252,7 +398,7 @@ class GenerateData:
         sensor_data = {}
         for i, sen in enumerate(sensors):
             sensor_data[str(i)] = round(grid[sen.x][sen.y], 3)
-        ipsn_input = IpsnInput(tx_data, sensor_data)
+        ipsn_input = IpsnInput(tx_data, sensor_data, authorized)
         with open(output_file, 'w') as f:
             f.write(ipsn_input.to_json_str())
 
@@ -358,6 +504,7 @@ if __name__ == '__main__':
     parser.add_argument('-ed', '--edge', nargs=1, type=int, default=[Default.edge], help='no TX at the edge')
     parser.add_argument('-vp', '--vary_power', nargs=1, type=float, default=[0], help='varying power amount')
     parser.add_argument('-ct', '--center', action='store_true', help='if given, only generate data in the center of the grid (for fixed TX)')
+    parser.add_argument('-auth', '--num_authorized', nargs=1, type=int, default=[Default.authorized], help='number of authorized users in the background')
 
     args = parser.parse_args()
 
@@ -365,13 +512,14 @@ if __name__ == '__main__':
     grid_length = args.grid_length[0]
     sensor_density = args.sensor_density[0]
     num_tx = args.num_tx[0]
+    num_authorized = args.num_authorized[0]
 
     # python generate.py -gs -rs 0 -sd 100
     if args.generate_sensor:
         print('generating sensor')
         GenerateSensors.random(grid_length, sensor_density, random_seed, f'data/sensors/{grid_length}-{sensor_density}-{random_seed}')
 
-    if args.generate_data:
+    if args.generate_data and num_authorized == 0:
         alpha       = args.alpha[0]
         std         = args.std[0]
         cell_length = args.cell_length[0]
@@ -411,3 +559,30 @@ if __name__ == '__main__':
         gd = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density, noise_floor)
         gd.generate_ipsn(power, f'data/sensors/{grid_length}-{sensor_density}-{random_seed}', root_dir, splat)
         # the relationship between the deep learning root_dir and the ipsn root_dir is a difference of "-ipsn" suffix
+
+
+    if args.generate_data and num_authorized != 0:
+        # generate data when there are some number of authorized users in the background
+        alpha       = args.alpha[0]
+        std         = args.std[0]
+        cell_length = args.cell_length[0]
+        power       = args.power[0]
+        cell_percentage  = args.cell_percentage[0]
+        sample_per_label = args.sample_per_label[0]
+        root_dir    = args.root_dir[0]
+        noise_floor = args.noise_floor[0]
+        min_dist    = args.min_dist[0]
+        max_dist    = args.max_dist[0]
+        num_tx_upbound = args.num_tx_upbound
+        edge        = args.edge[0]
+        vary_power  = args.vary_power[0]
+        splat       = args.splat
+        center      = args.center
+        if splat:
+            mysplat = Splat('data_splat/pl_map_array.json')
+
+        print(f'generating {num_tx} TX data with authorized users in the background')
+
+        gd = GenerateData(random_seed, alpha, std, grid_length, cell_length, sensor_density, noise_floor)
+        gd.generate_authorized(power, cell_percentage, sample_per_label, f'data/sensors/{grid_length}-{sensor_density}-{random_seed}', root_dir,\
+                    num_tx, num_tx_upbound, min_dist, max_dist, edge, vary_power, splat, center, num_authorized)

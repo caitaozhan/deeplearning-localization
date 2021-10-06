@@ -758,6 +758,52 @@ class PlotResults:
         ax.set_xlabel('Number of Transmitters', labelpad=20)
         fig.savefig(figname)
 
+    @staticmethod
+    def error_authorized_varyintru(data, data_source, sen_density, figname):
+        # step 1: prepare for data
+        metric = 'error'
+        methods = ['deepmtl_auth']
+        table = defaultdict(list)
+        reduce_f = PlotResults.reduce_avg
+        for myinput, output_by_method in data:
+            if myinput.sensor_density == sen_density and myinput.data_source == data_source:
+                table[myinput.num_intruder].append({method:output.get_metric(metric) for method, output in output_by_method.items()})
+        print_table = []
+        for x, list_of_y_by_method in sorted(table.items()):
+            tmp_list = [reduce_f([(y_by_method[method] if method in y_by_method else None) for y_by_method in list_of_y_by_method]) for method in methods]
+            print_table.append([x] + tmp_list)
+        print('Metric:', metric)
+        print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
+
+        metric = 'miss'
+        methods = ['deepmtl_auth']
+        table = defaultdict(list)
+        reduce_f = PlotResults.reduce_avg
+        for myinput, output_by_method in data:
+            if myinput.sensor_density == sen_density and myinput.data_source == data_source:
+                num_tx = myinput.num_intruder
+                table[myinput.num_intruder].append({method:output.get_metric(metric)/num_tx for method, output in output_by_method.items()})
+        print_table = []
+        for x, list_of_y_by_method in sorted(table.items()):
+            tmp_list = [reduce_f([(y_by_method[method] if method in y_by_method else None) for y_by_method in list_of_y_by_method]) for method in methods]
+            print_table.append([x] + tmp_list)
+        print('Metric:', metric)
+        print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
+
+        metric = 'false_alarm'
+        methods = ['deepmtl_auth']
+        table = defaultdict(list)
+        reduce_f = PlotResults.reduce_avg
+        for myinput, output_by_method in data:
+            if myinput.sensor_density == sen_density and myinput.data_source == data_source:
+                num_tx = myinput.num_intruder
+                table[myinput.num_intruder].append({method: output.get_metric(metric)/num_tx for method, output in output_by_method.items()})
+        print_table = []
+        for x, list_of_y_by_method in sorted(table.items()):
+            tmp_list = [reduce_f([(y_by_method[method] if method in y_by_method else None) for y_by_method in list_of_y_by_method]) for method in methods]
+            print_table.append([x] + tmp_list)
+        print('Metric:', metric)
+        print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
 
 def test():
     logs = ['result/11.19/log-differentsensor']
@@ -968,6 +1014,14 @@ def power_varyintru():
     PlotResults.powererror_varyintru(data, sen_density, data_splat, figname)
 
 
+def authorized_varyintru():
+    data_splat = 'data/1005test'
+    logs = ['result/10.6-nms=0.4/splat-deepmtl_auth-5000']
+    data = IOUtility.read_logs(logs)
+    figname = 'result/10.5/splat-error_missfalse-authorized-varyintru.png'
+    sen_density = 600
+    PlotResults.error_authorized_varyintru(data, data_splat, sen_density, figname)
+
 
 if __name__ == '__main__':
     # test()
@@ -982,7 +1036,9 @@ if __name__ == '__main__':
 
     # power_varysensor()
 
-    power_varyintru()
+    # power_varyintru()
+
+    authorized_varyintru()
 
 
 ###################### compare_ours()  ###########################

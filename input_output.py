@@ -32,6 +32,7 @@ class Default:
     edge             = 2
     methods          = ['deepmtl', 'deepmtl-simple', 'deepmtl-yolo', 'map', 'splot', 'dtxf']
     server_ip        = '0.0.0.0'
+    authorized       = 0   # number of authorized users
 
 
 @dataclass
@@ -99,6 +100,7 @@ class IpsnInput:
     '''
     ground_truth: Dict
     sensor_data:  Dict
+    authorized: List = None
 
     def to_json_str(self):
         '''return json formated string
@@ -108,6 +110,7 @@ class IpsnInput:
         inputdict = {
             "ground_truth": self.ground_truth,
             "sensor_data":  self.sensor_data,
+            "authorized":   self.authorized
         }
         return json.dumps(inputdict)
 
@@ -118,7 +121,7 @@ class IpsnInput:
         with open(file, 'r') as f:
             line = f.readline()
             json_dict = json.loads(line)
-            return cls(json_dict['ground_truth'], json_dict['sensor_data'])
+            return cls(json_dict['ground_truth'], json_dict['sensor_data'], json_dict['authorized'])
 
 
 @dataclass
@@ -375,6 +378,24 @@ class DataInfo:
             dtxf_cnn2_template = 'model_dtxf/12.13-cnn2-splat_{}.pt'
             return cls(max_ntx, test_data, train_data, ipsn_cov_list, ipsn_sen_list, ipsn_hypo_list, \
                        translate_net, yolocust_def, yolocust_weights, yolo_def, yolo_weights, dtxf_cnn1, dtxf_cnn2_template, predpower_net, power_corrector)
+
+        if data_source == 'data/1005test':  # the splat model, using the same parameters comparing to 305test, except for adding 5 authorized users
+            max_ntx = 10
+            test_data  = 'data/1005test'
+            train_data = 'data/1005train'
+            ipsn_cov_list  = ['data/300test-ipsn/cov',        'data/301test-ipsn/cov',        'data/302test-ipsn/cov',        'data/303test-ipsn/cov',        'data/304test-ipsn/cov']
+            ipsn_sen_list  = ['data/300test-ipsn/sensors',    'data/301test-ipsn/sensors',    'data/302test-ipsn/sensors',    'data/303test-ipsn/sensors',    'data/304test-ipsn/sensors']
+            ipsn_hypo_list = ['data/300test-ipsn/hypothesis', 'data/301test-ipsn/hypothesis', 'data/302test-ipsn/hypothesis', 'data/303test-ipsn/hypothesis', 'data/304test-ipsn/hypothesis']
+            translate_net  = 'model/model1-12.13-net5-norm-32-splat.pt'
+            yolocust_def     = '../PyTorch-YOLOv3/config/yolov3-custom.cfg'
+            yolocust_weights = '../PyTorch-YOLOv3/checkpoints_splat/yolov3_ckpt_5.pth'
+            # below are useless
+            yolo_def         = '../PyTorch-YOLOv3/config/yolov3-custom-class.cfg'
+            yolo_weights     = '../PyTorch-YOLOv3/checkpoints_logdistance_class/yolov3_ckpt_5.pth'
+            dtxf_cnn1        =   'model_dtxf/12.13-cnn1-splat.pt'
+            dtxf_cnn2_template = 'model_dtxf/12.13-cnn2-splat_{}.pt'
+            return cls(max_ntx, test_data, train_data, ipsn_cov_list, ipsn_sen_list, ipsn_hypo_list, \
+                       translate_net, yolocust_def, yolocust_weights, yolo_def, yolo_weights, dtxf_cnn1, dtxf_cnn2_template)
 
 class IOUtility:
     '''input/output utility'''

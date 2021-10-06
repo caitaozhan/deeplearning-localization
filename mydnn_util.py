@@ -45,15 +45,25 @@ class SensorInputDatasetTranslation(Dataset):
         power_name = str(idx%self.sample_per_label) + '.power.npy'
         power_path = os.path.join(self.root_dir, folder, power_name)
         power = np.load(power_path)
-        sample = {'matrix':matrix, 'target':target_img, 'target_float':target_float, 'target_num':target_num, 'power': power, 'index':idx}
+        matrix_auth_name = str(idx%self.sample_per_label) + '.auth.npy'
+        matrix_auth_path = os.path.join(self.root_dir, folder, matrix_auth_name)
+        matrix_auth = np.load(matrix_auth_path)
+        if self.transform:
+            matrix_auth = self.transform(matrix_auth)
+        target_auth_float_name = str(idx%self.sample_per_label) + '.auth.target.npy'
+        target_auth_float_path = os.path.join(self.root_dir, folder, target_auth_float_name)
+        target_auth_float = np.load(target_auth_float_path)
+        power_auth_name = str(idx%self.sample_per_label) + '.auth.power.npy'
+        power_auth_path = os.path.join(self.root_dir, folder, power_auth_name)
+        power_auth = np.load(power_auth_path)
+        sample = {'matrix':matrix, 'target':target_img, 'target_float':target_float, 'target_num':target_num, 'power': power, 'index':idx, \
+                 'matrix_auth': matrix_auth, 'target_auth_float': target_auth_float, 'power_auth': power_auth}
         return sample
 
     def get_sample_per_label(self):
         folder = glob.glob(os.path.join(self.root_dir, '*'))[0]
-        samples = glob.glob(os.path.join(folder, '*.npy'))
-        targets = glob.glob(os.path.join(folder, '*.target.npy'))
-        powers = glob.glob(os.path.join(folder, '*.power.npy'))
-        return len(samples) - len(targets) - len(powers)
+        samples = glob.glob(os.path.join(folder, '*.json'))
+        return len(samples)
 
     def get_translation_target(self, folder: str, target_name: str):
         '''
