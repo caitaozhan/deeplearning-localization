@@ -19,12 +19,12 @@ class PlotResults:
     plt.rcParams['font.weight'] = 'bold'
     plt.rcParams['axes.labelweight'] = 'bold'
 
-    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',     'splot', 'dtxf',         'deepmtl_noretrain',          'predpower', 'predpower_nocorrect']
-    _LEGEND = ['DeepMTL', 'DeepMTL-yolo', 'DeepMTL-peak',   'MAP$^*$', 'SPLOT', 'DeepTxFinder', 'DeepMTL(No Part 2 Retrain)', 'PredPower (With Correction)', 'PredPower (No Correction)']
+    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',     'splot', 'dtxf',         'deepmtl_noretrain',          'predpower',                   'predpower_nocorrect',       'deepmtl_auth',            'deepmtl_auth_subtractpower']
+    _LEGEND = ['DeepMTL', 'DeepMTL-yolo', 'DeepMTL-peak',   'MAP$^*$', 'SPLOT', 'DeepTxFinder', 'DeepMTL(No Part 2 Retrain)', 'PredPower (With Correction)', 'PredPower (No Correction)', 'Localize All, Remove PU', 'Subtract PU Power, Localize']
     LEGEND  = dict(zip(METHOD, _LEGEND))
 
-    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',       'splot',       'dtxf', 'deepmtl_noretrain', 'predpower', 'predpower_nocorrect']
-    _COLOR  = ['r',       'tab:cyan',     'tab:orange',     'limegreen', 'deepskyblue', 'gold', 'tab:purple',        'tab:gray',  'lightgray']
+    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',       'splot',       'dtxf', 'deepmtl_noretrain', 'predpower', 'predpower_nocorrect', 'deepmtl_auth', 'deepmtl_auth_subtractpower']
+    _COLOR  = ['r',       'tab:cyan',     'tab:orange',     'limegreen', 'deepskyblue', 'gold', 'tab:purple',        'tab:gray',  'lightgray',           'fuchsia',      'lightpink']
     COLOR   = dict(zip(METHOD, _COLOR))
 
     METRIC = ['miss', 'false']
@@ -759,10 +759,10 @@ class PlotResults:
         fig.savefig(figname)
 
     @staticmethod
-    def error_authorized_varyintru(data, data_source, sen_density, figname):
+    def error_authorized_varyintru(data, data_source, sen_density, fignames):
         # step 1: prepare for data
         metric = 'error'
-        methods = ['deepmtl_auth']
+        methods = ['deepmtl_auth','deepmtl_auth_subtractpower']
         table = defaultdict(list)
         reduce_f = PlotResults.reduce_avg
         for myinput, output_by_method in data:
@@ -774,9 +774,12 @@ class PlotResults:
             print_table.append([x] + tmp_list)
         print('Metric:', metric)
         print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
+        arr = np.array(print_table)
+        deepmtl_auth_error               = arr[:, 1] * Default.cell_length
+        deepmtl_auth_subtracepower_error = arr[:, 2] * Default.cell_length
 
         metric = 'miss'
-        methods = ['deepmtl_auth']
+        methods = ['deepmtl_auth', 'deepmtl_auth_subtractpower']
         table = defaultdict(list)
         reduce_f = PlotResults.reduce_avg
         for myinput, output_by_method in data:
@@ -789,9 +792,13 @@ class PlotResults:
             print_table.append([x] + tmp_list)
         print('Metric:', metric)
         print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
+        arr = np.array(print_table)
+        deepmtl_auth_miss               = arr[:, 1] * 100
+        deepmtl_auth_subtractpower_miss = arr[:, 2] * 100
+        X_label                         = arr[:, 0]
 
         metric = 'false_alarm'
-        methods = ['deepmtl_auth']
+        methods = ['deepmtl_auth', 'deepmtl_auth_subtractpower']
         table = defaultdict(list)
         reduce_f = PlotResults.reduce_avg
         for myinput, output_by_method in data:
@@ -804,6 +811,55 @@ class PlotResults:
             print_table.append([x] + tmp_list)
         print('Metric:', metric)
         print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
+        arr = np.array(print_table)
+        deepmtl_auth_false               = arr[:, 1] * 100
+        deepmtl_auth_subtractpower_false = arr[:, 2] * 100
+
+        # step 2: the plot
+        plt.rcParams['font.size'] = 65
+        ind = np.arange(len(deepmtl_auth_error))
+        fig, ax = plt.subplots(1, 1, figsize=(40, 20))
+        fig.subplots_adjust(left=0.08, right=0.99, top=0.86, bottom=0.12)
+        width = 0.25
+        pos1 = ind - 0.5*width
+        pos2 = ind + 0.5*width
+        ax.bar(pos1, deepmtl_auth_error, width, edgecolor='black', label=PlotResults.LEGEND['deepmtl_auth'], color=PlotResults.COLOR['deepmtl_auth'])
+        ax.bar(pos2, deepmtl_auth_subtracepower_error, width, edgecolor='black', label=PlotResults.LEGEND['deepmtl_auth_subtractpower'], color=PlotResults.COLOR['deepmtl_auth_subtractpower'])
+        ax.set_xticks(ind)
+        ax.set_xticklabels([str(int(x)) for x in X_label])
+        ax.tick_params(axis='x', pad=15)
+        ax.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
+        ax.set_ylabel('Mean Localization Error (m)')
+        ax.set_xlabel('Number of Transmitters', labelpad=20)
+        handles, labels = ax.get_legend_handles_labels()
+        fig.legend(handles, labels, bbox_to_anchor=(0.064, 0.85), loc='lower left', ncol=4, fontsize=70)
+        fig.savefig(fignames[0])
+
+        ind = np.arange(len(deepmtl_auth_error))
+        fig, ax = plt.subplots(1, 1, figsize=(40, 20))
+        fig.subplots_adjust(left=0.08, right=0.99, top=0.86, bottom=0.12)
+        ax.bar(pos1, deepmtl_auth_miss, width, edgecolor='black',  color=PlotResults.COLOR['deepmtl_auth'], hatch=PlotResults.HATCH['miss'])
+        ax.bar(pos1, deepmtl_auth_false, width, edgecolor='black', color=PlotResults.COLOR['deepmtl_auth'], hatch=PlotResults.HATCH['false'], bottom=deepmtl_auth_miss)
+        ax.bar(pos2, deepmtl_auth_subtractpower_miss, width, edgecolor='black',  color=PlotResults.COLOR['deepmtl_auth_subtractpower'], hatch=PlotResults.HATCH['miss'])
+        ax.bar(pos2, deepmtl_auth_subtractpower_false, width, edgecolor='black', color=PlotResults.COLOR['deepmtl_auth_subtractpower'], hatch=PlotResults.HATCH['false'], bottom=deepmtl_auth_subtractpower_miss)
+
+        miss_patch = mpatches.Patch(facecolor='0.95', hatch=PlotResults.HATCH['miss'], label='Miss Rate')
+        false_patch = mpatches.Patch(facecolor='0.95', hatch=PlotResults.HATCH['false'], label='False Alarm Rate')
+        first_legend = plt.legend(handles=[false_patch, miss_patch], bbox_to_anchor=(0.1, 0.6, 0.4, 0.4))
+        plt.gca().add_artist(first_legend)
+
+        deepmtl_auth_patch = mpatches.Patch(label=PlotResults.LEGEND['deepmtl_auth'], color=PlotResults.COLOR['deepmtl_auth'])
+        deepmtl_auth_subtractpower_patch = mpatches.Patch(label=PlotResults.LEGEND['deepmtl_auth_subtractpower'], color=PlotResults.COLOR['deepmtl_auth_subtractpower'])
+        plt.legend(handles=[deepmtl_auth_patch, deepmtl_auth_subtractpower_patch], bbox_to_anchor=(0.48, 0.68, 0.5, 0.5), ncol=2)
+
+        ax.set_xticks(ind)
+        ax.set_xticklabels([str(int(x)) for x in X_label])
+        ax.tick_params(axis='x', pad=15)
+        ax.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
+        ax.set_xlabel('Number of Transmitters', labelpad=20)
+        ax.set_ylabel('Percentage (%)')
+        fig.savefig(fignames[1])
+
 
 def test():
     logs = ['result/11.19/log-differentsensor']
@@ -1016,11 +1072,11 @@ def power_varyintru():
 
 def authorized_varyintru():
     data_splat = 'data/1005test'
-    logs = ['result/10.6-nms=0.4/splat-deepmtl_auth-5000']
+    logs = ['result/10.6-nms=0.4/splat-deepmtl_auth-5000', 'result/10.7/splat-deepmtl_auth_subtractpower3-5000-conf=0.85,nms=0.4']
     data = IOUtility.read_logs(logs)
-    figname = 'result/10.5/splat-error_missfalse-authorized-varyintru.png'
+    fignames = ['result/10.7/splat-error-authorized-varyintru.png', 'result/10.7/splat-missfalse-authorized-varyintru.png']
     sen_density = 600
-    PlotResults.error_authorized_varyintru(data, data_splat, sen_density, figname)
+    PlotResults.error_authorized_varyintru(data, data_splat, sen_density, fignames)
 
 
 if __name__ == '__main__':

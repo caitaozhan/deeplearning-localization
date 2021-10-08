@@ -227,6 +227,7 @@ class DataInfo:
     dtxf_cnn2_template: str
     predpower_net: str = None
     power_corrector: str = None
+    subtract_net: str = None
 
     @classmethod
     def  naive_factory(cls, data_source):
@@ -389,13 +390,14 @@ class DataInfo:
             translate_net  = 'model/model1-12.13-net5-norm-32-splat.pt'
             yolocust_def     = '../PyTorch-YOLOv3/config/yolov3-custom.cfg'
             yolocust_weights = '../PyTorch-YOLOv3/checkpoints_splat/yolov3_ckpt_5.pth'
+            subtract_net = 'model/subtractnet3-10.7-pu_guassian.pt'
             # below are useless
             yolo_def         = '../PyTorch-YOLOv3/config/yolov3-custom-class.cfg'
             yolo_weights     = '../PyTorch-YOLOv3/checkpoints_logdistance_class/yolov3_ckpt_5.pth'
             dtxf_cnn1        =   'model_dtxf/12.13-cnn1-splat.pt'
             dtxf_cnn2_template = 'model_dtxf/12.13-cnn2-splat_{}.pt'
             return cls(max_ntx, test_data, train_data, ipsn_cov_list, ipsn_sen_list, ipsn_hypo_list, \
-                       translate_net, yolocust_def, yolocust_weights, yolo_def, yolo_weights, dtxf_cnn1, dtxf_cnn2_template)
+                       translate_net, yolocust_def, yolocust_weights, yolo_def, yolo_weights, dtxf_cnn1, dtxf_cnn2_template, None, None, subtract_net)
 
 class IOUtility:
     '''input/output utility'''

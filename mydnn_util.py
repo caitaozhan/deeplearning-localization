@@ -7,6 +7,7 @@ import os
 import numpy as np
 from torch.utils.data import Dataset, DataLoader
 import torch
+import math
 
 from input_output import Default
 from utility import Utility
@@ -16,7 +17,7 @@ class SensorInputDatasetTranslation(Dataset):
     '''Sensor reading input dataset -- for multi TX
        Output is image, model as a image segmentation problem
     '''
-    def __init__(self, root_dir: str, transform=None):
+    def __init__(self, root_dir: str, transform=None, transform_pu=None):
         '''
         Args:
             root_dir:  directory with all the images
@@ -25,6 +26,7 @@ class SensorInputDatasetTranslation(Dataset):
         '''
         self.root_dir = root_dir
         self.transform = transform
+        self.transform_pu = transform_pu
         self.length = len(os.listdir(self.root_dir))
         self.sample_per_label = self.get_sample_per_label()
 
@@ -32,33 +34,70 @@ class SensorInputDatasetTranslation(Dataset):
         return self.length * self.sample_per_label
 
     def __getitem__(self, idx):
-        folder = int(idx/self.sample_per_label)
+        folder = int(idx / self.sample_per_label)
         folder = format(folder, '06d')
-        matrix_name = str(idx%self.sample_per_label) + '.npy'
+        matrix_name = str(idx % self.sample_per_label) + '.npy'
         matrix_path = os.path.join(self.root_dir, folder, matrix_name)
-        target_name = str(idx%self.sample_per_label) + '.target.npy'
+        target_name = str(idx % self.sample_per_label) + '.target.npy'
         target_img, target_float = self.get_translation_target(folder, target_name)
         matrix = np.load(matrix_path)
         if self.transform:
             matrix = self.transform(matrix)
         target_num = len(target_float)
-        power_name = str(idx%self.sample_per_label) + '.power.npy'
+        power_name = str(idx % self.sample_per_label) + '.power.npy'
         power_path = os.path.join(self.root_dir, folder, power_name)
         power = np.load(power_path)
-        matrix_auth_name = str(idx%self.sample_per_label) + '.auth.npy'
+        matrix_auth_name = str(idx % self.sample_per_label) + '.auth.npy'
         matrix_auth_path = os.path.join(self.root_dir, folder, matrix_auth_name)
         matrix_auth = np.load(matrix_auth_path)
         if self.transform:
             matrix_auth = self.transform(matrix_auth)
-        target_auth_float_name = str(idx%self.sample_per_label) + '.auth.target.npy'
+        target_auth_float_name = str(idx % self.sample_per_label) + '.auth.target.npy'
         target_auth_float_path = os.path.join(self.root_dir, folder, target_auth_float_name)
         target_auth_float = np.load(target_auth_float_path)
-        power_auth_name = str(idx%self.sample_per_label) + '.auth.power.npy'
+        power_auth_name = str(idx % self.sample_per_label) + '.auth.power.npy'
         power_auth_path = os.path.join(self.root_dir, folder, power_auth_name)
         power_auth = np.load(power_auth_path)
-        sample = {'matrix':matrix, 'target':target_img, 'target_float':target_float, 'target_num':target_num, 'power': power, 'index':idx, \
-                 'matrix_auth': matrix_auth, 'target_auth_float': target_auth_float, 'power_auth': power_auth}
+        pu_matrix = self.get_pu_matrix(target_auth_float, power_auth)
+        if self.transform_pu:
+            pu_matrix = self.transform_pu(pu_matrix)
+        two_sheet = np.stack((matrix_auth[0], pu_matrix[0]), axis=0)
+        sample = {'matrix': matrix, 'target': target_img, 'target_float': target_float, 'target_num': target_num, 'power': power, 'index': idx, \
+                 'matrix_auth': matrix_auth, 'target_auth_float': target_auth_float, 'power_auth': power_auth, 'pu_matrix': pu_matrix, 'two_sheet': two_sheet}
         return sample
+
+    def get_pu_matrix(self, target_auth_float, power_auth):
+        '''The sheet for PU, each PU is a circle
+        Args:
+            target_auth_float -- np.ndarray, n=3 -- a list of 2D locations
+            power_auth        -- np.ndarray, n=2 -- a list of power values
+        Return:
+            np.ndarray, n = 2
+        '''
+        grid = np.zeros((Default.grid_length, Default.grid_length))
+        for (x, y), power in zip(target_auth_float, power_auth):
+            x, y = int(x), int(y)
+            for i in [-3, -2, -1, 0, 1, 2, 3]:
+                for j in [-3, -2, -1, 0, 1, 2, 3]:
+                    nxt = (x + i, y + j)
+                    if 0 <= nxt[0] < Default.grid_length and 0 <= nxt[1] < Default.grid_length:
+                        val = self.gaussian_cust(power + 10, x + 0.5, y + 0.5, nxt[0] + 0.5, nxt[1] + 0.5)
+                        grid[nxt[0]][nxt[1]] = max(val, grid[nxt[0]][nxt[1]])
+        return grid.astype(np.float32)
+
+    def gaussian(self, b_x, b_y, x, y):
+        '''2D gaussian
+        '''
+        a, c = 10, 0.9
+        dist = math.sqrt((x - b_x) ** 2 + (y - b_y) ** 2)
+        return a * np.exp(- dist ** 2 / (2 * c ** 2))
+        
+    def gaussian_cust(self, a, b_x, b_y, x, y):
+        '''2D gaussian
+        '''
+        c = 0.9
+        dist = math.sqrt((x - b_x) ** 2 + (y - b_y) ** 2)
+        return a * np.exp(- dist ** 2 / (2 * c ** 2))
 
     def get_sample_per_label(self):
         folder = glob.glob(os.path.join(self.root_dir, '*'))[0]
@@ -66,7 +105,7 @@ class SensorInputDatasetTranslation(Dataset):
         return len(samples)
 
     def get_translation_target(self, folder: str, target_name: str):
-        '''
+        '''try guassian peak
         Args:
             folder      -- eg. 000001
             target_name -- eg. 0.target.npy
@@ -80,17 +119,12 @@ class SensorInputDatasetTranslation(Dataset):
             x, y = location[i][0], location[i][1]
             target_float = (x, y)
             x, y = int(x), int(y)
-            neighbor = []
-            sum_weight = 0
-            for i in [-1, 0, 1]:
-                for j in [-1, 0, 1]:
+            for i in [-2, -1, 0, 1, 2]:
+                for j in [-2, -1, 0, 1, 2]:
                     nxt = (x + i, y + j)
                     if 0 <= nxt[0] < Default.grid_length and 0 <= nxt[1] < Default.grid_length:
-                        weight = 1./Utility.distance((nxt[0] + 0.5, nxt[1] + 0.5), target_float)
-                        sum_weight += weight
-                        neighbor.append((nxt, weight))
-            for n, w in neighbor:
-                grid[n[0]][n[1]] += w / sum_weight * len(neighbor) * 3  # 2 is for adding weights
+                        val = self.gaussian(target_float[0], target_float[1], nxt[0]+0.5, nxt[1]+0.5)
+                        grid[nxt[0]][nxt[1]] = max(val, grid[nxt[0]][nxt[1]])
         grid = np.expand_dims(grid, 0)
         return grid.astype(np.float32), location.astype(np.float32)
 
@@ -293,7 +327,19 @@ tf = T.Compose([
      UniformNormalize(Default.noise_floor),                 # TUNE: Uniform normalization is better than the above minmax normalization
      T.ToTensor()])
 
+class PuNormalize:
+    '''only subtract the floor value
+    '''
+    
+    def __init__(self, floor):
+        self.floor = floor
+    
+    def __call__(self, matrix):
+        matrix -= self.floor
+        return matrix.astype(np.float32)
 
+tf_pu = T.Compose([
+     T.ToTensor()])
 
 ############# Below are for DeepTxFinder #################3
 

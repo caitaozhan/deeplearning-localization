@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
     myinput = Input(data_source=data_source, methods=methods)
 
-    sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=data_source, transform=mydnn_util.tf)
+    sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=data_source, transform=mydnn_util.tf, transform_pu=mydnn_util.tf_pu)
     total = sensor_input_dataset.__len__()
     print('total:', total)
     myrange = range(experimemts[0], experimemts[1])

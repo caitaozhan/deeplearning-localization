@@ -158,6 +158,82 @@ class NetTranslation5(nn.Module):
 
 
 
+class PowerPredictor5(nn.Module):
+    '''The input is 1 x 21 x 21, the output is a scaler between 0.5 and 5.5
+       No fully connected layer in the end
+       
+       The CHOSEN one.
+    '''
+    def __init__(self):
+        super(PowerPredictor5, self).__init__()
+        self.conv1 = nn.Conv2d(1, 32, 5)
+        self.conv2 = nn.Conv2d(32, 128, 5)
+        self.conv3 = nn.Conv2d(128, 32, 5)
+        self.conv4 = nn.Conv2d(32, 8, 5)
+        self.conv5 = nn.Conv2d(8, 1, 5)
+        self.norm1 = nn.BatchNorm2d(32)
+        self.norm2 = nn.BatchNorm2d(128)
+        self.norm3 = nn.BatchNorm2d(32)
+        self.norm4 = nn.BatchNorm2d(8)
+    
+    def forward(self, x):
+        x = F.relu(self.norm1(self.conv1(x)))
+        x = F.relu(self.norm2(self.conv2(x)))
+        x = F.relu(self.norm3(self.conv3(x)))
+        x = F.relu(self.norm4(self.conv4(x)))
+        x = self.conv5(x)
+        x = x.view(-1, self.num_flat_features(x))
+        return x
+
+    def num_flat_features(self, x):
+        
+        size = x.size()[1:]
+        num_features = 1
+        for s in size:
+            num_features *= s
+        return num_features
+
+
+
+class SubtractNet3(nn.Module):
+    '''The chosen one!
+       Image translation. Comparing with version 4, it adds a layer so it is symetric, it also has group normalization
+       the first CNN is the same as NetTranslation, 
+       the second one uses the output of the first CNN and output the # of Tx
+       Assuming the input image is 1 x 100 x 100
+    '''
+    def __init__(self):
+        super(SubtractNet3, self).__init__()
+        self.conv1 = nn.Conv2d(2,  8,  5, padding=2)   # TUNE: a larger filter decrease miss, decrease localization error
+        self.conv2 = nn.Conv2d(8,  16, 5, padding=2)
+        self.conv3 = nn.Conv2d(16, 32, 5, padding=2)
+        self.conv4 = nn.Conv2d(32, 32, 5, padding=2)
+        self.conv5 = nn.Conv2d(32, 16, 5, padding=2)
+        self.conv6 = nn.Conv2d(16, 8,  5, padding=2)
+        self.conv7 = nn.Conv2d(8,  2,  5, padding=2)
+        self.conv8 = nn.Conv2d(2,  1,  5, padding=2)
+        self.norm1 = nn.GroupNorm(4,  8)
+        self.norm2 = nn.GroupNorm(8,  16)
+        self.norm3 = nn.GroupNorm(16, 32)
+        self.norm4 = nn.GroupNorm(16, 32)
+        self.norm5 = nn.GroupNorm(8, 16)
+        self.norm6 = nn.GroupNorm(4,  8)
+        self.norm7 = nn.GroupNorm(1,  2)
+
+    def forward(self, x):
+        x = F.relu(self.norm1(self.conv1(x)))
+        x = F.relu(self.norm2(self.conv2(x)))
+        x = F.relu(self.norm3(self.conv3(x)))
+        x = F.relu(self.norm4(self.conv4(x)))
+        x = F.relu(self.norm5(self.conv5(x)))
+        x = F.relu(self.norm6(self.conv6(x)))
+        x = F.relu(self.norm7(self.conv7(x)))
+        y = self.conv8(x)
+        return y
+
+
+
+
 ########## Below are for DeepTxFinder ###############
 
 class CNN_NoTx(nn.Module):
@@ -216,38 +292,3 @@ class CNN_i(nn.Module):
         x = self.dense1(x)
         return x
 
-
-class PowerPredictor5(nn.Module):
-    '''The input is 1 x 21 x 21, the output is a scaler between 0.5 and 5.5
-       No fully connected layer in the end
-       
-       The CHOSEN one.
-    '''
-    def __init__(self):
-        super(PowerPredictor5, self).__init__()
-        self.conv1 = nn.Conv2d(1, 32, 5)
-        self.conv2 = nn.Conv2d(32, 128, 5)
-        self.conv3 = nn.Conv2d(128, 32, 5)
-        self.conv4 = nn.Conv2d(32, 8, 5)
-        self.conv5 = nn.Conv2d(8, 1, 5)
-        self.norm1 = nn.BatchNorm2d(32)
-        self.norm2 = nn.BatchNorm2d(128)
-        self.norm3 = nn.BatchNorm2d(32)
-        self.norm4 = nn.BatchNorm2d(8)
-    
-    def forward(self, x):
-        x = F.relu(self.norm1(self.conv1(x)))
-        x = F.relu(self.norm2(self.conv2(x)))
-        x = F.relu(self.norm3(self.conv3(x)))
-        x = F.relu(self.norm4(self.conv4(x)))
-        x = self.conv5(x)
-        x = x.view(-1, self.num_flat_features(x))
-        return x
-
-    def num_flat_features(self, x):
-        
-        size = x.size()[1:]
-        num_features = 1
-        for s in size:
-            num_features *= s
-        return num_features

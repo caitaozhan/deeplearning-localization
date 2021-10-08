@@ -13,7 +13,7 @@ import copy
 from sklearn import linear_model
 from flask import Flask, request
 from dataclasses import dataclass
-from mydnn import NetTranslation5, CNN_NoTx, CNN_i, PowerPredictor5
+from mydnn import NetTranslation5, CNN_NoTx, CNN_i, PowerPredictor5, SubtractNet3
 import mydnn_util
 import myplots
 from input_output import Input, Output, Default, DataInfo
@@ -68,7 +68,7 @@ def localize():
         return 'hello world'
 
 
-    sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=myinput.data_source, transform=mydnn_util.tf)
+    sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=myinput.data_source, transform=mydnn_util.tf, transform_pu=mydnn_util.tf_pu)
     outputs = []
     if 'deepmtl-simple' in myinput.methods:  # two CNN in sequence, the second CNN is object detection
         sample = sensor_input_dataset[myinput.image_index]
@@ -294,7 +294,7 @@ def localize():
         end = time.time()
         outputs.append(Output('predpower_nocorrect', errors[0], falses[0], misses[0], preds[0], end-start, power_errors))
 
-    if 'deepmtl_auth' in myinput.methods:  # two CNN in sequence, the second CNN is object detection
+    if 'deepmtl_auth' in myinput.methods:  # localize all and then subtract
         sample = sensor_input_dataset[myinput.image_index]
         X      = torch.as_tensor(sample['matrix_auth']).unsqueeze(0).to(device)   # the matrix (sensor reading image) with invaders + authorized users
         y_f    = np.expand_dims(sample['target_float'], 0)                        # ground truth location for the invaders
@@ -313,6 +313,24 @@ def localize():
         preds, errors, misses, falses = mydnn_util.Metrics.localization_error_image_continuous_detection(pred_xy, y_f, indx, debug=False)
         end = time.time()
         outputs.append(Output('deepmtl_auth', errors[0], falses[0], misses[0], preds[0], end-start, []))
+
+    if 'deepmtl_auth_subtractpower':   # subtract the PU power via CNN and then localize
+        sample = sensor_input_dataset[myinput.image_index]
+        X      = torch.as_tensor(sample['two_sheet']).unsqueeze(0).to(device)
+        y_f    = np.expand_dims(sample['target_float'], 0)
+        indx   = np.expand_dims(np.array(sample['index']), 0)
+        start = time.time()
+        subtracted = subtract_net(X)
+        pred_matrix = translate_net(subtracted)
+        pred_matrix = pred_matrix[0][0]
+        img = torch.stack((pred_matrix, pred_matrix, pred_matrix), axis=0)
+        img = resize(img, server.DETECT_IMG_SIZE).unsqueeze(0)
+        detections = darknet_cust(img)
+        detections = non_max_suppression(detections, conf_thres=0.85, nms_thres=0.4)
+        pred_xy = [server.box2xy(detections[0].numpy())]  # add a batch dimension
+        preds, errors, misses, falses = mydnn_util.Metrics.localization_error_image_continuous_detection(pred_xy, y_f, indx, debug=False)
+        end = time.time()
+        outputs.append(Output('deepmtl_auth_subtractpower', errors[0], falses[0], misses[0], preds[0], end-start, []))
 
     server.log(myinput, outputs)
     return 'hello world'
@@ -506,14 +524,14 @@ if __name__ == '__main__':
 
     data = DataInfo.naive_factory(data_source=data_source)
     # 1: init server utilities
-    date = '10.6-0.4'                                                 # 1
+    date = '10.7'                                                 # 1
     output_dir = f'result/{date}'
     # output_file = f'splat-dtxf-{port}'                                        # 2
     # output_file = f'splat-map-{port}'                                        # 2
     # output_file = f'splat-splot-{port}'                                        # 2
     # output_file = f'logdistance-deepmtl-{port}'                                        # 2
     # output_file = f'splat-deepmtl-{port}'                                        # 2
-    output_file = f'splat-deepmtl_auth-{port}'                                        # 2
+    output_file = f'splat-deepmtl_auth_subtractpower3-{port}-conf=0.85,nms=0.4'                                        # 2
     # output_file = f'logdistance-deepmtl.predpower-{port}'
     # output_file = f'logdistance-deepmtl.predpower_and_nocorrect-{port}'
     # if args.plus:
@@ -538,8 +556,13 @@ if __name__ == '__main__':
     # predpower_net.load_state_dict(torch.load(data.predpower_net))
     # predpower_net = predpower_net.to(device)
     # predpower_net.eval()
-
     # ridgereg = pickle.load(open(data.power_corrector, 'rb'))
+
+    # *** FOR subtracting authorized user power only ***
+    subtract_net = SubtractNet3()
+    subtract_net.load_state_dict(torch.load(data.subtract_net))
+    subtract_net = subtract_net.to(device)
+    subtract_net.eval()
 
 
     # 3.1: init the darknet

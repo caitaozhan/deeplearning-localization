@@ -189,49 +189,49 @@ if __name__ == '__main__':
 
     # 3. merge the data of step 1
     # print('step 3 ...')
-    train_dir = 'data/1005train'
-    Utility.remove_make(train_dir)
-    size = 9216
-    # size = 6400
-    for i in range(size):
-        if i % 1000 == 0:
-            print(i)
-        folder = format(i, '06d')
-        dest_dir = os.path.join(train_dir, folder)
-        Utility.remove_make(dest_dir)
-        counter = 0
-        for c in config[::2]:   # train
-            for j in range(c[1]):
-                source = os.path.join('data', c[0], folder, str(j))
-                shutil.copy(source + '.npy',        os.path.join(dest_dir, str(counter) + '.npy'))
-                shutil.copy(source + '.target.npy', os.path.join(dest_dir, str(counter) + '.target.npy'))
-                shutil.copy(source + '.power.npy',  os.path.join(dest_dir, str(counter) + '.power.npy'))
-                shutil.copy(source + '.json',       os.path.join(dest_dir, str(counter) + '.json'))
-                shutil.copy(source + '.auth.npy',         os.path.join(dest_dir, str(counter) + '.auth.npy'))
-                shutil.copy(source + '.auth.power.npy',   os.path.join(dest_dir, str(counter) + '.auth.power.npy'))
-                shutil.copy(source + '.auth.target.npy',  os.path.join(dest_dir, str(counter) + '.auth.target.npy'))
-                counter += 1
+    # train_dir = 'data/1005train'
+    # Utility.remove_make(train_dir)
+    # size = 9216
+    # # size = 6400
+    # for i in range(size):
+    #     if i % 1000 == 0:
+    #         print(i)
+    #     folder = format(i, '06d')
+    #     dest_dir = os.path.join(train_dir, folder)
+    #     Utility.remove_make(dest_dir)
+    #     counter = 0
+    #     for c in config[::2]:   # train
+    #         for j in range(c[1]):
+    #             source = os.path.join('data', c[0], folder, str(j))
+    #             shutil.copy(source + '.npy',        os.path.join(dest_dir, str(counter) + '.npy'))
+    #             shutil.copy(source + '.target.npy', os.path.join(dest_dir, str(counter) + '.target.npy'))
+    #             shutil.copy(source + '.power.npy',  os.path.join(dest_dir, str(counter) + '.power.npy'))
+    #             shutil.copy(source + '.json',       os.path.join(dest_dir, str(counter) + '.json'))
+    #             shutil.copy(source + '.auth.npy',         os.path.join(dest_dir, str(counter) + '.auth.npy'))
+    #             shutil.copy(source + '.auth.power.npy',   os.path.join(dest_dir, str(counter) + '.auth.power.npy'))
+    #             shutil.copy(source + '.auth.target.npy',  os.path.join(dest_dir, str(counter) + '.auth.target.npy'))
+    #             counter += 1
 
-    test_dir = 'data/1005test'
-    Utility.remove_make(test_dir)
-    for i in range(size):
-        if i % 1000 == 0:
-            print(i)
-        folder = format(i, '06d')
-        dest_dir = os.path.join(test_dir, folder)
-        Utility.remove_make(dest_dir)
-        counter = 0
-        for c in config[1::2]:  # test
-            for j in range(c[1]):
-                source = os.path.join('data', c[0], folder, str(j))
-                shutil.copy(source + '.npy',        os.path.join(dest_dir, str(counter) + '.npy'))
-                shutil.copy(source + '.target.npy', os.path.join(dest_dir, str(counter) + '.target.npy'))
-                shutil.copy(source + '.power.npy',  os.path.join(dest_dir, str(counter) + '.power.npy'))
-                shutil.copy(source + '.json',       os.path.join(dest_dir, str(counter) + '.json'))
-                shutil.copy(source + '.auth.npy',         os.path.join(dest_dir, str(counter) + '.auth.npy'))
-                shutil.copy(source + '.auth.power.npy',   os.path.join(dest_dir, str(counter) + '.auth.power.npy'))
-                shutil.copy(source + '.auth.target.npy',  os.path.join(dest_dir, str(counter) + '.auth.target.npy'))
-                counter += 1
+    # test_dir = 'data/1005test'
+    # Utility.remove_make(test_dir)
+    # for i in range(size):
+    #     if i % 1000 == 0:
+    #         print(i)
+    #     folder = format(i, '06d')
+    #     dest_dir = os.path.join(test_dir, folder)
+    #     Utility.remove_make(dest_dir)
+    #     counter = 0
+    #     for c in config[1::2]:  # test
+    #         for j in range(c[1]):
+    #             source = os.path.join('data', c[0], folder, str(j))
+    #             shutil.copy(source + '.npy',        os.path.join(dest_dir, str(counter) + '.npy'))
+    #             shutil.copy(source + '.target.npy', os.path.join(dest_dir, str(counter) + '.target.npy'))
+    #             shutil.copy(source + '.power.npy',  os.path.join(dest_dir, str(counter) + '.power.npy'))
+    #             shutil.copy(source + '.json',       os.path.join(dest_dir, str(counter) + '.json'))
+    #             shutil.copy(source + '.auth.npy',         os.path.join(dest_dir, str(counter) + '.auth.npy'))
+    #             shutil.copy(source + '.auth.power.npy',   os.path.join(dest_dir, str(counter) + '.auth.power.npy'))
+    #             shutil.copy(source + '.auth.target.npy',  os.path.join(dest_dir, str(counter) + '.auth.target.npy'))
+    #             counter += 1
 
 
 
