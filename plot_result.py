@@ -19,8 +19,8 @@ class PlotResults:
     plt.rcParams['font.weight'] = 'bold'
     plt.rcParams['axes.labelweight'] = 'bold'
 
-    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',     'splot', 'dtxf',         'deepmtl_noretrain',          'predpower',                   'predpower_nocorrect',       'deepmtl_auth',            'deepmtl_auth_subtractpower']
-    _LEGEND = ['DeepMTL', 'DeepMTL-yolo', 'DeepMTL-peak',   'MAP$^*$', 'SPLOT', 'DeepTxFinder', 'DeepMTL(No Part 2 Retrain)', 'PredPower (With Correction)', 'PredPower (No Correction)', 'Localize All, Remove PU', 'Subtract PU Power, Localize']
+    METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',     'splot', 'dtxf',         'deepmtl_noretrain',          'predpower',                   'predpower_nocorrect',       'deepmtl_auth',                       'deepmtl_auth_subtractpower']
+    _LEGEND = ['DeepMTL', 'DeepMTL-yolo', 'DeepMTL-peak',   'MAP$^*$', 'SPLOT', 'DeepTxFinder', 'DeepMTL(No Part 2 Retrain)', 'PredPower (With Correction)', 'PredPower (No Correction)', 'Localize, Remove Authorized TX', 'Subtract Authorized TX Power, Localize']
     LEGEND  = dict(zip(METHOD, _LEGEND))
 
     METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',       'splot',       'dtxf', 'deepmtl_noretrain', 'predpower', 'predpower_nocorrect', 'deepmtl_auth', 'deepmtl_auth_subtractpower']
@@ -830,9 +830,9 @@ class PlotResults:
         ax.tick_params(axis='x', pad=15)
         ax.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
         ax.set_ylabel('Mean Localization Error (m)')
-        ax.set_xlabel('Number of Transmitters', labelpad=20)
+        ax.set_xlabel('Number of Intruders', labelpad=20)
         handles, labels = ax.get_legend_handles_labels()
-        fig.legend(handles, labels, bbox_to_anchor=(0.064, 0.85), loc='lower left', ncol=4, fontsize=70)
+        fig.legend(handles, labels, bbox_to_anchor=(0.055, 0.88), loc='lower left', ncol=2, fontsize=55)
         fig.savefig(fignames[0])
 
         ind = np.arange(len(deepmtl_auth_error))
@@ -845,18 +845,18 @@ class PlotResults:
 
         miss_patch = mpatches.Patch(facecolor='0.95', hatch=PlotResults.HATCH['miss'], label='Miss Rate')
         false_patch = mpatches.Patch(facecolor='0.95', hatch=PlotResults.HATCH['false'], label='False Alarm Rate')
-        first_legend = plt.legend(handles=[false_patch, miss_patch], bbox_to_anchor=(0.1, 0.6, 0.4, 0.4))
+        first_legend = plt.legend(handles=[false_patch, miss_patch], bbox_to_anchor=(0.15, 0.6, 0.4, 0.4), fontsize=55)
         plt.gca().add_artist(first_legend)
 
         deepmtl_auth_patch = mpatches.Patch(label=PlotResults.LEGEND['deepmtl_auth'], color=PlotResults.COLOR['deepmtl_auth'])
         deepmtl_auth_subtractpower_patch = mpatches.Patch(label=PlotResults.LEGEND['deepmtl_auth_subtractpower'], color=PlotResults.COLOR['deepmtl_auth_subtractpower'])
-        plt.legend(handles=[deepmtl_auth_patch, deepmtl_auth_subtractpower_patch], bbox_to_anchor=(0.48, 0.68, 0.5, 0.5), ncol=2)
+        plt.legend(handles=[deepmtl_auth_patch, deepmtl_auth_subtractpower_patch], bbox_to_anchor=(0.51, 0.68, 0.5, 0.5), ncol=2, fontsize=55)
 
         ax.set_xticks(ind)
         ax.set_xticklabels([str(int(x)) for x in X_label])
         ax.tick_params(axis='x', pad=15)
         ax.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
-        ax.set_xlabel('Number of Transmitters', labelpad=20)
+        ax.set_xlabel('Number of Intruders', labelpad=20)
         ax.set_ylabel('Percentage (%)')
         fig.savefig(fignames[1])
 
