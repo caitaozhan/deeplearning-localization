@@ -2,7 +2,8 @@
 *.code-workspace
 __pycache__
 visualize
-data/*
+data/*test*
+data/*train*
 data2/*
 data3/*
 *.ipynb_checkpoints
