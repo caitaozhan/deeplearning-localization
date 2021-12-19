@@ -34,12 +34,14 @@ class GenerateSensors:
         Visualize.sensors(subset_sensors, grid_length, 1)
         subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
         Visualize.sensors(subset_sensors, grid_length, 2)
-        # subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
-        # Visualize.sensors(subset_sensors, grid_length, 3)
-        # subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
-        # Visualize.sensors(subset_sensors, grid_length, 4)
-        # subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
-        # Visualize.sensors(subset_sensors, grid_length, 5)
+        subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
+        Visualize.sensors(subset_sensors, grid_length, 3)
+        subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
+        Visualize.sensors(subset_sensors, grid_length, 4)
+        subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
+        Visualize.sensors(subset_sensors, grid_length, 5)
+        subset_sensors = GenerateSensors.relocate_sensors(subset_sensors, grid_length, sensor_density)
+        Visualize.sensors(subset_sensors, grid_length, 6)
         subset_sensors.sort()
         GenerateSensors.save(subset_sensors, grid_length, filename)
 
@@ -48,7 +50,7 @@ class GenerateSensors:
         '''Relocate sensors that are side by side
         '''
         if sensor_density <= 100:
-            neighbor = [(i, j) for i in range(-5, 6) for j in range(-5, 6)]
+            neighbor = [(i, j) for i in range(-7, 7) for j in range(-7, 7)]
         elif sensor_density <= 200:
             neighbor = [(i, j) for i in range(-4, 5) for j in range(-4, 5)]
         elif sensor_density <= 400:
@@ -61,7 +63,7 @@ class GenerateSensors:
             neighbor = [(i, j) for i in range(-2, 2) for j in range(-2, 2)]
         else:
             pass
-        neighbor = [(i, j) for i in range(-2, 3) for j in range(-2, 3)]
+        # neighbor = [(i, j) for i in range(-2, 3) for j in range(-2, 3)]
         new_random_sensors = []
         need_to_relocate = []
         ocupy_grid = np.zeros((grid_len, grid_len), dtype=int)
@@ -379,7 +381,7 @@ class GenerateData:
         return authorized
 
 
-    def save_ipsn_input(self, grid, targets, power_deltas, sensors, output_file, authorized):
+    def save_ipsn_input(self, grid, targets, power_deltas, sensors, output_file, authorized=None):
         '''
         Args:
             grid         -- np.ndarray, n = 2

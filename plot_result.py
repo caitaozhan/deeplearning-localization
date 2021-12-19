@@ -20,7 +20,7 @@ class PlotResults:
     plt.rcParams['axes.labelweight'] = 'bold'
 
     METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',     'splot', 'dtxf',         'deepmtl_noretrain',          'predpower',                   'predpower_nocorrect',       'deepmtl_auth',                       'deepmtl_auth_subtractpower']
-    _LEGEND = ['DeepMTL', 'DeepMTL-yolo', 'DeepMTL-peak',   'MAP$^*$', 'SPLOT', 'DeepTxFinder', 'DeepMTL(No Part 2 Retrain)', 'PredPower (With Correction)', 'PredPower (No Correction)', 'Localize, Remove Authorized TX', 'Subtract Authorized TX Power, Localize']
+    _LEGEND = ['DeepMTL', 'DeepMTL-yolo', 'DeepMTL-peak',   'MAP$^*$', 'SPLOT', 'DeepTxFinder', 'DeepMTL(No Step 2 Retrain)', 'PredPower (With Correction)', 'PredPower (No Correction)', 'Localize, Remove Authorized TX', 'Subtract Authorized TX Power, Localize']
     LEGEND  = dict(zip(METHOD, _LEGEND))
 
     METHOD  = ['deepmtl', 'deepmtl-yolo', 'deepmtl-simple', 'map',       'splot',       'dtxf', 'deepmtl_noretrain', 'predpower', 'predpower_nocorrect', 'deepmtl_auth', 'deepmtl_auth_subtractpower']
@@ -446,11 +446,11 @@ class PlotResults:
         X_label = arr[:, 0]
 
         # step 2: the plot
-        plt.rcParams['font.size'] = 65
+        plt.rcParams['font.size'] = 45
         ind = np.arange(len(deepmtl_error))
-        fig, ax = plt.subplots(1, 1, figsize=(40, 20))
-        fig.subplots_adjust(left=0.08, right=0.99, top=0.86, bottom=0.12)
-        width = 0.2
+        fig, ax = plt.subplots(1, 1, figsize=(20, 13))
+        fig.subplots_adjust(left=0.12, right=0.96, top=0.88, bottom=0.13)
+        width = 0.35
         pos1 = ind - 0.5 * width
         pos2 = ind + 0.5 * width
         ax.bar(pos1, deepmtl_error, width, edgecolor='black', label=PlotResults.LEGEND['deepmtl'], color=PlotResults.COLOR['deepmtl'])
@@ -459,10 +459,11 @@ class PlotResults:
         ax.set_xticklabels([str(int(x)) for x in X_label])
         ax.tick_params(axis='x', pad=15)
         ax.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
+        ax.set_ylim([0, 6.9])
         ax.set_ylabel('Mean Localization Error (m)')
         ax.set_xlabel('Number of Transmitters', labelpad=20)
         handles, labels = ax.get_legend_handles_labels()
-        fig.legend(handles, labels, loc='upper center', ncol=2, fontsize=70)
+        fig.legend(handles, labels, loc='upper center', ncol=2, fontsize=45)
         fig.savefig(fignames[0])
 
         plt.rcParams['font.size'] = 70
@@ -1033,12 +1034,12 @@ def noretrain():
     data_source = 'data/205test'
     logs = ['result/9.20/logdistance-deepmtl-5000', 'result/9.20/logdistance-deepmtl-5000_plus']
     data = IOUtility.read_logs(logs)
-    fignames = ['result/9.20/noretrain-logdistance-error-vary_numintru.png', 'result/9.20/noretrain-logdistance-missfalse-vary_numintru.png']
+    fignames = ['result/9.20.2/noretrain-logdistance-error-vary_numintru.png', 'result/9.20.2/noretrain-logdistance-missfalse-vary_numintru.png']
     PlotResults.noretrain_error_missfalse_vary_numintru(data, data_source, fignames)
     data_source = 'data/305test'
     logs = ['result/9.20/splat-deepmtl-5000', 'result/9.20/splat-deepmtl-5000_plus']
     data = IOUtility.read_logs(logs)
-    fignames = ['result/9.20/noretrain-splat-error-vary_numintru.png', 'result/9.20/noretrain-splat-missfalse-vary_numintru.png']
+    fignames = ['result/9.20.2/noretrain-splat-error-vary_numintru.png', 'result/9.20.2/noretrain-splat-missfalse-vary_numintru.png']
     PlotResults.noretrain_error_missfalse_vary_numintru(data, data_source, fignames)
 
 

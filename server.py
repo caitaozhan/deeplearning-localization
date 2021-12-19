@@ -524,14 +524,14 @@ if __name__ == '__main__':
 
     data = DataInfo.naive_factory(data_source=data_source)
     # 1: init server utilities
-    date = '10.7'                                                 # 1
+    date = '12.19'                                                 # 1
     output_dir = f'result/{date}'
     # output_file = f'splat-dtxf-{port}'                                        # 2
     # output_file = f'splat-map-{port}'                                        # 2
     # output_file = f'splat-splot-{port}'                                        # 2
-    # output_file = f'logdistance-deepmtl-{port}'                                        # 2
+    output_file = f'logdistance-deepmtl-{port}'                                        # 2
     # output_file = f'splat-deepmtl-{port}'                                        # 2
-    output_file = f'splat-deepmtl_auth_subtractpower3-{port}-conf=0.85,nms=0.4'                                        # 2
+    # output_file = f'splat-deepmtl_auth_subtractpower3-{port}-conf=0.85,nms=0.4'                                        # 2
     # output_file = f'logdistance-deepmtl.predpower-{port}'
     # output_file = f'logdistance-deepmtl.predpower_and_nocorrect-{port}'
     # if args.plus:
@@ -559,10 +559,10 @@ if __name__ == '__main__':
     # ridgereg = pickle.load(open(data.power_corrector, 'rb'))
 
     # *** FOR subtracting authorized user power only ***
-    subtract_net = SubtractNet3()
-    subtract_net.load_state_dict(torch.load(data.subtract_net))
-    subtract_net = subtract_net.to(device)
-    subtract_net.eval()
+    # subtract_net = SubtractNet3()
+    # subtract_net.load_state_dict(torch.load(data.subtract_net))
+    # subtract_net = subtract_net.to(device)
+    # subtract_net.eval()
 
 
     # 3.1: init the darknet
