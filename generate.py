@@ -6,10 +6,8 @@ from typing import List
 
 import random
 import numpy as np
-import imageio
 import argparse
 import os
-import time
 from visualize import Visualize
 from propagation import Propagation, Splat
 from input_output import Default, IpsnInput
