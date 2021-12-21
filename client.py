@@ -56,7 +56,10 @@ if __name__ == '__main__':
 
     myinput = Input(data_source=data_source, methods=methods)
 
-    sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=data_source, transform=mydnn_util.tf, transform_pu=mydnn_util.tf_pu)
+    # the journal extension introduced the PU concept
+    # sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=data_source, transform=mydnn_util.tf, transform_pu=mydnn_util.tf_pu)
+    
+    sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=data_source, transform=mydnn_util.tf)
     total = sensor_input_dataset.__len__()
     print('total:', total)
     myrange = range(experimemts[0], experimemts[1])
@@ -76,7 +79,6 @@ if __name__ == '__main__':
         p = Popen(command, stdout=PIPE, shell=True)
         p.wait()
 
-# python client.py -exp 0 10 -met dl map -src data/matrix-test60
 
 
 # python client.py -src data/205test -met map -exp 0 200 -p 5000

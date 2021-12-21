@@ -13,9 +13,10 @@ from input_output import Default
 from utility import Utility
 
 
-class SensorInputDatasetTranslation(Dataset):
+class SensorInputDatasetTranslation_authorized(Dataset):
     '''Sensor reading input dataset -- for multi TX
        Output is image, model as a image segmentation problem
+       This class includes the authorized users
     '''
     def __init__(self, root_dir: str, transform=None, transform_pu=None):
         '''
@@ -128,6 +129,156 @@ class SensorInputDatasetTranslation(Dataset):
         grid = np.expand_dims(grid, 0)
         return grid.astype(np.float32), location.astype(np.float32)
 
+
+class SensorInputDatasetTranslation_new(Dataset):
+    '''Sensor reading input dataset -- for multi TX
+       Output is image, model as a image segmentation problem
+    '''
+    def __init__(self, root_dir: str, transform=None, transform_pu=None):
+        '''
+        Args:
+            root_dir:  directory with all the images
+            labels:    labels of images
+            transform: optional transform to be applied on a sample
+        '''
+        self.root_dir = root_dir
+        self.transform = transform
+        self.transform_pu = transform_pu
+        self.length = len(os.listdir(self.root_dir))
+        self.sample_per_label = self.get_sample_per_label()
+
+    def __len__(self):
+        return self.length * self.sample_per_label
+
+    def __getitem__(self, idx):
+        folder = int(idx / self.sample_per_label)
+        folder = format(folder, '06d')
+        matrix_name = str(idx % self.sample_per_label) + '.npy'
+        matrix_path = os.path.join(self.root_dir, folder, matrix_name)
+        target_name = str(idx % self.sample_per_label) + '.target.npy'
+        target_img, target_float = self.get_translation_target(folder, target_name)
+        matrix = np.load(matrix_path)
+        if self.transform:
+            matrix = self.transform(matrix)
+        target_num = len(target_float)
+        power_name = str(idx % self.sample_per_label) + '.power.npy'
+        power_path = os.path.join(self.root_dir, folder, power_name)
+        power = np.load(power_path)
+        sample = {'matrix': matrix, 'target': target_img, 'target_float': target_float, 'target_num': target_num, 'power': power, 'index': idx}
+        return sample
+
+    def gaussian(self, b_x, b_y, x, y):
+        '''2D gaussian
+        '''
+        a, c = 10, 0.9
+        dist = math.sqrt((x - b_x) ** 2 + (y - b_y) ** 2)
+        return a * np.exp(- dist ** 2 / (2 * c ** 2))
+        
+    def gaussian_cust(self, a, b_x, b_y, x, y):
+        '''2D gaussian
+        '''
+        c = 0.9
+        dist = math.sqrt((x - b_x) ** 2 + (y - b_y) ** 2)
+        return a * np.exp(- dist ** 2 / (2 * c ** 2))
+
+    def get_sample_per_label(self):
+        folder = glob.glob(os.path.join(self.root_dir, '*'))[0]
+        samples = glob.glob(os.path.join(folder, '*.json'))
+        return len(samples)
+
+
+    def get_translation_target(self, folder: str, target_name: str):
+        '''try guassian peak
+        Args:
+            folder      -- eg. 000001
+            target_name -- eg. 0.target.npy
+        Return:
+            np.ndarray, n = 2, the pixels surrounding TX will be assigned some values
+        '''
+        location = np.load(os.path.join(self.root_dir, folder, target_name))
+        num_tx = len(location)
+        grid = np.zeros((Default.grid_length, Default.grid_length))
+        for i in range(num_tx):
+            x, y = location[i][0], location[i][1]
+            target_float = (x, y)
+            x, y = int(x), int(y)
+            for i in [-2, -1, 0, 1, 2]:
+                for j in [-2, -1, 0, 1, 2]:
+                    nxt = (x + i, y + j)
+                    if 0 <= nxt[0] < Default.grid_length and 0 <= nxt[1] < Default.grid_length:
+                        val = self.gaussian(target_float[0], target_float[1], nxt[0]+0.5, nxt[1]+0.5)
+                        grid[nxt[0]][nxt[1]] = max(val, grid[nxt[0]][nxt[1]])
+        grid = np.expand_dims(grid, 0)
+        return grid.astype(np.float32), location.astype(np.float32)
+
+
+class SensorInputDatasetTranslation(Dataset):
+    '''Sensor reading input dataset -- for multi TX
+       Output is image, model as a image segmentation problem
+    '''
+    def __init__(self, root_dir: str, transform=None):
+        '''
+        Args:
+            root_dir:  directory with all the images
+            labels:    labels of images
+            transform: optional transform to be applied on a sample
+        '''
+        self.root_dir = root_dir
+        self.transform = transform
+        self.length = len(os.listdir(self.root_dir))
+        self.sample_per_label = self.get_sample_per_label()
+
+    def __len__(self):
+        return self.length * self.sample_per_label
+
+    def __getitem__(self, idx):
+        folder = int(idx/self.sample_per_label)
+        folder = format(folder, '06d')
+        matrix_name = str(idx%self.sample_per_label) + '.npy'
+        matrix_path = os.path.join(self.root_dir, folder, matrix_name)
+        target_name = str(idx%self.sample_per_label) + '.target.npy'
+        target_img, target_float = self.get_translation_target(folder, target_name)
+        matrix = np.load(matrix_path)
+        if self.transform:
+            matrix = self.transform(matrix)
+        target_num = len(target_float)
+        sample = {'matrix':matrix, 'target':target_img, 'target_float':target_float, 'target_num':target_num, 'index':idx}
+        return sample
+
+    def get_sample_per_label(self):
+        folder = glob.glob(os.path.join(self.root_dir, '*'))[0]
+        samples = glob.glob(os.path.join(folder, '*.npy'))
+        targets = glob.glob(os.path.join(folder, '*.target.npy'))
+        return len(samples) - len(targets)
+
+    def get_translation_target(self, folder: str, target_name: str):
+        '''
+        Args:
+            folder      -- eg. 000001
+            target_name -- eg. 0.target.npy
+        Return:
+            np.ndarray, n = 2, the pixels surrounding TX will be assigned some values
+        '''
+        location = np.load(os.path.join(self.root_dir, folder, target_name))
+        num_tx = len(location)
+        grid = np.zeros((Default.grid_length, Default.grid_length))
+        for i in range(num_tx):
+            x, y = location[i][0], location[i][1]
+            target_float = (x, y)
+            x, y = int(x), int(y)
+            neighbor = []
+            sum_weight = 0
+            for i in [-1, 0, 1]:
+                for j in [-1, 0, 1]:
+                    nxt = (x + i, y + j)
+                    if 0 <= nxt[0] < Default.grid_length and 0 <= nxt[1] < Default.grid_length:
+                        weight = 1./Utility.distance((nxt[0] + 0.5, nxt[1] + 0.5), target_float)
+                        sum_weight += weight
+                        neighbor.append((nxt, weight))
+            for n, w in neighbor:
+                grid[n[0]][n[1]] += w / sum_weight * len(neighbor) * 3  # 2 is for adding weights
+        grid = np.expand_dims(grid, 0)
+        return grid.astype(np.float32), location.astype(np.float32)
 
 class UniformNormalize:
     '''Set a uniform threshold accross all samples
