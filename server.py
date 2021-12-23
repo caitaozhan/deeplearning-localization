@@ -73,10 +73,15 @@ def localize():
     if port == 4999 and (myinput.num_intruder in [1, 2, 3, 4, 6, 7, 8, 9, 10] or myinput.sensor_density != 100):  # ipsn: 4999 port is for 100 sensor density experiments
         return 'hello world'
 
-    # The PU is introduced in the journal extension
-    # sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=myinput.data_source, transform=mydnn_util.tf, transform_pu=mydnn_util.tf_pu)
+    if port == 5010:  # the ipsn data only has a fixed sensor density. It do has varying transmitters
+        pass
 
-    sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=myinput.data_source, transform=mydnn_util.tf)
+    # Different datasets are a little different in normalization
+    # The PU and ipsn are introduced in the journal extension
+    # sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=myinput.data_source, transform=mydnn_util.tf, transform_pu=mydnn_util.tf_pu)
+    # sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=myinput.data_source, transform=mydnn_util.tf)
+    sensor_input_dataset = mydnn_util.SensorInputDatasetTranslation(root_dir=myinput.data_source, transform=mydnn_util.tf_ipsn)
+
     outputs = []
     if 'deepmtl-simple' in myinput.methods:  # two CNN in sequence, the second CNN is object detection
         sample = sensor_input_dataset[myinput.image_index]
@@ -532,13 +537,14 @@ if __name__ == '__main__':
 
     data = DataInfo.naive_factory(data_source=data_source)
     # 1: init server utilities
-    date = '12.20'                                                 # 1
+    date = '12.23'                                                 # 1
     output_dir = f'result/{date}'
     # output_file = f'splat-dtxf-{port}'                                        # 2
     # output_file = f'splat-map-{port}'                                        # 2
     # output_file = f'splat-splot-{port}'                                        # 2
     # output_file = f'logdistance-all-100_sendensity-{port}'                                        # 2
-    output_file = f'splat-all-100_sendensity-{port}'                                        # 2
+    # output_file = f'splat-all-100_sendensity-{port}'                                        # 2
+    output_file = f'ipsn-deepmtl-{port}'                                        # 2
     # output_file = f'splat-deepmtl-{port}'                                        # 2
     # output_file = f'splat-deepmtl_auth_subtractpower3-{port}-conf=0.85,nms=0.4'                                        # 2
     # output_file = f'logdistance-deepmtl.predpower-{port}'
@@ -580,16 +586,16 @@ if __name__ == '__main__':
     # darknet.eval()
 
     # 4: init MAP* (and SPLOT)
-    grid_len = 100
-    debug = False                                                   # 3
-    # case = 'lognormal3'                                             # 4
-    case = 'splat3'                                               # 4
-    lls = []
-    ll_index = {100:0, 200:1, 400:2, 600:3, 800:4, 1000:5}
-    for i in range(len(data.ipsn_cov_list)):
-        ll = Localization(grid_len=grid_len, case=case, debug=debug)
-        ll.init_data(data.ipsn_cov_list[i], data.ipsn_sensors_list[i], data.ipsn_hypothesis_list[i], None)
-        lls.append(ll)
+    # grid_len = 100
+    # debug = False                                                   # 3
+    # # case = 'lognormal3'                                             # 4
+    # case = 'splat3'                                               # 4
+    # lls = []
+    # ll_index = {100:0, 200:1, 400:2, 600:3, 800:4, 1000:5}
+    # for i in range(len(data.ipsn_cov_list)):
+    #     ll = Localization(grid_len=grid_len, case=case, debug=debug)
+    #     ll.init_data(data.ipsn_cov_list[i], data.ipsn_sensors_list[i], data.ipsn_hypothesis_list[i], None)
+    #     lls.append(ll)
 
     # ll = Localization(grid_len=grid_len, case=case, debug=debug)
     # ll.init_data(data.ipsn_cov_list[2], data.ipsn_sensors_list[2], data.ipsn_hypothesis_list[2], None)
@@ -597,21 +603,21 @@ if __name__ == '__main__':
     #     lls.append(ll)
 
     # 5 init deeptxfinder
-    device = torch.device('cuda')
-    max_ntx = 10
-    cnn1  = CNN_NoTx(max_ntx)
-    cnn1.load_state_dict(torch.load(data.dtxf_cnn1))
-    cnn1 = cnn1.to(device)
-    cnn1.eval()
-    cnn2s = []
-    cnn2_template = data.dtxf_cnn2_template
-    for i in range(max_ntx):
-        num_ntx = i + 1
-        cnn2 = CNN_i(num_ntx)
-        cnn2.load_state_dict(torch.load(cnn2_template.format(num_ntx)))
-        cnn2 = cnn2.to(device)
-        cnn2.eval()
-        cnn2s.append(cnn2)
+    # device = torch.device('cuda')
+    # max_ntx = 10
+    # cnn1  = CNN_NoTx(max_ntx)
+    # cnn1.load_state_dict(torch.load(data.dtxf_cnn1))
+    # cnn1 = cnn1.to(device)
+    # cnn1.eval()
+    # cnn2s = []
+    # cnn2_template = data.dtxf_cnn2_template
+    # for i in range(max_ntx):
+    #     num_ntx = i + 1
+    #     cnn2 = CNN_i(num_ntx)
+    #     cnn2.load_state_dict(torch.load(cnn2_template.format(num_ntx)))
+    #     cnn2 = cnn2.to(device)
+    #     cnn2.eval()
+    #     cnn2s.append(cnn2)
 
     # 6: start the web server
     print('process time:', time.process_time())

@@ -26,7 +26,13 @@ def get_index_from_log(log: str):
     return index
 
 
-def get_sen_num(idx, root_dir='data/205test', sample_per_label=5):
+def get_sen_num(idx, root_dir='data/205test', sample_per_label=5, ipsn=False):
+    '''Get the sensor density of a sample
+       For the ipsn testbed data, sensor density is fixed at 4.5%
+    '''
+    if ipsn:
+        return 4.5
+
     folder = int(idx / sample_per_label)
     folder = format(folder, '06d')
     json_name = str(idx % sample_per_label) + '.json'
@@ -73,7 +79,8 @@ if __name__ == '__main__':
         myinput.experiment_num = i
         myinput.image_index = idx
         myinput.num_intruder = sensor_input_dataset[idx]['target_num']
-        myinput.sensor_density = get_sen_num(idx, data_source, sensor_input_dataset.sample_per_label)
+        # myinput.sensor_density = get_sen_num(idx, data_source, sensor_input_dataset.sample_per_label)
+        myinput.sensor_density = get_sen_num(idx, data_source, sensor_input_dataset.sample_per_label, ipsn=True)
         curl = "curl -d \'{}\' -H \'Content-Type: application/json\' -X POST http://{}:{}/localize"
         command = curl.format(myinput.to_json_str(), Default.server_ip, port)
         p = Popen(command, stdout=PIPE, shell=True)

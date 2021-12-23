@@ -400,6 +400,23 @@ class DataInfo:
             return cls(max_ntx, test_data, train_data, ipsn_cov_list, ipsn_sen_list, ipsn_hypo_list, \
                        translate_net, yolocust_def, yolocust_weights, yolo_def, yolo_weights, dtxf_cnn1, dtxf_cnn2_template, None, None, subtract_net)
 
+        if data_source == 'ipsn_testbed/test':  # data from the ipsn 2020 testbed
+            max_ntx = 10
+            test_data  = 'ipsn_testbed/test'
+            train_data = 'ipsn_testbed/train'
+            ipsn_cov_list  = []
+            ipsn_sen_list  = []
+            ipsn_hypo_list = []
+            translate_net  = 'model/model1-12.22-net5-norm-32.pt'
+            yolocust_def     = '../PyTorch-YOLOv3/config/yolov3-custom.cfg'
+            yolocust_weights = '../PyTorch-YOLOv3/checkpoints_ipsn/yolov3_ckpt_5.pth'
+            yolo_def         = '../PyTorch-YOLOv3/config/yolov3-custom-class.cfg'
+            yolo_weights     = '../PyTorch-YOLOv3/checkpoints_logdistance_class/yolov3_ckpt_5.pth'
+            dtxf_cnn1        =   'model_dtxf/12.12-cnn1-logdist.pt'
+            dtxf_cnn2_template = 'model_dtxf/12.12-cnn2-logdist_{}.pt'
+            return cls(max_ntx, test_data, train_data, ipsn_cov_list, ipsn_sen_list, ipsn_hypo_list, \
+                       translate_net, yolocust_def, yolocust_weights, yolo_def, yolo_weights, dtxf_cnn1, dtxf_cnn2_template)
+
 class IOUtility:
     '''input/output utility'''
     @staticmethod

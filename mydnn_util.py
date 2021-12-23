@@ -478,6 +478,10 @@ tf = T.Compose([
      UniformNormalize(Default.noise_floor),                 # TUNE: Uniform normalization is better than the above minmax normalization
      T.ToTensor()])
 
+tf_ipsn = T.Compose([
+    UniformNormalize(Default.noise_floor_ipsn),
+    T.ToTensor()])
+
 class PuNormalize:
     '''only subtract the floor value
     '''
