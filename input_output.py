@@ -21,6 +21,7 @@ class Default:
     cell_length      = 10
     random_seed      = 0
     noise_floor      = -80
+    noise_floor_ipsn = -48.5
     power            = 10
     cell_percentage  = 1
     sample_per_label = 10

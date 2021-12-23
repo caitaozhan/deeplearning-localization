@@ -2,6 +2,7 @@
 *.code-workspace
 __pycache__
 visualize
+ipsn_testbed/*
 data/*test*
 data/*train*
 data2/*
