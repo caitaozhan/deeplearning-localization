@@ -393,6 +393,104 @@ class PlotResults:
             fig.savefig(figname)
 
     @staticmethod
+    def error_missfalse_vary_numintru_ipsntestbed(data, data_source, sen_density, fignames: List):
+        # step 1: prepare for data
+        metric = 'error'
+        methods = ['deepmtl', 'deeptxfinder']
+        table = defaultdict(list)
+        reduce_f = PlotResults.reduce_avg
+        for myinput, output_by_method in data:
+            if myinput.sensor_density == sen_density and myinput.data_source == data_source:
+                table[myinput.num_intruder].append({method: output.get_metric(metric) for method, output in output_by_method.items()})
+        print_table = []
+        for x, list_of_y_by_method in sorted(table.items()):
+            tmp_list = [reduce_f([(y_by_method[method] if method in y_by_method else None) for y_by_method in list_of_y_by_method]) for method in methods]
+            print_table.append([x] + tmp_list)
+        print('Metric:', metric)
+        print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
+        arr = np.array(print_table)
+        deepmtl_error = arr[:, 1] * 3.2
+        dtxf_error    = arr[:, 2] * 3.2
+
+        metric = 'miss'
+        table = defaultdict(list)
+        for myinput, output_by_method in data:
+            if myinput.sensor_density == sen_density and myinput.data_source == data_source:
+                num_tx = myinput.num_intruder
+                table[num_tx].append({method: output.get_metric(metric)/num_tx for method, output in output_by_method.items()})
+        print_table = []
+        for x, list_of_y_by_method in sorted(table.items()):
+            tmp_list = [reduce_f([(y_by_method[method] if method in y_by_method else None) for y_by_method in list_of_y_by_method]) for method in methods]
+            print_table.append([x] + tmp_list)
+        print('Metric:', metric)
+        print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
+        arr = np.array(print_table)
+        deepmtl_miss = arr[:, 1] * 100
+        dtxf_miss    = arr[:, 2] * 100
+
+        metric = 'false_alarm'
+        table = defaultdict(list)
+        for myinput, output_by_method in data:
+            if myinput.sensor_density == sen_density and myinput.data_source == data_source:
+                num_tx = myinput.num_intruder
+                table[num_tx].append({method: output.get_metric(metric)/output.get_pred_len() for method, output in output_by_method.items()})
+        print_table = []
+        for x, list_of_y_by_method in sorted(table.items()):
+            tmp_list = [reduce_f([(y_by_method[method] if method in y_by_method else None) for y_by_method in list_of_y_by_method]) for method in methods]
+            print_table.append([x] + tmp_list)
+        print('Metric:', metric)
+        print(tabulate.tabulate(print_table, headers=['NUM TX'] + methods))
+        arr = np.array(print_table)
+        deepmtl_false = arr[:, 1] * 100
+        dtxf_false    = arr[:, 2] * 100
+        X_label       = arr[:, 0]
+
+        # step 2: the plot
+        plt.rcParams['font.size'] = 65
+        ind = np.arange(len(deepmtl_error))
+        fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(48, 20))
+        fig.subplots_adjust(left=0.08, right=0.98, top=0.9, bottom=0.16)
+        width = 0.3
+        pos1 = ind - 0.5 * width
+        pos2 = ind + 0.5 * width
+        ax0.bar(pos1, deepmtl_error, width, edgecolor='black', label=PlotResults.LEGEND['deepmtl'], color=PlotResults.COLOR['deepmtl'])
+        ax0.bar(pos2, dtxf_error, width, edgecolor='black', label=PlotResults.LEGEND['dtxf'], color=PlotResults.COLOR['dtxf'])
+        ax0.set_xticks(ind)
+        ax0.set_xticklabels([str(int(x)) for x in X_label])
+        ax0.tick_params(axis='x', pad=15)
+        ax0.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
+        ax0.set_ylabel('Mean Localization Error (m)')
+        ax0.set_xlabel('Number of Transmitters', labelpad=20)
+        handles, labels = ax0.get_legend_handles_labels()
+        fig.legend(handles, labels, bbox_to_anchor=(0.32, 0.89), loc='lower left', ncol=4, fontsize=70)
+
+        ind = np.arange(len(deepmtl_error))
+        ax1.bar(pos1, deepmtl_miss, width, edgecolor='black',  color=PlotResults.COLOR['deepmtl'], hatch=PlotResults.HATCH['miss'])
+        ax1.bar(pos1, deepmtl_false, width, edgecolor='black', color=PlotResults.COLOR['deepmtl'], hatch=PlotResults.HATCH['false'], bottom=deepmtl_miss)
+        ax1.bar(pos2, dtxf_miss, width, edgecolor='black',     color=PlotResults.COLOR['dtxf'],    hatch=PlotResults.HATCH['miss'])
+        ax1.bar(pos2, dtxf_false, width, edgecolor='black',    color=PlotResults.COLOR['dtxf'],    hatch=PlotResults.HATCH['false'], bottom=dtxf_miss)
+
+        miss_patch = mpatches.Patch(facecolor='0.95', hatch=PlotResults.HATCH['miss'], label='Miss Rate')
+        false_patch = mpatches.Patch(facecolor='0.9', hatch=PlotResults.HATCH['false'], label='False Alarm Rate')
+        first_legend = plt.legend(handles=[false_patch, miss_patch], bbox_to_anchor=(0.035, 0.57, 0.4, 0.4), fontsize=41)
+        plt.gca().add_artist(first_legend)
+
+        plt.figtext(0.265, 0.01, '(a)',  weight='bold', fontsize=52)
+        plt.figtext(0.757, 0.01, '(b)',  weight='bold', fontsize=52)
+
+        ax1.set_xticks(ind)
+        ax1.set_xticklabels([str(int(x)) for x in X_label])
+        ax1.tick_params(axis='x', pad=15)
+        ax1.tick_params(axis='y', direction='in', length=10, width=3, pad=15)
+        ax1.set_xlabel('Number of Transmitters', labelpad=20)
+        ax1.set_ylabel('Percentage (%)')
+        if data_source == 'ipsn_testbed/test':
+            ax1.set_ylim([0, 20.5])
+            ax1.set_yticks([0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20])
+        fig.savefig(fignames[0])
+
+
+    @staticmethod
     def noretrain_error_missfalse_vary_numintru(data, data_source, fignames):
         # step 1: prepare the data
         metric = 'error'
@@ -1120,6 +1218,15 @@ def authorized_varyintru():
     PlotResults.error_authorized_varyintru(data, data_splat, sen_density, fignames)
 
 
+def ipsn_testbed():
+    # error, miss and false for varying num of intruders
+    data_source = 'ipsn_testbed/test'
+    logs    = ['result/12.23/ipsn-deepmtl-5010', 'result/12.23/ipsn-dtxf-5010']
+    data    = IOUtility.read_logs(logs)
+    fignames = ['result/12.23/ipsn_testbed-error_false_miss_vary_numintru.png']
+    PlotResults.error_missfalse_vary_numintru_ipsntestbed(data, data_source, sen_density=4.5, fignames=fignames)
+    print()
+
 
 if __name__ == '__main__':
     # test()
@@ -1128,10 +1235,10 @@ if __name__ == '__main__':
     # compare_ours_100sensor()
     # print('*'*20)
     # compare_logdistance()
-    compare_logdistance_100sensor()
+    # compare_logdistance_100sensor()
     # print('*'*20)
     # compare_splat()
-    compare_splat_100sensors()
+    # compare_splat_100sensors()
 
     # noretrain()
 
@@ -1141,7 +1248,7 @@ if __name__ == '__main__':
 
     # authorized_varyintru()
 
-
+    ipsn_testbed()
 
 ##################################################################
 ###################### compare_ours()  ###########################
@@ -1447,14 +1554,7 @@ if __name__ == '__main__':
 
 
 
-
-
-
-
-
-
-
-#########################################################################
+#####################################################################
 ###################### power_varyintru()  ###########################
 
 # Metric: power_error
@@ -1483,3 +1583,47 @@ if __name__ == '__main__':
 #        8  1.3258                 2.1672       0.909
 #        9  1.3921                 2.3211       0.9726
 #       10  1.4768                 2.5541       1.0551
+
+
+
+##################################################################
+###################### ipsn_testbed()  ###########################
+# Metric: error
+#   NUM TX    deepmtl    deeptxfinder
+# --------  ---------  --------------
+#        1     0.4253          2.2412
+#        2     0.4284          7.3707
+#        3     0.4408         10.548
+#        4     0.465          12.3071
+#        5     0.4641         13.9537
+#        6     0.4738         12.7262
+#        7     0.4879         12.7665
+#        8     0.4995         13.0123
+#        9     0.5057         12.6094
+#       10     0.524          12.5345
+# Metric: miss
+#   NUM TX    deepmtl    deeptxfinder
+# --------  ---------  --------------
+#        1     0               0
+#        2     0.0103          0.0071
+#        3     0.0142          0.0276
+#        4     0.0245          0.0593
+#        5     0.0259          0.0956
+#        6     0.0323          0.0691
+#        7     0.0376          0.0799
+#        8     0.0418          0.0955
+#        9     0.0502          0.0765
+#       10     0.0584          0.0817
+# Metric: false_alarm
+#   NUM TX    deepmtl    deeptxfinder
+# --------  ---------  --------------
+#        1     0               0.0011
+#        2     0.0015          0.0078
+#        3     0.0028          0.0244
+#        4     0.0028          0.0592
+#        5     0.0043          0.0972
+#        6     0.0034          0.0681
+#        7     0.0063          0.0759
+#        8     0.0074          0.0914
+#        9     0.0072          0.0913
+#       10     0.0086          0.0672

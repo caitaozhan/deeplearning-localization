@@ -579,6 +579,10 @@ dtxf_tf = T.Compose([
      Normalize(Default.noise_floor),
      T.ToTensor()])
 
+dtxf_tf_ipsn = T.Compose([
+     Normalize(Default.noise_floor_ipsn),
+     T.ToTensor()])
+
 def match(pred, y):
     '''
     Args:

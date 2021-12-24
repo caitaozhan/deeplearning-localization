@@ -139,7 +139,8 @@ if __name__ == '__main__.old':
 
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
+if __name__ == '':
     # for localization with authorized users in the background
     vary_power = 2.5
     power = 0
@@ -244,14 +245,14 @@ if __name__ == '__main__':
 
 
 
-if __name__ == '':
-# if __name__ == '__main__':
+# if __name__ == '':
+if __name__ == '__main__':
     '''for deeptxfinder data, split the dataset into 10 dataset
     '''
 
-    train_dir = 'data/305train/*'
-    dest_dirs  = ['data3/cnn2_train1', 'data3/cnn2_train2', 'data3/cnn2_train3', 'data3/cnn2_train4', 'data3/cnn2_train5',\
-                  'data3/cnn2_train6', 'data3/cnn2_train7', 'data3/cnn2_train8', 'data3/cnn2_train9', 'data3/cnn2_train10']
+    train_dir = 'ipsn_testbed/train/*'
+    dest_dirs  = ['ipsn_testbed/dtxf/cnn2_train1', 'ipsn_testbed/dtxf/cnn2_train2', 'ipsn_testbed/dtxf/cnn2_train3', 'ipsn_testbed/dtxf/cnn2_train4', 'ipsn_testbed/dtxf/cnn2_train5',\
+                  'ipsn_testbed/dtxf/cnn2_train6', 'ipsn_testbed/dtxf/cnn2_train7', 'ipsn_testbed/dtxf/cnn2_train8', 'ipsn_testbed/dtxf/cnn2_train9', 'ipsn_testbed/dtxf/cnn2_train10']
     for folder in dest_dirs:
         Utility.remove_make(folder)
 
@@ -273,9 +274,9 @@ if __name__ == '':
         print(f'train, num tx = {i}, counter = {counter}')
 
 
-    test_dir  = 'data/305test/*'
-    dest_dirs  = ['data3/cnn2_test1', 'data3/cnn2_test2', 'data3/cnn2_test3', 'data3/cnn2_test4', 'data3/cnn2_test5',\
-                  'data3/cnn2_test6', 'data3/cnn2_test7', 'data3/cnn2_test8', 'data3/cnn2_test9', 'data3/cnn2_test10']
+    test_dir  = 'ipsn_testbed/test/*'
+    dest_dirs  = ['ipsn_testbed/dtxf/cnn2_test1', 'ipsn_testbed/dtxf/cnn2_test2', 'ipsn_testbed/dtxf/cnn2_test3', 'ipsn_testbed/dtxf/cnn2_test4', 'ipsn_testbed/dtxf/cnn2_test5',\
+                  'ipsn_testbed/dtxf/cnn2_test6', 'ipsn_testbed/dtxf/cnn2_test7', 'ipsn_testbed/dtxf/cnn2_test8', 'ipsn_testbed/dtxf/cnn2_test9', 'ipsn_testbed/dtxf/cnn2_test10']
     for folder in dest_dirs:
         Utility.remove_make(folder)
 

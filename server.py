@@ -130,7 +130,8 @@ def localize():
         outputs.append(Output('deepmtl', errors[0], falses[0], misses[0], preds[0], end-start, power_error=[]))
 
     if 'dtxf' in myinput.methods:
-        sensor_input_dataset_regress = mydnn_util.SensorInputDatasetRegression(root_dir=myinput.data_source, grid_len=Default.grid_length, transform=mydnn_util.dtxf_tf)
+        # sensor_input_dataset_regress = mydnn_util.SensorInputDatasetRegression(root_dir=myinput.data_source, grid_len=Default.grid_length, transform=mydnn_util.dtxf_tf)
+        sensor_input_dataset_regress = mydnn_util.SensorInputDatasetRegression(root_dir=myinput.data_source, grid_len=Default.grid_length, transform=mydnn_util.dtxf_tf_ipsn)
         sample = sensor_input_dataset_regress[myinput.image_index]
         X      = torch.as_tensor(sample['matrix']).unsqueeze(0).to(device)
         y      = np.array(sample['target'])
@@ -146,7 +147,7 @@ def localize():
         y        = sensor_input_dataset_regress.undo_normalize(y)
         pred_loc = np.reshape(pred_loc, (len(pred_loc)//2, 2))
         y        = np.reshape(y, (len(y)//2, 2))
-        radius_threshold = Default.grid_length * 0.5
+        radius_threshold = Default.grid_length * 0.4
         error, miss, false = Utility.compute_error(pred_loc, y, radius_threshold, False)
         end = time.time()
         pred_loc = [(float(x), float(y)) for x, y in pred_loc]
@@ -544,7 +545,7 @@ if __name__ == '__main__':
     # output_file = f'splat-splot-{port}'                                        # 2
     # output_file = f'logdistance-all-100_sendensity-{port}'                                        # 2
     # output_file = f'splat-all-100_sendensity-{port}'                                        # 2
-    output_file = f'ipsn-deepmtl-{port}'                                        # 2
+    output_file = f'ipsn-dtxf-{port}'                                        # 2
     # output_file = f'splat-deepmtl-{port}'                                        # 2
     # output_file = f'splat-deepmtl_auth_subtractpower3-{port}-conf=0.85,nms=0.4'                                        # 2
     # output_file = f'logdistance-deepmtl.predpower-{port}'
@@ -555,16 +556,16 @@ if __name__ == '__main__':
 
 
     # 2: init image to image translation model
-    device = torch.device('cuda')
-    translate_net = NetTranslation5()
-    translate_net.load_state_dict(torch.load(data.translate_net))
-    translate_net = translate_net.to(device)
-    translate_net.eval()
+    # device = torch.device('cuda')
+    # translate_net = NetTranslation5()
+    # translate_net.load_state_dict(torch.load(data.translate_net))
+    # translate_net = translate_net.to(device)
+    # translate_net.eval()
 
-    # 3: init the darknet_cust
-    darknet_cust = Darknet(data.yolocust_def, img_size=server.DETECT_IMG_SIZE).to(device)
-    darknet_cust.load_state_dict(torch.load(data.yolocust_weights))
-    darknet_cust.eval()
+    # # 3: init the darknet_cust
+    # darknet_cust = Darknet(data.yolocust_def, img_size=server.DETECT_IMG_SIZE).to(device)
+    # darknet_cust.load_state_dict(torch.load(data.yolocust_weights))
+    # darknet_cust.eval()
 
     # *** FOR Power Estimation only, init both predpower and ridgereg ***
     # predpower_net = PowerPredictor5()
@@ -603,21 +604,21 @@ if __name__ == '__main__':
     #     lls.append(ll)
 
     # 5 init deeptxfinder
-    # device = torch.device('cuda')
-    # max_ntx = 10
-    # cnn1  = CNN_NoTx(max_ntx)
-    # cnn1.load_state_dict(torch.load(data.dtxf_cnn1))
-    # cnn1 = cnn1.to(device)
-    # cnn1.eval()
-    # cnn2s = []
-    # cnn2_template = data.dtxf_cnn2_template
-    # for i in range(max_ntx):
-    #     num_ntx = i + 1
-    #     cnn2 = CNN_i(num_ntx)
-    #     cnn2.load_state_dict(torch.load(cnn2_template.format(num_ntx)))
-    #     cnn2 = cnn2.to(device)
-    #     cnn2.eval()
-    #     cnn2s.append(cnn2)
+    device = torch.device('cuda')
+    max_ntx = 10
+    cnn1  = CNN_NoTx(max_ntx)
+    cnn1.load_state_dict(torch.load(data.dtxf_cnn1))
+    cnn1 = cnn1.to(device)
+    cnn1.eval()
+    cnn2s = []
+    cnn2_template = data.dtxf_cnn2_template
+    for i in range(max_ntx):
+        num_ntx = i + 1
+        cnn2 = CNN_i(num_ntx)
+        cnn2.load_state_dict(torch.load(cnn2_template.format(num_ntx)))
+        cnn2 = cnn2.to(device)
+        cnn2.eval()
+        cnn2s.append(cnn2)
 
     # 6: start the web server
     print('process time:', time.process_time())
