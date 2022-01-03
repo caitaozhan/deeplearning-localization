@@ -564,21 +564,21 @@ class PlotResults:
         fig.legend(handles, labels, loc='upper center', ncol=2, fontsize=45)
         fig.savefig(fignames[0])
 
-        plt.rcParams['font.size'] = 70
+        plt.rcParams['font.size'] = 45
         ind = np.arange(len(deepmtl_error))
-        fig, ax = plt.subplots(1, 1, figsize=(40, 20))
-        fig.subplots_adjust(left=0.08, right=0.99, top=0.86, bottom=0.12)
+        fig, ax = plt.subplots(1, 1, figsize=(20, 13))
+        fig.subplots_adjust(left=0.12, right=0.96, top=0.88, bottom=0.13)
         ax.bar(pos1, deepmtl_miss, width, edgecolor='black', color=PlotResults.COLOR['deepmtl'], hatch=PlotResults.HATCH['miss'])
         ax.bar(pos1, deepmtl_false, width, edgecolor='black', color=PlotResults.COLOR['deepmtl'], hatch=PlotResults.HATCH['false'], bottom=deepmtl_miss)
         ax.bar(pos2, deepmtl_noretrain_miss, width, edgecolor='black',      color=PlotResults.COLOR['deepmtl_noretrain'],     hatch=PlotResults.HATCH['miss'])
         ax.bar(pos2, deepmtl_noretrain_false, width, edgecolor='black',     color=PlotResults.COLOR['deepmtl_noretrain'],     hatch=PlotResults.HATCH['false'], bottom=deepmtl_noretrain_miss)
         miss_patch = mpatches.Patch(facecolor='0.9', hatch=PlotResults.HATCH['miss'], label='Miss Rate')
         false_patch = mpatches.Patch(facecolor='0.9', hatch=PlotResults.HATCH['false'], label='False Alarm Rate')
-        first_legend = plt.legend(handles=[false_patch, miss_patch], bbox_to_anchor=(0.02, 0.6, 0.4, 0.4))
+        first_legend = plt.legend(handles=[false_patch, miss_patch], bbox_to_anchor=(0.11, 0.62, 0.4, 0.4), fontsize=43)
         plt.gca().add_artist(first_legend)
         deepmtl_patch = mpatches.Patch(label=PlotResults.LEGEND['deepmtl'], color=PlotResults.COLOR['deepmtl'])
         deepmtl_noretrain_patch = mpatches.Patch(label=PlotResults.LEGEND['deepmtl_noretrain'], color=PlotResults.COLOR['deepmtl_noretrain'])
-        plt.legend(handles=[deepmtl_patch, deepmtl_noretrain_patch], bbox_to_anchor=(0.4, 0.68, 0.5, 0.5), ncol=4)
+        plt.legend(handles=[deepmtl_patch, deepmtl_noretrain_patch], bbox_to_anchor=(0.53, 0.68, 0.5, 0.5), ncol=2, fontsize=45)
         ax.set_xticks(ind)
         ax.set_xticklabels([str(int(x)) for x in X_label])
         ax.tick_params(axis='x', pad=15)
@@ -1240,7 +1240,7 @@ if __name__ == '__main__':
     # compare_splat()
     # compare_splat_100sensors()
 
-    # noretrain()
+    noretrain()
 
     # power_varysensor()
 
@@ -1248,7 +1248,8 @@ if __name__ == '__main__':
 
     # authorized_varyintru()
 
-    ipsn_testbed()
+    # ipsn_testbed()
+
 
 ##################################################################
 ###################### compare_ours()  ###########################
