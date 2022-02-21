@@ -1211,7 +1211,7 @@ def power_varyintru():
 
 def authorized_varyintru():
     data_splat = 'data/1005test'
-    logs = ['result/10.6-nms=0.4/splat-deepmtl_auth-5000', 'result/10.7/splat-deepmtl_auth_subtractpower3-5000-conf=0.85,nms=0.4']
+    logs = ['result/10.6-nms=0.4/splat-deepmtl_auth-5000', 'result/10.7/splat-deepmtl_auth_subtractpower3-5000-conf=0.85,nms=0.4.txt']
     data = IOUtility.read_logs(logs)
     fignames = ['result/10.7/splat-error-authorized-varyintru.png', 'result/10.7/splat-missfalse-authorized-varyintru.png']
     sen_density = 600
