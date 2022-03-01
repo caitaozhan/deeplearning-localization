@@ -179,7 +179,6 @@ if __name__ == '':
     # for p in ps:
     #     p.wait()
 
-
     # 2. generate the IPSN format data
     print('step 2 ...')
     # template = 'python generate.py -ipsn -rd data/{} -sd {} -rs {}'
@@ -196,13 +195,12 @@ if __name__ == '':
     for p in ps:
         p.wait()
 
-
     # 3. merge the data of step 1
     print('step 3 ...')
     # train_dir = 'data/206train'
     # Utility.remove_make(train_dir)
     size = 9216
-    # # size = 6400
+    # size = 6400
     # for i in range(size):
     #     if i % 1000 == 0:
     #         print(i)
@@ -250,9 +248,9 @@ if __name__ == '__main__':
     '''for deeptxfinder data, split the dataset into 10 dataset
     '''
 
-    train_dir = 'ipsn_testbed/train/*'
-    dest_dirs  = ['ipsn_testbed/dtxf/cnn2_train1', 'ipsn_testbed/dtxf/cnn2_train2', 'ipsn_testbed/dtxf/cnn2_train3', 'ipsn_testbed/dtxf/cnn2_train4', 'ipsn_testbed/dtxf/cnn2_train5',\
-                  'ipsn_testbed/dtxf/cnn2_train6', 'ipsn_testbed/dtxf/cnn2_train7', 'ipsn_testbed/dtxf/cnn2_train8', 'ipsn_testbed/dtxf/cnn2_train9', 'ipsn_testbed/dtxf/cnn2_train10']
+    train_dir = 'ipsn_testbed/train_random/*'
+    dest_dirs  = ['ipsn_testbed/dtxf_random/cnn2_train1', 'ipsn_testbed/dtxf_random/cnn2_train2', 'ipsn_testbed/dtxf_random/cnn2_train3', 'ipsn_testbed/dtxf_random/cnn2_train4', 'ipsn_testbed/dtxf_random/cnn2_train5',\
+                  'ipsn_testbed/dtxf_random/cnn2_train6', 'ipsn_testbed/dtxf_random/cnn2_train7', 'ipsn_testbed/dtxf_random/cnn2_train8', 'ipsn_testbed/dtxf_random/cnn2_train9', 'ipsn_testbed/dtxf_random/cnn2_train10']
     for folder in dest_dirs:
         Utility.remove_make(folder)
 
@@ -274,9 +272,9 @@ if __name__ == '__main__':
         print(f'train, num tx = {i}, counter = {counter}')
 
 
-    test_dir  = 'ipsn_testbed/test/*'
-    dest_dirs  = ['ipsn_testbed/dtxf/cnn2_test1', 'ipsn_testbed/dtxf/cnn2_test2', 'ipsn_testbed/dtxf/cnn2_test3', 'ipsn_testbed/dtxf/cnn2_test4', 'ipsn_testbed/dtxf/cnn2_test5',\
-                  'ipsn_testbed/dtxf/cnn2_test6', 'ipsn_testbed/dtxf/cnn2_test7', 'ipsn_testbed/dtxf/cnn2_test8', 'ipsn_testbed/dtxf/cnn2_test9', 'ipsn_testbed/dtxf/cnn2_test10']
+    test_dir  = 'ipsn_testbed/test_random/*'
+    dest_dirs  = ['ipsn_testbed/dtxf_random/cnn2_test1', 'ipsn_testbed/dtxf_random/cnn2_test2', 'ipsn_testbed/dtxf_random/cnn2_test3', 'ipsn_testbed/dtxf_random/cnn2_test4', 'ipsn_testbed/dtxf_random/cnn2_test5',\
+                  'ipsn_testbed/dtxf_random/cnn2_test6', 'ipsn_testbed/dtxf_random/cnn2_test7', 'ipsn_testbed/dtxf_random/cnn2_test8', 'ipsn_testbed/dtxf_random/cnn2_test9', 'ipsn_testbed/dtxf_random/cnn2_test10']
     for folder in dest_dirs:
         Utility.remove_make(folder)
 

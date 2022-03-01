@@ -1217,7 +1217,6 @@ def authorized_varyintru():
     sen_density = 600
     PlotResults.error_authorized_varyintru(data, data_splat, sen_density, fignames)
 
-
 def ipsn_testbed():
     # error, miss and false for varying num of intruders
     data_source = 'ipsn_testbed/test'
@@ -1225,7 +1224,15 @@ def ipsn_testbed():
     data    = IOUtility.read_logs(logs)
     fignames = ['result/12.23/ipsn_testbed-error_false_miss_vary_numintru.png']
     PlotResults.error_missfalse_vary_numintru_ipsntestbed(data, data_source, sen_density=4.5, fignames=fignames)
-    print()
+
+
+def ipsn_testbed_random():
+    # the random suffix means that the sensor are not fixed to the bottom left of the four equally split cells (as a result of increase granularity)
+    data_source = 'ipsn_testbed/test_random'
+    logs    = ['result/2.28/ipsn-deepmtl-5010', 'result/2.28/ipsn-dtxf-5010']
+    data    = IOUtility.read_logs(logs)
+    fignames = ['result/2.28/ipsn_testbed-error_false_miss_vary_numintru.png']
+    PlotResults.error_missfalse_vary_numintru_ipsntestbed(data, data_source, sen_density=4.5, fignames=fignames)
 
 
 if __name__ == '__main__':
@@ -1240,7 +1247,7 @@ if __name__ == '__main__':
     # compare_splat()
     # compare_splat_100sensors()
 
-    noretrain()
+    # noretrain()
 
     # power_varysensor()
 
@@ -1248,7 +1255,7 @@ if __name__ == '__main__':
 
     # authorized_varyintru()
 
-    # ipsn_testbed()
+    ipsn_testbed_random()
 
 
 ##################################################################
@@ -1628,3 +1635,44 @@ if __name__ == '__main__':
 #        8     0.0074          0.0914
 #        9     0.0072          0.0913
 #       10     0.0086          0.0672
+
+##################################################################
+###################### ipsn_testbed_random()  ####################
+#   NUM TX    deepmtl    deeptxfinder
+# --------  ---------  --------------
+#        1     0.4029          2.056
+#        2     0.4104          5.6234
+#        3     0.4092          9.658
+#        4     0.434          14.5576
+#        5     0.449          12.776
+#        6     0.4527         13.0361
+#        7     0.461          12.6886
+#        8     0.4664         12.9086
+#        9     0.4877         12.9437
+#       10     0.4976         12.1435
+# Metric: miss
+#   NUM TX    deepmtl    deeptxfinder
+# --------  ---------  --------------
+#        1     0               0.0011
+#        2     0.006           0.0033
+#        3     0.0078          0.0153
+#        4     0.0121          0.066
+#        5     0.0156          0.066
+#        6     0.018           0.083
+#        7     0.0193          0.0698
+#        8     0.0259          0.0779
+#        9     0.0264          0.0778
+#       10     0.0287          0.0778
+# Metric: false_alarm
+#   NUM TX    deepmtl    deeptxfinder
+# --------  ---------  --------------
+#        1     0.0006          0.0033
+#        2     0.0038          0.0045
+#        3     0.0035          0.0169
+#        4     0.0075          0.0619
+#        5     0.0094          0.0647
+#        6     0.0106          0.0812
+#        7     0.0158          0.0706
+#        8     0.0153          0.0832
+#        9     0.0162          0.0882
+#       10     0.0173          0.06

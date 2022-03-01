@@ -36,6 +36,7 @@ class IPSN:
         self.sensors = []
         self.means = []
         self.stds = []
+        self.gran = {}  # when increasing the granularity from 1 to 2x2, randomly pick one from 2x2s
 
     def init_data(self):
         '''Initialize the IPSN testbed data (the hypothesis file and sensors data)
@@ -63,6 +64,11 @@ class IPSN:
                 self.stds[tran_x*self.ipsn_grid_len + tran_y, count] = std
                 count = (count + 1) % len(self.sensors)
 
+        for x in range(self.ipsn_grid_len):
+            for y in range(self.ipsn_grid_len):
+                self.gran[(x, y)] = [random.randint(0, 1), random.randint(0, 1)]
+
+
     def check_if_skip(self, small_x, small_y):
         '''Due to edges and finer granularity, some locations will be skipped or ignored
            The IPSN testbed data is 10x10, scale it to 20x20, then duplicate 25 of them and get a 100x100 grid
@@ -76,7 +82,9 @@ class IPSN:
         '''
         if small_x <= 3 or small_x >= 16 or small_y <= 3 or small_y >= 16:   # at the edge
             return True
-        if small_x % 2 == 0 and small_y % 2 == 0:
+        ipsn_x, ipsn_y = small_x // 2, small_y // 2
+        delta_x, delta_y = self.gran[(ipsn_x, ipsn_y)]
+        if small_x % 2 == delta_x and small_y % 2 == delta_y:
             return False
         else:
             return True
@@ -162,7 +170,8 @@ class IPSN:
                         mean = self.means[ipsn_x * self.ipsn_grid_len + ipsn_y, sensor.index]
                         std  = self.stds[ipsn_x * self.ipsn_grid_len + ipsn_y, sensor.index]
                         rssi = np.random.normal(mean, std, size=1)[0]
-                        grid_small[sensor.x*2, sensor.y*2] = rssi if rssi > self.ipsn_noise_floor else self.ipsn_noise_floor
+                        delta_x, delta_y = self.gran[(sensor.x, sensor.y)]
+                        grid_small[sensor.x*2 + delta_x, sensor.y*2 + delta_y] = rssi if rssi > self.ipsn_noise_floor else self.ipsn_noise_floor
 
                     # step 3: add the 20x20 small grid to the 100x100 big grid
                     x_multiple = big_x_ // 20
@@ -188,7 +197,7 @@ if __name__ == '__main__':
     ipsn = IPSN(deepmtl_grid_len, ipsn_grid_len, ipsn_data_dir, ipsn_noise_floor)
     ipsn.init_data()
 
-    root_dir = 'ipsn_testbed/test'
-    sample_per_label = 10
+    root_dir = 'ipsn_testbed/train_random'
+    sample_per_label = 20
     num_tx = 10
     ipsn.generate_data(root_dir, sample_per_label, num_tx)

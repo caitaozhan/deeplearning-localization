@@ -409,13 +409,32 @@ class DataInfo:
             ipsn_hypo_list = []
             translate_net  = 'model/model1-12.22-net5-norm-32.pt'
             yolocust_def     = '../PyTorch-YOLOv3/config/yolov3-custom.cfg'
-            yolocust_weights = '../PyTorch-YOLOv3/checkpoints_ipsn/yolov3_ckpt_5.pth'
+            yolocust_weights = '../PyTorch-YOLOv3/checkpoints_ipsn.12.22/yolov3_ckpt_5.pth'
             yolo_def         = '../PyTorch-YOLOv3/config/yolov3-custom-class.cfg'
             yolo_weights     = '../PyTorch-YOLOv3/checkpoints_logdistance_class/yolov3_ckpt_5.pth'
             dtxf_cnn1        =   'model_dtxf/12.23-cnn1-ipsn.pt'
             dtxf_cnn2_template = 'model_dtxf/12.23-cnn2-ipsn_{}.pt'
             return cls(max_ntx, test_data, train_data, ipsn_cov_list, ipsn_sen_list, ipsn_hypo_list, \
                        translate_net, yolocust_def, yolocust_weights, yolo_def, yolo_weights, dtxf_cnn1, dtxf_cnn2_template)
+
+        if data_source == 'ipsn_testbed/test_random':  # data from the ipsn 2020 testbed
+            max_ntx = 10
+            test_data  = 'ipsn_testbed/test_random'
+            train_data = 'ipsn_testbed/train_random'
+            ipsn_cov_list  = []
+            ipsn_sen_list  = []
+            ipsn_hypo_list = []
+            translate_net  = 'model/model1-2.28-net5-norm-32.pt'
+            yolocust_def     = '../PyTorch-YOLOv3/config/yolov3-custom.cfg'
+            yolocust_weights = '../PyTorch-YOLOv3/checkpoints_ipsn/yolov3_ckpt_5.pth'
+            yolo_def         = '../PyTorch-YOLOv3/config/yolov3-custom-class.cfg'
+            yolo_weights     = '../PyTorch-YOLOv3/checkpoints_logdistance_class/yolov3_ckpt_5.pth'
+            dtxf_cnn1        =   'model_dtxf/2.28-cnn1-ipsn.pt'
+            dtxf_cnn2_template = 'model_dtxf/2.28-cnn2-ipsn_{}.pt'
+            return cls(max_ntx, test_data, train_data, ipsn_cov_list, ipsn_sen_list, ipsn_hypo_list, \
+                       translate_net, yolocust_def, yolocust_weights, yolo_def, yolo_weights, dtxf_cnn1, dtxf_cnn2_template)
+
+
 
 class IOUtility:
     '''input/output utility'''

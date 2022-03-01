@@ -538,14 +538,14 @@ if __name__ == '__main__':
 
     data = DataInfo.naive_factory(data_source=data_source)
     # 1: init server utilities
-    date = '12.23'                                                 # 1
+    date = '2.28'                                                 # 1
     output_dir = f'result/{date}'
     # output_file = f'splat-dtxf-{port}'                                        # 2
     # output_file = f'splat-map-{port}'                                        # 2
     # output_file = f'splat-splot-{port}'                                        # 2
     # output_file = f'logdistance-all-100_sendensity-{port}'                                        # 2
     # output_file = f'splat-all-100_sendensity-{port}'                                        # 2
-    output_file = f'ipsn-dtxf-{port}'                                        # 2
+    output_file = f'ipsn-deepmtl-{port}'                                        # 2
     # output_file = f'splat-deepmtl-{port}'                                        # 2
     # output_file = f'splat-deepmtl_auth_subtractpower3-{port}-conf=0.85,nms=0.4'                                        # 2
     # output_file = f'logdistance-deepmtl.predpower-{port}'
@@ -556,16 +556,16 @@ if __name__ == '__main__':
 
 
     # 2: init image to image translation model
-    # device = torch.device('cuda')
-    # translate_net = NetTranslation5()
-    # translate_net.load_state_dict(torch.load(data.translate_net))
-    # translate_net = translate_net.to(device)
-    # translate_net.eval()
+    device = torch.device('cuda')
+    translate_net = NetTranslation5()
+    translate_net.load_state_dict(torch.load(data.translate_net))
+    translate_net = translate_net.to(device)
+    translate_net.eval()
 
-    # # 3: init the darknet_cust
-    # darknet_cust = Darknet(data.yolocust_def, img_size=server.DETECT_IMG_SIZE).to(device)
-    # darknet_cust.load_state_dict(torch.load(data.yolocust_weights))
-    # darknet_cust.eval()
+    # 3: init the darknet_cust
+    darknet_cust = Darknet(data.yolocust_def, img_size=server.DETECT_IMG_SIZE).to(device)
+    darknet_cust.load_state_dict(torch.load(data.yolocust_weights))
+    darknet_cust.eval()
 
     # *** FOR Power Estimation only, init both predpower and ridgereg ***
     # predpower_net = PowerPredictor5()

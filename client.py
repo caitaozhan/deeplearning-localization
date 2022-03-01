@@ -70,7 +70,7 @@ if __name__ == '__main__':
     print('total:', total)
     myrange = range(experimemts[0], experimemts[1])
     random.seed(time.time())
-    # random.seed(0)
+    random.seed(0)
     index = random.sample(range(total), len(myrange))
     # index = get_index_from_log('result/11.14/log')
     print('caitao', len(myrange), len(index))
