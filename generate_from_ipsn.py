@@ -80,15 +80,17 @@ class IPSN:
         Return:
             bool
         '''
-        if small_x <= 3 or small_x >= 16 or small_y <= 3 or small_y >= 16:   # at the edge
+        if small_x <= 4 or small_x >= 15 or small_y <= 4 or small_y >= 15:   # at the edge
             return True
-        ipsn_x, ipsn_y = small_x // 2, small_y // 2
-        delta_x, delta_y = self.gran[(ipsn_x, ipsn_y)]
-        if small_x % 2 == delta_x and small_y % 2 == delta_y:
-            return False
-        else:
-            return True
-    
+        # ipsn_x, ipsn_y = small_x // 2, small_y // 2
+        # delta_x, delta_y = self.gran[(ipsn_x, ipsn_y)]
+        # if small_x % 2 == delta_x and small_y % 2 == delta_y:
+        #     return False
+        # else:
+        #     return True
+        return False
+
+
     def linear2db(self, linear: float):
         '''Transform power from linear into decibel format
         Args:
@@ -197,7 +199,7 @@ if __name__ == '__main__':
     ipsn = IPSN(deepmtl_grid_len, ipsn_grid_len, ipsn_data_dir, ipsn_noise_floor)
     ipsn.init_data()
 
-    root_dir = 'ipsn_testbed/train_random'
-    sample_per_label = 20
+    root_dir = 'ipsn_testbed/test_random'
+    sample_per_label = 5
     num_tx = 10
     ipsn.generate_data(root_dir, sample_per_label, num_tx)

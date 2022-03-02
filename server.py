@@ -538,14 +538,14 @@ if __name__ == '__main__':
 
     data = DataInfo.naive_factory(data_source=data_source)
     # 1: init server utilities
-    date = '2.28'                                                 # 1
+    date = '3.1'                                                 # 1
     output_dir = f'result/{date}'
     # output_file = f'splat-dtxf-{port}'                                        # 2
     # output_file = f'splat-map-{port}'                                        # 2
     # output_file = f'splat-splot-{port}'                                        # 2
     # output_file = f'logdistance-all-100_sendensity-{port}'                                        # 2
     # output_file = f'splat-all-100_sendensity-{port}'                                        # 2
-    output_file = f'ipsn-deepmtl-{port}'                                        # 2
+    output_file = f'ipsn-all-{port}'                                        # 2
     # output_file = f'splat-deepmtl-{port}'                                        # 2
     # output_file = f'splat-deepmtl_auth_subtractpower3-{port}-conf=0.85,nms=0.4'                                        # 2
     # output_file = f'logdistance-deepmtl.predpower-{port}'

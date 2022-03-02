@@ -424,13 +424,13 @@ class DataInfo:
             ipsn_cov_list  = []
             ipsn_sen_list  = []
             ipsn_hypo_list = []
-            translate_net  = 'model/model1-2.28-net5-norm-32.pt'
+            translate_net  = 'model/model1-3.1-net5-norm-32.pt'
             yolocust_def     = '../PyTorch-YOLOv3/config/yolov3-custom.cfg'
             yolocust_weights = '../PyTorch-YOLOv3/checkpoints_ipsn/yolov3_ckpt_5.pth'
             yolo_def         = '../PyTorch-YOLOv3/config/yolov3-custom-class.cfg'
             yolo_weights     = '../PyTorch-YOLOv3/checkpoints_logdistance_class/yolov3_ckpt_5.pth'
-            dtxf_cnn1        =   'model_dtxf/2.28-cnn1-ipsn.pt'
-            dtxf_cnn2_template = 'model_dtxf/2.28-cnn2-ipsn_{}.pt'
+            dtxf_cnn1        =   'model_dtxf/3.1-cnn1-ipsn.pt'
+            dtxf_cnn2_template = 'model_dtxf/3.1-cnn2-ipsn_{}.pt'
             return cls(max_ntx, test_data, train_data, ipsn_cov_list, ipsn_sen_list, ipsn_hypo_list, \
                        translate_net, yolocust_def, yolocust_weights, yolo_def, yolo_weights, dtxf_cnn1, dtxf_cnn2_template)
 
