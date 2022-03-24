@@ -7,23 +7,25 @@ The WoWMoM conference presentation is on my [YouTube channel](https://www.youtub
 
 The WoWMoM conference paper is extended to the Elsevier journal Pervasive and Mobile Computing: [Elsevier Link](https://doi.org/10.1016/j.pmcj.2022.101582), [Open Access PDF link](https://arxiv.org/abs/2112.13181). The main new part is the transmit power estimation. Also the quality of writing is improved.
 
-Cite The Conference:
+Please cite the conference:
 ```
-@INPROCEEDINGS{deepmtl-zhan2021,
+@INPROCEEDINGS{wowmom21-deepmtl,
 title={DeepMTL: Deep Learning Based Multiple Transmitter Localization}, 
-author={Zhan, Caitao and Ghaderibaneh, Mohammad and Sahu, Pranjal and Gupta, Himanshu},
 booktitle={IEEE 22nd International Symposium on a World of Wireless, Mobile and Multimedia Networks (WoWMoM)}, 
+author={Zhan, Caitao and Ghaderibaneh, Mohammad and Sahu, Pranjal and Gupta, Himanshu},
 year={2021},
+doi={10.1109/WoWMoM51794.2021.00017}
 }
 ```
 
-Cite the Journal:
+Please cite the journal:
 ```
-@article{deepmtl-pro-zhan2022,
+@article{pmc22-deepmtlpro,
 title = {DeepMTL Pro: Deep Learning Based Multiple Transmitter Localization and Power Estimation},
 author = {Caitao Zhan and Mohammad Ghaderibaneh and Pranjal Sahu and Himanshu Gupta},
 journal = {Pervasive and Mobile Computing},
 year = {2022},
+doi={10.1016/j.pmcj.2022.101582}
 }
 ```
 
