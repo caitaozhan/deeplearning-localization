@@ -10,9 +10,9 @@ The WoWMoM conference paper is extended to the Elsevier journal Pervasive and Mo
 Cite The Conference:
 ```
 @INPROCEEDINGS{deepmtl-zhan2021,
+title={DeepMTL: Deep Learning Based Multiple Transmitter Localization}, 
 author={Zhan, Caitao and Ghaderibaneh, Mohammad and Sahu, Pranjal and Gupta, Himanshu},
 booktitle={IEEE 22nd International Symposium on a World of Wireless, Mobile and Multimedia Networks (WoWMoM)}, 
-title={DeepMTL: Deep Learning Based Multiple Transmitter Localization}, 
 year={2021},
 }
 ```
