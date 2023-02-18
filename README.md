@@ -5,7 +5,7 @@ This is the repository of my IEEE WoWMoM 2021 paper: [IEEE Link](https://ieeexpl
 
 The WoWMoM conference presentation is on my [YouTube channel](https://www.youtube.com/watch?v=arnhAloIr90).
 
-The WoWMoM conference paper is extended to the Elsevier journal Pervasive and Mobile Computing (PMC): [Elsevier Link](https://doi.org/10.1016/j.pmcj.2022.101582), [Open Access PDF link](https://arxiv.org/abs/2112.13181). The Elsevier version is also uploaded in this repository, checkout [deepmtl-pro-final.pdf](https://github.com/caitaozhan/caitaozhan.github.io/blob/master/file/deepmtl-pro-final.pdf). The main new part is the transmit power estimation. Also the quality of writing is improved.
+The WoWMoM conference paper is extended to the Elsevier journal Pervasive and Mobile Computing (PMC): [Elsevier Link](https://doi.org/10.1016/j.pmcj.2022.101582), [Open Access PDF link](https://arxiv.org/abs/2112.13181). The Elsevier version is also uploaded in this repository, checkout [deepmtl-pro.pdf](https://caitaozhan.github.io/file/deepmtl-pro.pdf). The main new part is the transmit power estimation. Also the quality of writing is improved.
 
 I also made a presentation for the PMC journal paper, plese check my [YouTube channel](https://www.youtube.com/watch?v=DScawc1znjs).
 
